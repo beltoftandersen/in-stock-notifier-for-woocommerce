@@ -21,7 +21,6 @@ Stock changes are detected regardless of source: admin UI, REST API, CLI, or ERP
 - Email configurable under WooCommerce > Settings > Emails > Back In Stock
 - Batch sending via WP-Cron with configurable batch size and throttle
 - Detects stock changes from admin, REST API, CLI, and ERP systems
-- Cache purging on stock change (WP Super Cache, W3TC, WP Rocket, LiteSpeed, WP Fastest Cache)
 - Admin dashboard with stats and manual "Send Notifications" button
 - Subscription list with search, filters, pagination, and bulk actions
 - One-click unsubscribe link in every email
@@ -36,7 +35,7 @@ Stock changes are detected regardless of source: admin UI, REST API, CLI, or ERP
 1. Customer visits an out-of-stock product and enters their email.
 2. When the product comes back in stock, WooCommerce hooks trigger the plugin.
 3. Emails are queued and sent in batches — product image, "Shop Now" button, and unsubscribe link included.
-4. Product page cache is purged so customers see the correct stock status.
+4. Custom hook available for CDN/Varnish cache purging if needed.
 
 ## Installation
 

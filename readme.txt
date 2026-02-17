@@ -21,19 +21,18 @@ In-Stock Notifier for WooCommerce adds a subscription form to out-of-stock produ
 4. Email settings (subject, heading, on/off) under WooCommerce > Settings > Emails.
 5. Batch sending via WP-Cron — handles thousands of subscribers without slowing down.
 6. Detects stock changes from admin, REST API, CLI, and ERP systems.
-7. Cache purging on stock change (WP Super Cache, W3TC, WP Rocket, LiteSpeed, WP Fastest Cache).
-8. Admin dashboard with stats and a manual "Send Notifications" button per product.
-9. Subscription list with search, filters, pagination, and bulk actions.
-10. One-click unsubscribe link in every email.
-11. Optional GDPR checkbox, honeypot spam protection, and rate limiting.
-12. Shortcode `[instock_notifier]` for custom placement.
-13. Activity logging with auto-trim.
+7. Admin dashboard with stats and a manual "Send Notifications" button per product.
+8. Subscription list with search, filters, pagination, and bulk actions.
+9. One-click unsubscribe link in every email.
+10. Optional GDPR checkbox, honeypot spam protection, and rate limiting.
+11. Shortcode `[instock_notifier]` for custom placement.
+12. Activity logging with auto-trim.
 
 === How It Works ===
 1. Customer visits an out-of-stock product and enters their email.
 2. When the product comes back in stock, the plugin picks it up via WooCommerce hooks.
 3. Emails are queued and sent in batches — each one includes the product image, a "Shop Now" button, and an unsubscribe link.
-4. The product page cache is purged so customers see the correct stock status.
+4. Custom hook available for CDN/Varnish cache purging if needed.
 
 == Installation ==
 1. Upload the `instock-notifier-for-woocommerce` folder to `/wp-content/plugins/` or install via the Plugins screen.
@@ -90,7 +89,7 @@ Every email has a one-click unsubscribe link. No login needed.
 The sender checks stock before each batch. If the product is out of stock again, remaining emails are skipped.
 
 = Does it handle cached pages? =
-Yes. When stock changes, the plugin purges the product page from popular cache plugins so customers see the right status.
+WooCommerce and popular caching plugins already purge product pages when stock changes. The plugin also fires an `instock_notifier_cache_purge_product` hook if you need custom purge logic (e.g. Varnish or a CDN).
 
 == Screenshots ==
 1. Subscription form on an out-of-stock product page.

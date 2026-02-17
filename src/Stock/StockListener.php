@@ -120,10 +120,18 @@ class StockListener {
 
 		$variation = ( $parent_id && $parent_id !== $product_id ) ? $product_id : 0;
 		NotificationQueue::enqueue( $check_id, $variation );
-		CacheBuster::purge_product( $product_id );
+
+		/**
+		 * Fires after a product comes back in stock, for custom cache purge logic (CDN, Varnish, etc.).
+		 *
+		 * @param int    $product_id Product ID.
+		 * @param string $url        Product permalink.
+		 */
+		do_action( 'instock_notifier_cache_purge_product', $product_id, get_permalink( $product_id ) );
 
 		if ( $parent_id && $parent_id !== $product_id ) {
-			CacheBuster::purge_product( $parent_id );
+			/** This action is documented above. */
+			do_action( 'instock_notifier_cache_purge_product', $parent_id, get_permalink( $parent_id ) );
 		}
 	}
 }
