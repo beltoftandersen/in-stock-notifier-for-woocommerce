@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-17T12:04:49+00:00\n"
+"POT-Creation-Date: 2026-02-17T12:25:34+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: instock-notifier-for-woocommerce\n"
@@ -51,7 +51,7 @@ msgstr ""
 
 #: src/Admin/AdminPage.php:38
 #: src/Admin/AdminPage.php:39
-#: src/Admin/AdminPage.php:65
+#: src/Admin/AdminPage.php:64
 msgid "In-Stock Notifier"
 msgstr ""
 
@@ -61,10 +61,6 @@ msgstr ""
 
 #: src/Admin/AdminPage.php:54
 msgid "Subscriptions"
-msgstr ""
-
-#: src/Admin/AdminPage.php:56
-msgid "Logs"
 msgstr ""
 
 #: src/Admin/DashboardTab.php:33
@@ -438,24 +434,6 @@ msgstr ""
 #: src/Frontend/Shortcode.php:109
 #: src/Plugin.php:161
 msgid "An error occurred. Please try again."
-msgstr ""
-
-#: src/Logging/LogViewer.php:51
-msgid "Logging is currently disabled in settings."
-msgstr ""
-
-#: src/Logging/LogViewer.php:58
-msgid "Logs are stored using the WooCommerce logger."
-msgstr ""
-
-#: src/Logging/LogViewer.php:60
-msgid "View Logs in WooCommerce"
-msgstr ""
-
-#. translators: %s: log source name
-#: src/Logging/LogViewer.php:65
-#, php-format
-msgid "Look for the source \"%s\" in WooCommerce > Status > Logs."
 msgstr ""
 
 #: src/Subscription/Validator.php:33

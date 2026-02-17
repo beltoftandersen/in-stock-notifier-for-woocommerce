@@ -53,7 +53,6 @@ class AdminPage {
 			'dashboard'     => __( 'Dashboard', 'instock-notifier-for-woocommerce' ),
 			'subscriptions' => __( 'Subscriptions', 'instock-notifier-for-woocommerce' ),
 			'settings'      => __( 'Settings', 'instock-notifier-for-woocommerce' ),
-			'logs'          => __( 'Logs', 'instock-notifier-for-woocommerce' ),
 		);
 
 		$current_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'dashboard'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -88,9 +87,6 @@ class AdminPage {
 				break;
 			case 'settings':
 				SettingsTab::render();
-				break;
-			case 'logs':
-				LogsTab::render();
 				break;
 			default:
 				DashboardTab::render();
