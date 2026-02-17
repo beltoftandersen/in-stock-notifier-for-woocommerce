@@ -1,0 +1,48 @@
+/**
+ * In-Stock Notifier admin styles.
+ *
+ * @package InStockNotifier
+ */
+
+.isn-stats-cards {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+	margin-bottom: 24px;
+}
+
+.isn-stat-card {
+	background: #fff;
+	border: 1px solid #ccd0d4;
+	border-left-width: 4px;
+	padding: 16px 20px;
+	min-width: 140px;
+	border-radius: 0 4px 4px 0;
+}
+
+.isn-stat-value {
+	font-size: 28px;
+	font-weight: 600;
+	line-height: 1.2;
+	color: #1d2327;
+}
+
+.isn-stat-label {
+	font-size: 13px;
+	color: #646970;
+	margin-top: 4px;
+}
+
+.isn-log-viewer {
+	margin-top: 12px;
+}
+
+.isn-log-content {
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+
+.isn-tab-content .widefat td,
+.isn-tab-content .widefat th {
+	vertical-align: middle;
+}

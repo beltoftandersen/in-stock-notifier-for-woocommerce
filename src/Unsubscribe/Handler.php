@@ -1,0 +1,114 @@
+<?php
+/**
+ * Handles unsubscribe requests.
+ *
+ * @package InStockNotifier
+ */
+
+namespace InStockNotifier\Unsubscribe;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+use InStockNotifier\Subscription\Repository;
+use InStockNotifier\Logging\LogViewer;
+
+/**
+ * Listens for unsubscribe requests and processes them.
+ *
+ * Uses a two-step flow: GET shows a confirmation page with a POST form,
+ * POST performs the actual unsubscribe. This prevents link prefetchers
+ * and email scanners from triggering unsubscribes.
+ */
+class Handler {
+
+	/**
+	 * Register the init hook.
+	 *
+	 * @return void
+	 */
+	public static function init() {
+		add_action( 'init', array( __CLASS__, 'listen' ) );
+	}
+
+	/**
+	 * Listen for unsubscribe action in query string.
+	 *
+	 * @return void
+	 */
+	public static function listen() {
+		if ( ! isset( $_GET['isn_action'] ) || 'unsubscribe' !== $_GET['isn_action'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return;
+		}
+
+		$token = isset( $_GET['token'] ) ? sanitize_text_field( wp_unslash( $_GET['token'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( empty( $token ) ) {
+			wp_die(
+				esc_html__( 'Invalid unsubscribe link.', 'instock-notifier-for-woocommerce' ),
+				esc_html__( 'Unsubscribe', 'instock-notifier-for-woocommerce' ),
+				array( 'response' => 400 )
+			);
+		}
+
+		$sub = Repository::get_by_token( $token );
+		if ( ! $sub ) {
+			wp_die(
+				esc_html__( 'Invalid unsubscribe link.', 'instock-notifier-for-woocommerce' ),
+				esc_html__( 'Unsubscribe', 'instock-notifier-for-woocommerce' ),
+				array( 'response' => 400 )
+			);
+		}
+
+		if ( 'active' !== $sub->status ) {
+			wp_die(
+				esc_html__( 'You have already been unsubscribed.', 'instock-notifier-for-woocommerce' ),
+				esc_html__( 'Unsubscribe', 'instock-notifier-for-woocommerce' ),
+				array( 'response' => 200 )
+			);
+		}
+
+		/* POST = perform the unsubscribe. */
+		if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' === $_SERVER['REQUEST_METHOD'] ) {
+			if ( ! isset( $_POST['isn_unsub_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['isn_unsub_nonce'] ) ), 'isn_unsubscribe_' . $token ) ) {
+				wp_die(
+					esc_html__( 'Security check failed. Please try the link again.', 'instock-notifier-for-woocommerce' ),
+					esc_html__( 'Unsubscribe', 'instock-notifier-for-woocommerce' ),
+					array( 'response' => 403 )
+				);
+			}
+
+			Repository::unsubscribe_by_token( $token );
+			LogViewer::log( 'UNSUBSCRIBE email=' . $sub->email . ' product=' . $sub->product_id );
+
+			wp_die(
+				esc_html__( 'You have been successfully unsubscribed. You will no longer receive back-in-stock notifications for this product.', 'instock-notifier-for-woocommerce' ),
+				esc_html__( 'Unsubscribed', 'instock-notifier-for-woocommerce' ),
+				array( 'response' => 200 )
+			);
+		}
+
+		/* GET = show confirmation page with POST form. */
+		$action_url = esc_url( add_query_arg(
+			array(
+				'isn_action' => 'unsubscribe',
+				'token'      => $token,
+			),
+			home_url( '/' )
+		) );
+
+		$html  = '<p>' . esc_html__( 'Click the button below to confirm you want to unsubscribe from back-in-stock notifications for this product.', 'instock-notifier-for-woocommerce' ) . '</p>';
+		$html .= '<form method="post" action="' . $action_url . '">';
+		$html .= '<input type="hidden" name="isn_unsub_nonce" value="' . esc_attr( wp_create_nonce( 'isn_unsubscribe_' . $token ) ) . '" />';
+		$html .= '<p><button type="submit" style="padding:10px 24px;background:#0073aa;color:#fff;border:none;border-radius:3px;cursor:pointer;font-size:14px;">';
+		$html .= esc_html__( 'Confirm Unsubscribe', 'instock-notifier-for-woocommerce' );
+		$html .= '</button></p>';
+		$html .= '</form>';
+
+		wp_die(
+			$html, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- All parts escaped above.
+			esc_html__( 'Unsubscribe', 'instock-notifier-for-woocommerce' ),
+			array( 'response' => 200 )
+		);
+	}
+}

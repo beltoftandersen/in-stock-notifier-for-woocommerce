@@ -1,0 +1,179 @@
+/**
+ * In-Stock Notifier frontend styles.
+ *
+ * Option D: Minimal — no box, just content.
+ *
+ * Uses WordPress block theme (--wp--preset--*) and WooCommerce (--wc-*)
+ * CSS custom properties for consistent theming.
+ *
+ * @package InStockNotifier
+ */
+
+/* ── Container ──────────────────────────────────────────────────── */
+
+.isn-notify-form {
+	margin: 1.5em 0 0;
+	padding: 0;
+	color: var(--wp--preset--color--contrast, #111);
+	font-family: inherit;
+}
+
+.isn-notify-form form.isn-form {
+	margin: 0;
+	padding: 0;
+}
+
+/* ── Screen reader text ─────────────────────────────────────────── */
+
+.isn-notify-form .screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	position: absolute;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	word-wrap: normal;
+}
+
+/* ── Heading ────────────────────────────────────────────────────── */
+
+.isn-form-heading {
+	margin: 0 0 0.6em;
+	font-size: var(--wp--preset--font-size--small, 0.875rem);
+	font-weight: 400;
+	color: var(--wp--preset--color--accent-4, #686868);
+}
+
+/* ── Inline row (email + button joined) ─────────────────────────── */
+
+.isn-fields-row {
+	display: inline-flex;
+	align-items: stretch;
+	width: 100%;
+	max-width: 360px;
+}
+
+/* ── Field rows ─────────────────────────────────────────────────── */
+
+.isn-field {
+	margin-bottom: 0.8em;
+}
+
+.isn-field:last-child {
+	margin-bottom: 0;
+}
+
+/* ── Email input ────────────────────────────────────────────────── */
+
+.isn-email-input {
+	flex: 1;
+	min-width: 0;
+	padding: 0.6em 0.75em;
+	background-color: var(--wc-form-color-background, #fff);
+	border: var(--wc-form-border-width, 1px) solid var(--wc-form-border-color, rgba(32, 7, 7, 0.25));
+	border-radius: var(--wc-form-border-radius, 4px) 0 0 var(--wc-form-border-radius, 4px);
+	border-right: none;
+	color: var(--wc-form-color-text, inherit);
+	font-size: var(--wp--preset--font-size--small, 0.875rem);
+	font-family: inherit;
+	box-sizing: border-box;
+}
+
+.isn-email-input:focus {
+	outline: none;
+	border-color: var(--wp--preset--color--contrast, #111);
+	box-shadow: 0 0 0 1px var(--wp--preset--color--contrast, #111);
+	z-index: 1;
+	position: relative;
+}
+
+/* ── Quantity input ─────────────────────────────────────────────── */
+
+.isn-field-quantity label {
+	display: block;
+	margin-bottom: 0.25em;
+	font-size: var(--wp--preset--font-size--small, 0.875rem);
+	color: var(--wp--preset--color--accent-4, #686868);
+}
+
+.isn-quantity-input {
+	width: 70px;
+	padding: 0.5em;
+	background-color: var(--wc-form-color-background, #fff);
+	border: var(--wc-form-border-width, 1px) solid var(--wc-form-border-color, rgba(32, 7, 7, 0.25));
+	border-radius: var(--wc-form-border-radius, 4px);
+	color: var(--wc-form-color-text, inherit);
+	font-size: var(--wp--preset--font-size--small, 0.875rem);
+	font-family: inherit;
+}
+
+.isn-quantity-input:focus {
+	outline: none;
+	border-color: var(--wp--preset--color--contrast, #111);
+	box-shadow: 0 0 0 1px var(--wp--preset--color--contrast, #111);
+}
+
+/* ── GDPR checkbox ──────────────────────────────────────────────── */
+
+.isn-field-gdpr label {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.5em;
+	font-size: var(--wp--preset--font-size--small, 0.875rem);
+	color: var(--wp--preset--color--accent-4, #686868);
+	line-height: 1.4;
+}
+
+.isn-field-gdpr input[type="checkbox"] {
+	margin-top: 0.2em;
+	flex-shrink: 0;
+}
+
+/* ── Submit button ──────────────────────────────────────────────── */
+
+.isn-notify-form .isn-submit {
+	display: inline-block;
+	margin: 0;
+	padding: 0.6em 1.25em;
+	background-color: var(--wp--preset--color--contrast, #111);
+	color: var(--wp--preset--color--base, #fff);
+	border: none;
+	border-radius: 0 var(--wc-form-border-radius, 4px) var(--wc-form-border-radius, 4px) 0;
+	cursor: pointer;
+	font-size: var(--wp--preset--font-size--small, 0.875rem);
+	font-family: inherit;
+	font-weight: 500;
+	line-height: 1.2;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: opacity 0.15s ease;
+}
+
+.isn-notify-form .isn-submit:hover {
+	opacity: 0.85;
+}
+
+.isn-notify-form .isn-submit:focus {
+	outline: 2px solid var(--wp--preset--color--accent-4, #686868);
+	outline-offset: 2px;
+}
+
+.isn-notify-form .isn-submit:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* ── Status messages ────────────────────────────────────────────── */
+
+.isn-form-message {
+	margin-top: 0.75em;
+	font-size: var(--wp--preset--font-size--small, 0.875rem);
+	line-height: 1.4;
+}
+
+.isn-form-message.isn-success {
+	color: var(--wc-green, #4ab866);
+}
+
+.isn-form-message.isn-error {
+	color: var(--wc-red, #a00);
+}

@@ -1,0 +1,129 @@
+<?php
+/**
+ * Listens for WooCommerce stock changes.
+ *
+ * @package InStockNotifier
+ */
+
+namespace InStockNotifier\Stock;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+use InStockNotifier\Subscription\Repository;
+use InStockNotifier\Logging\LogViewer;
+
+/**
+ * Hooks into WooCommerce stock events and triggers notification queue.
+ */
+class StockListener {
+
+	/**
+	 * Register stock change hooks.
+	 *
+	 * @return void
+	 */
+	public static function init() {
+		/* Simple product stock status change. */
+		add_action( 'woocommerce_product_set_stock_status', array( __CLASS__, 'on_stock_status_change' ), 10, 3 );
+
+		/* Variation stock status change. */
+		add_action( 'woocommerce_variation_set_stock_status', array( __CLASS__, 'on_stock_status_change' ), 10, 3 );
+
+		/* Safety net: catches any product save where stock_status prop changed. */
+		add_action( 'woocommerce_product_object_updated_props', array( __CLASS__, 'on_product_props_updated' ), 10, 2 );
+	}
+
+	/**
+	 * Handle stock status change.
+	 *
+	 * @param int        $product_id Product ID.
+	 * @param string     $status     New stock status.
+	 * @param WC_Product $product    Product object.
+	 * @return void
+	 */
+	public static function on_stock_status_change( $product_id, $status, $product = null ) {
+		/**
+		 * Filter the stock statuses that trigger notifications.
+		 *
+		 * @param array $statuses Stock status values.
+		 */
+		$trigger_statuses = apply_filters( 'instock_notifier_stock_status_triggers', array( 'instock', 'onbackorder' ) );
+
+		if ( ! in_array( $status, $trigger_statuses, true ) ) {
+			return;
+		}
+
+		self::maybe_queue_product( $product_id );
+	}
+
+	/**
+	 * Handle product property updates (belt-and-suspenders for ERP/API updates).
+	 *
+	 * @param \WC_Product $product       Product object.
+	 * @param array       $updated_props Array of changed property names.
+	 * @return void
+	 */
+	public static function on_product_props_updated( $product, $updated_props ) {
+		if ( ! is_array( $updated_props ) || ! in_array( 'stock_status', $updated_props, true ) ) {
+			return;
+		}
+
+		$status = $product->get_stock_status();
+
+		/** This filter is documented in StockListener::on_stock_status_change. */
+		$trigger_statuses = apply_filters( 'instock_notifier_stock_status_triggers', array( 'instock', 'onbackorder' ) );
+
+		if ( ! in_array( $status, $trigger_statuses, true ) ) {
+			return;
+		}
+
+		$product_id = $product->get_id();
+		self::maybe_queue_product( $product_id );
+	}
+
+	/**
+	 * Check for subscriptions and queue notifications if any exist.
+	 *
+	 * @param int $product_id Product or variation ID.
+	 * @return void
+	 */
+	private static function maybe_queue_product( $product_id ) {
+		$product_id = absint( $product_id );
+		if ( ! $product_id ) {
+			return;
+		}
+
+		/* Check the parent product ID too for variations. */
+		$check_id = $product_id;
+		$product  = wc_get_product( $product_id );
+		if ( ! $product ) {
+			return;
+		}
+
+		$parent_id = $product->get_parent_id();
+
+		$has_subs = Repository::has_active_subscriptions( $product_id );
+		if ( ! $has_subs && $parent_id ) {
+			$has_subs = Repository::has_active_subscriptions( $parent_id );
+			if ( $has_subs ) {
+				$check_id = $parent_id;
+			}
+		}
+
+		if ( ! $has_subs ) {
+			return;
+		}
+
+		LogViewer::log( 'STOCK_CHANGE product=' . $product_id . ' status=instock queuing_notifications' );
+
+		$variation = ( $parent_id && $parent_id !== $product_id ) ? $product_id : 0;
+		NotificationQueue::enqueue( $check_id, $variation );
+		CacheBuster::purge_product( $product_id );
+
+		if ( $parent_id && $parent_id !== $product_id ) {
+			CacheBuster::purge_product( $parent_id );
+		}
+	}
+}

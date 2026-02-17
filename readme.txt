@@ -1,0 +1,122 @@
+=== In-Stock Notifier for WooCommerce ===
+Contributors: christian198521, Chimkins IT
+Tags: woocommerce, back in stock, restock, notification, waitlist
+Requires at least: 5.8
+Tested up to: 6.9
+Requires PHP: 7.4
+Stable tag: 1.0.7
+License: GPLv2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+Let customers subscribe to out-of-stock product notifications and automatically email them when items are back in stock.
+
+== Description ==
+
+In-Stock Notifier for WooCommerce adds a subscription form to out-of-stock products so customers can leave their email and get notified when the product is restocked. Emails are sent using WooCommerce's email template so they match your store's design.
+
+=== Key Features ===
+1. Subscription form on out-of-stock products — works with simple, variable, grouped, and external products.
+2. Variable products: form shows/hides automatically when selecting out-of-stock variations.
+3. Notifications sent via WooCommerce email templates — same look as your order emails.
+4. Email settings (subject, heading, on/off) under WooCommerce > Settings > Emails.
+5. Batch sending via WP-Cron — handles thousands of subscribers without slowing down.
+6. Detects stock changes from admin, REST API, CLI, and ERP systems.
+7. Cache purging on stock change (WP Super Cache, W3TC, WP Rocket, LiteSpeed, WP Fastest Cache).
+8. Admin dashboard with stats and a manual "Send Notifications" button per product.
+9. Subscription list with search, filters, pagination, and bulk actions.
+10. One-click unsubscribe link in every email.
+11. Optional GDPR checkbox, honeypot spam protection, and rate limiting.
+12. Shortcode `[instock_notifier]` for custom placement.
+13. Activity logging with auto-trim.
+
+=== How It Works ===
+1. Customer visits an out-of-stock product and enters their email.
+2. When the product comes back in stock, the plugin picks it up via WooCommerce hooks.
+3. Emails are queued and sent in batches — each one includes the product image, a "Shop Now" button, and an unsubscribe link.
+4. The product page cache is purged so customers see the correct stock status.
+
+== Installation ==
+1. Upload the `instock-notifier-for-woocommerce` folder to `/wp-content/plugins/` or install via the Plugins screen.
+2. Activate the plugin.
+3. Go to **WooCommerce > In-Stock Notifier** to configure.
+4. Optionally adjust the email under **WooCommerce > Settings > Emails > Back In Stock**.
+
+== Configuration ==
+
+=== Form Placement ===
+- The form shows automatically on out-of-stock product pages.
+- To place it yourself, disable auto-placement in settings and use `[instock_notifier]` or `[instock_notifier product_id="123"]`.
+
+=== Email Template ===
+- Uses WooCommerce's email system — same header, footer, and colours as your other store emails.
+- Customise subject and heading under WooCommerce > Settings > Emails > Back In Stock.
+- Override the template by copying `templates/emails/back-in-stock.php` to your theme's `woocommerce/emails/` folder.
+
+=== Batch Sending ===
+- Configurable batch size (default 50) and throttle between emails.
+- If there are more subscribers than one batch, the next batch runs 60 seconds later.
+- For low-traffic sites, set up a real system cron for reliable scheduling.
+
+=== Hooks & Filters ===
+Developers can extend the plugin:
+
+* `instock_notifier_form_html` / `instock_notifier_form_fields` / `instock_notifier_form_heading_text`
+* `instock_notifier_email_body` / `instock_notifier_email_subject` / `instock_notifier_email_heading`
+* `instock_notifier_before_subscription` / `instock_notifier_after_subscription`
+* `instock_notifier_before_notification_sent` / `instock_notifier_after_notification_sent`
+* `instock_notifier_validate_subscription` / `instock_notifier_placeholders`
+
+== Frequently Asked Questions ==
+
+= Does it work with variable products? =
+Yes. The form appears when a customer selects an out-of-stock variation. The specific variation is tracked so the notification only sends when that variation is back.
+
+= Does it pick up stock changes from the REST API or ERPs? =
+Yes. It hooks into WooCommerce's core stock events which fire regardless of how stock is updated.
+
+= Which email providers does it work with? =
+Any. It sends through WooCommerce's email system which uses `wp_mail()` — works with SMTP plugins, Amazon SES, SendGrid, etc.
+
+= Do emails match my store's design? =
+Yes. They use WooCommerce's email template — same header, footer, and styling as order emails.
+
+= Can I send notifications manually? =
+Yes. The Dashboard tab has a "Send Notifications" button next to each product.
+
+= How do customers unsubscribe? =
+Every email has a one-click unsubscribe link. No login needed.
+
+= What if the product sells out again before all emails go out? =
+The sender checks stock before each batch. If the product is out of stock again, remaining emails are skipped.
+
+= Does it handle cached pages? =
+Yes. When stock changes, the plugin purges the product page from popular cache plugins so customers see the right status.
+
+== Screenshots ==
+1. Subscription form on an out-of-stock product page.
+2. Admin dashboard with stats and top products.
+3. Subscription management with filters and bulk actions.
+4. Settings page.
+5. Back In Stock email in WooCommerce email settings.
+
+== Changelog ==
+
+= 1.0.7 =
+* Notifications now use WooCommerce email templates.
+* Back In Stock email configurable under WooCommerce > Settings > Emails.
+* Email preview in WooCommerce email settings.
+* Manual notification trigger from the Dashboard tab.
+* Variation stock status shown correctly in admin dashboard.
+* Improved form design (joined email input and button).
+* Pre-fill email for logged-in users.
+
+= 1.0.0 =
+* Initial release.
+
+== Upgrade Notice ==
+
+= 1.0.7 =
+Notifications now use WooCommerce email templates. New manual send button and admin improvements.
+
+= 1.0.0 =
+Initial release.

@@ -1,0 +1,439 @@
+# Copyright (C) 2026 Chimkins IT
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: In-Stock Notifier for WooCommerce 1.0.7\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/instock-notifier-for-woocommerce\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-02-16T20:58:58+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: instock-notifier-for-woocommerce\n"
+
+#. Plugin Name of the plugin
+#: instock-notifier.php
+msgid "In-Stock Notifier for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: instock-notifier.php
+msgid "https://developer.wordpress.org/plugins/instock-notifier-for-woocommerce/"
+msgstr ""
+
+#. Description of the plugin
+#: instock-notifier.php
+msgid "Let customers subscribe to out-of-stock product notifications and automatically email them when items are back in stock."
+msgstr ""
+
+#. Author of the plugin
+#: instock-notifier.php
+msgid "Starter Starter"
+msgstr ""
+
+#. Author URI of the plugin
+#: instock-notifier.php
+msgid "https://developer.wordpress.org/"
+msgstr ""
+
+#. translators: %s: WooCommerce plugin name
+#: instock-notifier.php:55
+msgid "In-Stock Notifier requires WooCommerce to be installed and active."
+msgstr ""
+
+#: instock-notifier.php:87
+#: src/Admin/AdminPage.php:55
+msgid "Settings"
+msgstr ""
+
+#: src/Admin/AdminPage.php:38
+#: src/Admin/AdminPage.php:39
+#: src/Admin/AdminPage.php:65
+msgid "In-Stock Notifier"
+msgstr ""
+
+#: src/Admin/AdminPage.php:53
+msgid "Dashboard"
+msgstr ""
+
+#: src/Admin/AdminPage.php:54
+msgid "Subscriptions"
+msgstr ""
+
+#: src/Admin/AdminPage.php:56
+msgid "Logs"
+msgstr ""
+
+#: src/Admin/DashboardTab.php:31
+msgid "Active"
+msgstr ""
+
+#: src/Admin/DashboardTab.php:32
+#: src/Admin/SubscriptionsTab.php:118
+msgid "Notified"
+msgstr ""
+
+#: src/Admin/DashboardTab.php:33
+#: src/Unsubscribe/Handler.php:86
+msgid "Unsubscribed"
+msgstr ""
+
+#: src/Admin/DashboardTab.php:34
+msgid "Total"
+msgstr ""
+
+#: src/Admin/DashboardTab.php:37
+msgid "Top Products by Active Subscriptions"
+msgstr ""
+
+#: src/Admin/DashboardTab.php:41
+msgid "No active subscriptions yet."
+msgstr ""
+
+#: src/Admin/DashboardTab.php:55
+#: src/Admin/SubscriptionsTab.php:115
+msgid "Product"
+msgstr ""
+
+#: src/Admin/DashboardTab.php:56
+msgid "Variation"
+msgstr ""
+
+#: src/Admin/DashboardTab.php:57
+msgid "Subscribers"
+msgstr ""
+
+#: src/Admin/DashboardTab.php:58
+msgid "Stock Status"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:30
+msgid "Settings saved."
+msgstr ""
+
+#: src/Admin/SettingsTab.php:37
+msgid "General"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:40
+msgid "Enable Notifications"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:41
+msgid "Auto-place Form on Product Pages"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:41
+msgid "Uncheck to use the [instock_notifier] shortcode only."
+msgstr ""
+
+#: src/Admin/SettingsTab.php:42
+msgid "Show Quantity Field"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:43
+msgid "Button Text"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:48
+msgid "GDPR / Consent"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:51
+msgid "Require GDPR Consent"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:52
+msgid "Consent Text"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:57
+msgid "Messages"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:60
+msgid "Success Message"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:61
+msgid "Already Subscribed Message"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:66
+msgid "Email Sender"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:69
+msgid "From Name"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:69
+#: src/Admin/SettingsTab.php:70
+msgid "Leave empty to use WordPress default."
+msgstr ""
+
+#: src/Admin/SettingsTab.php:70
+msgid "From Email"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:75
+msgid "Performance"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:78
+msgid "Batch Size"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:78
+msgid "Emails per cron run (1-500)."
+msgstr ""
+
+#: src/Admin/SettingsTab.php:79
+msgid "Throttle (seconds)"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:79
+msgid "Delay between each email (0 = no delay)."
+msgstr ""
+
+#: src/Admin/SettingsTab.php:80
+msgid "Rate Limit per IP"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:80
+msgid "Max subscriptions per IP per hour."
+msgstr ""
+
+#: src/Admin/SettingsTab.php:85
+msgid "Advanced"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:88
+msgid "Cleanup After (days)"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:88
+msgid "Delete notified subscriptions older than this."
+msgstr ""
+
+#: src/Admin/SettingsTab.php:89
+msgid "Disable Logging"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:90
+msgid "Remove Data on Uninstall"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:90
+msgid "Delete all plugin data when the plugin is deleted."
+msgstr ""
+
+#: src/Admin/SettingsTab.php:91
+msgid "Custom CSS"
+msgstr ""
+
+#: src/Admin/SettingsTab.php:91
+msgid "Additional CSS for the notification form."
+msgstr ""
+
+#: src/Admin/SubscriptionsTab.php:39
+msgid "Search Email"
+msgstr ""
+
+#. translators: %d: number of deleted subscriptions
+#: src/Admin/SubscriptionsTab.php:66
+#, php-format
+msgid "%d subscription deleted."
+msgid_plural "%d subscriptions deleted."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of updated subscriptions
+#: src/Admin/SubscriptionsTab.php:74
+#, php-format
+msgid "%d subscription marked as notified."
+msgid_plural "%d subscriptions marked as notified."
+msgstr[0] ""
+msgstr[1] ""
+
+#: src/Admin/SubscriptionsTab.php:114
+msgid "Email"
+msgstr ""
+
+#: src/Admin/SubscriptionsTab.php:116
+msgid "Status"
+msgstr ""
+
+#: src/Admin/SubscriptionsTab.php:117
+msgid "Subscribed"
+msgstr ""
+
+#: src/Admin/SubscriptionsTab.php:205
+msgid "All statuses"
+msgstr ""
+
+#: src/Admin/SubscriptionsTab.php:212
+msgid "Filter"
+msgstr ""
+
+#: src/Admin/SubscriptionsTab.php:216
+msgid "Bulk Actions"
+msgstr ""
+
+#: src/Admin/SubscriptionsTab.php:217
+msgid "Delete"
+msgstr ""
+
+#: src/Admin/SubscriptionsTab.php:218
+msgid "Mark as Notified"
+msgstr ""
+
+#: src/Admin/SubscriptionsTab.php:221
+msgid "Apply"
+msgstr ""
+
+#: src/Admin/SubscriptionsTab.php:256
+msgid "Variation:"
+msgstr ""
+
+#: src/Admin/SubscriptionsTab.php:314
+msgid "No subscriptions found."
+msgstr ""
+
+#. translators: %s: product name
+#: src/Email/TemplateRenderer.php:27
+#, php-format
+msgid "%s is back in stock!"
+msgstr ""
+
+#: src/Email/TemplateRenderer.php:70
+msgid "Available"
+msgstr ""
+
+#. translators: 1: product name, 2: site URL, 3: site name
+#: src/Email/TemplateRenderer.php:84
+#, php-format
+msgid "Good news! <strong>%1$s</strong> is back in stock at <a href=\"%2$s\">%3$s</a>."
+msgstr ""
+
+#: src/Email/TemplateRenderer.php:87
+msgid "Shop Now"
+msgstr ""
+
+#. translators: %s: stock quantity or "Available"
+#: src/Email/TemplateRenderer.php:91
+#, php-format
+msgid "Current stock: %s available."
+msgstr ""
+
+#. translators: 1: site name, 2: unsubscribe URL
+#: src/Email/TemplateRenderer.php:94
+#, php-format
+msgid "You received this email because you subscribed to a back-in-stock notification on %1$s. <a href=\"%2$s\">Unsubscribe</a>"
+msgstr ""
+
+#: src/Frontend/AjaxHandler.php:43
+msgid "Security check failed. Please refresh the page."
+msgstr ""
+
+#: src/Frontend/AjaxHandler.php:90
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#: src/Frontend/FormRenderer.php:105
+msgid "Get notified when back in stock"
+msgstr ""
+
+#: src/Frontend/FormRenderer.php:115
+msgid "Email address"
+msgstr ""
+
+#: src/Frontend/FormRenderer.php:116
+msgid "Your email address"
+msgstr ""
+
+#: src/Frontend/FormRenderer.php:122
+msgid "Desired quantity"
+msgstr ""
+
+#: src/Frontend/Shortcode.php:108
+#: src/Plugin.php:132
+msgid "An error occurred."
+msgstr ""
+
+#: src/Frontend/Shortcode.php:109
+#: src/Plugin.php:133
+msgid "An error occurred. Please try again."
+msgstr ""
+
+#: src/Logging/LogViewer.php:177
+msgid "Logs cleared."
+msgstr ""
+
+#: src/Logging/LogViewer.php:182
+msgid "Logging is currently disabled in settings."
+msgstr ""
+
+#: src/Logging/LogViewer.php:203
+msgid "Clear Logs"
+msgstr ""
+
+#: src/Logging/LogViewer.php:211
+msgid "No log entries."
+msgstr ""
+
+#: src/Subscription/Validator.php:33
+msgid "Spam detected."
+msgstr ""
+
+#: src/Subscription/Validator.php:39
+msgid "Please enter a valid email address."
+msgstr ""
+
+#: src/Subscription/Validator.php:45
+msgid "Invalid product."
+msgstr ""
+
+#: src/Subscription/Validator.php:51
+msgid "Please accept the consent checkbox."
+msgstr ""
+
+#: src/Subscription/Validator.php:58
+msgid "Too many requests. Please try again later."
+msgstr ""
+
+#: src/Unsubscribe/Handler.php:48
+#: src/Unsubscribe/Handler.php:57
+msgid "Invalid unsubscribe link."
+msgstr ""
+
+#: src/Unsubscribe/Handler.php:49
+#: src/Unsubscribe/Handler.php:58
+#: src/Unsubscribe/Handler.php:66
+#: src/Unsubscribe/Handler.php:76
+#: src/Unsubscribe/Handler.php:110
+msgid "Unsubscribe"
+msgstr ""
+
+#: src/Unsubscribe/Handler.php:65
+msgid "You have already been unsubscribed."
+msgstr ""
+
+#: src/Unsubscribe/Handler.php:75
+msgid "Security check failed. Please try the link again."
+msgstr ""
+
+#: src/Unsubscribe/Handler.php:85
+msgid "You have been successfully unsubscribed. You will no longer receive back-in-stock notifications for this product."
+msgstr ""
+
+#: src/Unsubscribe/Handler.php:100
+msgid "Click the button below to confirm you want to unsubscribe from back-in-stock notifications for this product."
+msgstr ""
+
+#: src/Unsubscribe/Handler.php:104
+msgid "Confirm Unsubscribe"
+msgstr ""
