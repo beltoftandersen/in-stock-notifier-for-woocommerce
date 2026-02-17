@@ -105,7 +105,6 @@ WooCommerce and popular caching plugins already purge product pages when stock c
 * "Enable Notifications" setting now fully stops queueing and sending when disabled.
 * Notification queue replaced with Action Scheduler (bundled with WooCommerce) for atomic, concurrent-safe scheduling.
 * Added composite index on ip_address + created_at for faster rate-limit queries at scale.
-* Added load_plugin_textdomain() for bundled translations on non-WordPress.org installs.
 * Removed legacy file-based logging and custom log viewer.
 
 = 1.0.7 =

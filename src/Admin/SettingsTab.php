@@ -133,29 +133,6 @@ class SettingsTab {
 	}
 
 	/**
-	 * Render an email input row.
-	 *
-	 * @param string               $key   Setting key.
-	 * @param string               $label Label text.
-	 * @param array<string, mixed> $opts  Current options.
-	 * @param string               $desc  Description text.
-	 * @return void
-	 */
-	private static function email_row( $key, $label, $opts, $desc = '' ) {
-		$name  = Options::OPTION . '[' . $key . ']';
-		$value = isset( $opts[ $key ] ) ? $opts[ $key ] : '';
-
-		echo '<tr><th scope="row"><label for="isn_' . esc_attr( $key ) . '">';
-		echo esc_html( $label );
-		echo '</label></th><td>';
-		echo '<input type="email" id="isn_' . esc_attr( $key ) . '" name="' . esc_attr( $name ) . '" value="' . esc_attr( $value ) . '" class="regular-text" />';
-		if ( $desc ) {
-			echo '<p class="description">' . esc_html( $desc ) . '</p>';
-		}
-		echo '</td></tr>';
-	}
-
-	/**
 	 * Render a number input row.
 	 *
 	 * @param string               $key   Setting key.

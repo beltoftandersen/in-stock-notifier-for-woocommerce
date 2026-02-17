@@ -27,6 +27,7 @@ $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}isn_subscriptions" );
 /* Delete options. */
 delete_option( 'isn_options' );
 delete_option( 'isn_db_version' );
+delete_option( 'isn_pending_queue' ); /* Legacy option from pre-1.0.8 queue. */
 
 /* Remove cron events. */
 wp_clear_scheduled_hook( 'isn_daily_cleanup' );

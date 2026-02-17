@@ -96,7 +96,7 @@ Developers can extend the plugin:
 - "Enable Notifications" setting now fully stops queueing and sending when disabled.
 - Notification queue uses Action Scheduler (bundled with WooCommerce) instead of options.
 - Added database index for faster rate-limit queries at scale.
-- Added load_plugin_textdomain() for bundled translations.
+- Removed legacy file-based logging and custom log viewer.
 
 ### 1.0.7
 
