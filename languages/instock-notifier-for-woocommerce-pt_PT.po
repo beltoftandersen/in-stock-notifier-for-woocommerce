@@ -161,39 +161,23 @@ msgstr "Tipo de email"
 msgid "Choose which format of email to send."
 msgstr "Escolha o formato de email a enviar."
 
-#. translators: %s: product name
-#: src/Email/TemplateRenderer.php:27
-#: src/Email/TemplateRenderer.php:50
-#, php-format
-msgid "%s is back in stock!"
-msgstr "%s está de volta ao stock!"
-
-#: src/Email/TemplateRenderer.php:88
+#. Frontend — Email templates
 #: templates/emails/back-in-stock.php:33
 #: templates/emails/plain/back-in-stock.php:29
 msgid "Available"
 msgstr "Disponível"
 
 #. translators: 1: product name, 2: site URL, 3: site name
-#: src/Email/TemplateRenderer.php:102
 #: templates/emails/back-in-stock.php:51
 #, php-format
 msgid "Good news! <strong>%1$s</strong> is back in stock at <a href=\"%2$s\">%3$s</a>."
 msgstr "Boas notícias! <strong>%1$s</strong> está de volta ao stock em <a href=\"%2$s\">%3$s</a>."
 
-#: src/Email/TemplateRenderer.php:105
 #: templates/emails/back-in-stock.php:58
 msgid "Shop Now"
 msgstr "Comprar Agora"
 
-#. translators: %s: stock quantity or "Available"
-#: src/Email/TemplateRenderer.php:109
-#, php-format
-msgid "Current stock: %s available."
-msgstr "Stock atual: %s disponível."
-
 #. translators: 1: site name, 2: unsubscribe URL
-#: src/Email/TemplateRenderer.php:112
 #: templates/emails/back-in-stock.php:72
 #, php-format
 msgid "You received this email because you subscribed to a back-in-stock notification on %1$s. <a href=\"%2$s\">Unsubscribe</a>"

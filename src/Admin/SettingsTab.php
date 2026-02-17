@@ -76,7 +76,7 @@ class SettingsTab {
 		echo '<h2>' . esc_html__( 'Advanced', 'instock-notifier-for-woocommerce' ) . '</h2>';
 		echo '<table class="form-table"><tbody>';
 
-		self::number_row( 'cleanup_days', __( 'Cleanup After (days)', 'instock-notifier-for-woocommerce' ), $opts, __( 'Delete notified subscriptions older than this.', 'instock-notifier-for-woocommerce' ) );
+		self::number_row( 'cleanup_days', __( 'Cleanup After (days)', 'instock-notifier-for-woocommerce' ), $opts, __( 'Delete notified subscriptions older than this. 0 = never delete.', 'instock-notifier-for-woocommerce' ) );
 		self::checkbox_row( 'disable_logging', __( 'Disable Logging', 'instock-notifier-for-woocommerce' ), $opts );
 		self::checkbox_row( 'cleanup_on_uninstall', __( 'Remove Data on Uninstall', 'instock-notifier-for-woocommerce' ), $opts, __( 'Delete all plugin data when the plugin is deleted.', 'instock-notifier-for-woocommerce' ) );
 		self::textarea_row( 'custom_css', __( 'Custom CSS', 'instock-notifier-for-woocommerce' ), $opts, __( 'Additional CSS for the notification form.', 'instock-notifier-for-woocommerce' ) );

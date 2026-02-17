@@ -69,11 +69,9 @@ class DashboardTab {
 		}
 		$variation_map = array();
 		if ( ! empty( $variation_ids ) ) {
-			foreach ( $variation_ids as $vid ) {
-				$var_product = wc_get_product( $vid );
-				if ( $var_product ) {
-					$variation_map[ $vid ] = $var_product;
-				}
+			$variations_list = wc_get_products( array( 'include' => $variation_ids, 'type' => 'variation', 'limit' => -1 ) );
+			foreach ( $variations_list as $isn_variation ) {
+				$variation_map[ $isn_variation->get_id() ] = $isn_variation;
 			}
 		}
 

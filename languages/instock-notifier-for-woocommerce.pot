@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-17T13:50:24+00:00\n"
+"POT-Creation-Date: 2026-02-17T14:01:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: instock-notifier-for-woocommerce\n"
@@ -93,49 +93,49 @@ msgstr ""
 msgid "No active subscriptions yet."
 msgstr ""
 
-#: src/Admin/DashboardTab.php:82
+#: src/Admin/DashboardTab.php:80
 #: src/Admin/SubscriptionsTab.php:119
 msgid "Product"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:83
+#: src/Admin/DashboardTab.php:81
 msgid "Variation"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:84
+#: src/Admin/DashboardTab.php:82
 msgid "Subscribers"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:85
+#: src/Admin/DashboardTab.php:83
 msgid "Stock Status"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:86
+#: src/Admin/DashboardTab.php:84
 msgid "Actions"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:141
+#: src/Admin/DashboardTab.php:139
 msgid "Send notifications to all active subscribers for this product?"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:142
+#: src/Admin/DashboardTab.php:140
 msgid "Send Notifications"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:164
+#: src/Admin/DashboardTab.php:162
 #: src/Admin/SubscriptionsTab.php:59
 msgid "You do not have permission to do this."
 msgstr ""
 
-#: src/Admin/DashboardTab.php:213
+#: src/Admin/DashboardTab.php:211
 msgid "In stock"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:214
+#: src/Admin/DashboardTab.php:212
 msgid "Out of stock"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:215
+#: src/Admin/DashboardTab.php:213
 msgid "On backorder"
 msgstr ""
 
@@ -228,7 +228,7 @@ msgid "Cleanup After (days)"
 msgstr ""
 
 #: src/Admin/SettingsTab.php:79
-msgid "Delete notified subscriptions older than this."
+msgid "Delete notified subscriptions older than this. 0 = never delete."
 msgstr ""
 
 #: src/Admin/SettingsTab.php:80
@@ -364,44 +364,6 @@ msgstr ""
 msgid "Choose which format of email to send."
 msgstr ""
 
-#. translators: %s: product name
-#: src/Email/TemplateRenderer.php:27
-#: src/Email/TemplateRenderer.php:50
-#, php-format
-msgid "%s is back in stock!"
-msgstr ""
-
-#: src/Email/TemplateRenderer.php:88
-#: templates/emails/back-in-stock.php:33
-#: templates/emails/plain/back-in-stock.php:29
-msgid "Available"
-msgstr ""
-
-#. translators: 1: product name, 2: site URL, 3: site name
-#: src/Email/TemplateRenderer.php:102
-#: templates/emails/back-in-stock.php:51
-#, php-format
-msgid "Good news! <strong>%1$s</strong> is back in stock at <a href=\"%2$s\">%3$s</a>."
-msgstr ""
-
-#: src/Email/TemplateRenderer.php:105
-#: templates/emails/back-in-stock.php:58
-msgid "Shop Now"
-msgstr ""
-
-#. translators: %s: stock quantity or "Available"
-#: src/Email/TemplateRenderer.php:109
-#, php-format
-msgid "Current stock: %s available."
-msgstr ""
-
-#. translators: 1: site name, 2: unsubscribe URL
-#: src/Email/TemplateRenderer.php:112
-#: templates/emails/back-in-stock.php:72
-#, php-format
-msgid "You received this email because you subscribed to a back-in-stock notification on %1$s. <a href=\"%2$s\">Unsubscribe</a>"
-msgstr ""
-
 #: src/Frontend/AjaxHandler.php:43
 msgid "Security check failed. Please refresh the page."
 msgstr ""
@@ -489,11 +451,32 @@ msgstr ""
 msgid "Confirm Unsubscribe"
 msgstr ""
 
+#: templates/emails/back-in-stock.php:33
+#: templates/emails/plain/back-in-stock.php:29
+msgid "Available"
+msgstr ""
+
+#. translators: 1: product name, 2: site URL, 3: site name
+#: templates/emails/back-in-stock.php:51
+#, php-format
+msgid "Good news! <strong>%1$s</strong> is back in stock at <a href=\"%2$s\">%3$s</a>."
+msgstr ""
+
+#: templates/emails/back-in-stock.php:58
+msgid "Shop Now"
+msgstr ""
+
 #. translators: %s: stock quantity or "Available"
 #: templates/emails/back-in-stock.php:65
 #: templates/emails/plain/back-in-stock.php:38
 #, php-format
 msgid "Current stock: %s"
+msgstr ""
+
+#. translators: 1: site name, 2: unsubscribe URL
+#: templates/emails/back-in-stock.php:72
+#, php-format
+msgid "You received this email because you subscribed to a back-in-stock notification on %1$s. <a href=\"%2$s\">Unsubscribe</a>"
 msgstr ""
 
 #. translators: 1: product name, 2: site name

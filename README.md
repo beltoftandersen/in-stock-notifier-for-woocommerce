@@ -78,10 +78,11 @@ Override the template by copying `templates/emails/back-in-stock.php` to your th
 Developers can extend the plugin:
 
 - `instock_notifier_form_html` / `instock_notifier_form_fields` / `instock_notifier_form_heading_text`
-- `instock_notifier_email_body` / `instock_notifier_email_subject` / `instock_notifier_email_heading`
 - `instock_notifier_before_subscription` / `instock_notifier_after_subscription`
-- `instock_notifier_before_notification_sent` / `instock_notifier_after_notification_sent`
-- `instock_notifier_validate_subscription` / `instock_notifier_placeholders`
+- `instock_notifier_validate_subscription`
+- `instock_notifier_before_notification_sent` / `instock_notifier_after_notification_sent` / `instock_notifier_after_batch_sent`
+- `instock_notifier_stock_status_triggers` — customise which statuses trigger notifications (default: instock, onbackorder)
+- `instock_notifier_cache_purge_product` — fire custom cache purge logic (e.g. Varnish, CDN)
 
 ## Translations
 
