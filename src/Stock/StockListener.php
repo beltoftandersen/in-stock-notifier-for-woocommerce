@@ -11,6 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+use InStockNotifier\Support\Options;
 use InStockNotifier\Subscription\Repository;
 use InStockNotifier\Logging\LogViewer;
 
@@ -44,6 +45,10 @@ class StockListener {
 	 * @return void
 	 */
 	public static function on_stock_status_change( $product_id, $status, $product = null ) {
+		if ( Options::get( 'enabled' ) !== '1' ) {
+			return;
+		}
+
 		/**
 		 * Filter the stock statuses that trigger notifications.
 		 *
@@ -66,6 +71,10 @@ class StockListener {
 	 * @return void
 	 */
 	public static function on_product_props_updated( $product, $updated_props ) {
+		if ( Options::get( 'enabled' ) !== '1' ) {
+			return;
+		}
+
 		if ( ! is_array( $updated_props ) || ! in_array( 'stock_status', $updated_props, true ) ) {
 			return;
 		}

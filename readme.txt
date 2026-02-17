@@ -4,7 +4,7 @@ Tags: woocommerce, back in stock, restock, notification, waitlist
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,7 +19,7 @@ In-Stock Notifier for WooCommerce adds a subscription form to out-of-stock produ
 2. Variable products: form shows/hides automatically when selecting out-of-stock variations.
 3. Notifications sent via WooCommerce email templates — same look as your order emails.
 4. Email settings (subject, heading, on/off) under WooCommerce > Settings > Emails.
-5. Batch sending via WP-Cron — handles thousands of subscribers without slowing down.
+5. Batch sending via Action Scheduler — handles thousands of subscribers without slowing down.
 6. Detects stock changes from admin, REST API, CLI, and ERP systems.
 7. Admin dashboard with stats and a manual "Send Notifications" button per product.
 8. Subscription list with search, filters, pagination, and bulk actions.
@@ -100,6 +100,14 @@ WooCommerce and popular caching plugins already purge product pages when stock c
 
 == Changelog ==
 
+= 1.0.8 =
+* Logging now uses WooCommerce logger (WooCommerce > Status > Logs) — fixes log file exposure on Nginx/IIS.
+* "Enable Notifications" setting now fully stops queueing and sending when disabled.
+* Notification queue replaced with Action Scheduler (bundled with WooCommerce) for atomic, concurrent-safe scheduling.
+* Added composite index on ip_address + created_at for faster rate-limit queries at scale.
+* Added load_plugin_textdomain() for bundled translations on non-WordPress.org installs.
+* Removed legacy file-based logging and custom log viewer.
+
 = 1.0.7 =
 * Notifications now use WooCommerce email templates.
 * Back In Stock email configurable under WooCommerce > Settings > Emails.
@@ -113,6 +121,9 @@ WooCommerce and popular caching plugins already purge product pages when stock c
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.0.8 =
+Security and reliability improvements: logging moved to WooCommerce logger, notification queue now uses Action Scheduler, rate-limit index added.
 
 = 1.0.7 =
 Notifications now use WooCommerce email templates. New manual send button and admin improvements.

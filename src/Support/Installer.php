@@ -55,7 +55,8 @@ class Installer {
 			KEY email (email(100)),
 			KEY status (status),
 			KEY product_status (product_id, status),
-			UNIQUE KEY unique_sub (product_id, variation_id, email(100))
+			UNIQUE KEY unique_sub (product_id, variation_id, email(100)),
+			KEY ip_created (ip_address, created_at)
 		) {$charset};";
 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';

@@ -2,7 +2,7 @@
 
 Let customers subscribe to out-of-stock product notifications and automatically email them when items are back in stock.
 
-- Stable version: 1.0.7
+- Stable version: 1.0.8
 - Requires: WordPress 5.8+, PHP 7.4+, WooCommerce 6.0+
 - Author: Chimkins IT
 - Text domain: instock-notifier-for-woocommerce
@@ -19,14 +19,14 @@ Stock changes are detected regardless of source: admin UI, REST API, CLI, or ERP
 - Variable products: form shows/hides automatically per variation
 - Notifications use WooCommerce email templates
 - Email configurable under WooCommerce > Settings > Emails > Back In Stock
-- Batch sending via WP-Cron with configurable batch size and throttle
+- Batch sending via Action Scheduler with configurable batch size and throttle
 - Detects stock changes from admin, REST API, CLI, and ERP systems
 - Admin dashboard with stats and manual "Send Notifications" button
 - Subscription list with search, filters, pagination, and bulk actions
 - One-click unsubscribe link in every email
 - Optional GDPR checkbox, honeypot spam protection, and rate limiting
 - Shortcode `[instock_notifier]` for custom placement
-- Activity logging with auto-trim
+- Activity logging via WooCommerce logger (WooCommerce > Status > Logs)
 - Clean uninstall with opt-in data removal
 - PSR-4 codebase, no Composer dependency
 
@@ -69,9 +69,9 @@ Override the template by copying `templates/emails/back-in-stock.php` to your th
 
 ### Logging
 
-- View activity in the Logs tab: subscriptions, sends, errors.
-- Disable logging in settings for production.
-- Logs auto-trim at 2 MiB.
+- Logs are written via WooCommerce's built-in logger.
+- View logs under WooCommerce > Status > Logs (source: `instock-notifier`).
+- Disable logging in the plugin settings for production.
 
 ## Hooks & Filters
 
@@ -89,6 +89,14 @@ Developers can extend the plugin:
 - Translation template: `languages/instock-notifier-for-woocommerce.pot`
 
 ## Changelog
+
+### 1.0.8
+
+- Logging switched to WooCommerce logger — no more exposed log files on Nginx/IIS.
+- "Enable Notifications" setting now fully stops queueing and sending when disabled.
+- Notification queue uses Action Scheduler (bundled with WooCommerce) instead of options.
+- Added database index for faster rate-limit queries at scale.
+- Added load_plugin_textdomain() for bundled translations.
 
 ### 1.0.7
 

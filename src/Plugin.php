@@ -19,7 +19,7 @@ use InStockNotifier\Stock\StockListener;
 use InStockNotifier\Stock\NotificationSender;
 use InStockNotifier\Unsubscribe\Handler as UnsubscribeHandler;
 use InStockNotifier\Email\BackInStockEmail;
-use InStockNotifier\Logging\LogViewer;
+use InStockNotifier\Support\Installer;
 use InStockNotifier\Support\Options;
 
 /**
@@ -34,7 +34,7 @@ class Plugin {
 	 */
 	public static function init() {
 		Options::init();
-		LogViewer::init();
+		self::maybe_upgrade_db();
 
 		if ( is_admin() ) {
 			AdminPage::init();
@@ -52,6 +52,19 @@ class Plugin {
 
 		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_admin_assets' ) );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_frontend_assets' ) );
+	}
+
+	/**
+	 * Run database migrations if DB version is outdated.
+	 *
+	 * @return void
+	 */
+	private static function maybe_upgrade_db() {
+		$current = get_option( 'isn_db_version', '1.0.0' );
+		if ( version_compare( $current, ISN_DB_VERSION, '>=' ) ) {
+			return;
+		}
+		Installer::activate();
 	}
 
 	/**

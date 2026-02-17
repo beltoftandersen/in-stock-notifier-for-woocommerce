@@ -3,7 +3,7 @@
  * Plugin Name:       In-Stock Notifier for WooCommerce
  * Plugin URI:        https://developer.wordpress.org/plugins/instock-notifier-for-woocommerce/
  * Description:       Let customers subscribe to out-of-stock product notifications and automatically email them when items are back in stock.
- * Version:           1.0.7
+ * Version:           1.0.8
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            Chimkins IT
@@ -40,11 +40,11 @@ spl_autoload_register(
 );
 
 /* ── Constants ─────────────────────────────────────────────────── */
-define( 'ISN_VERSION', '1.0.7' );
+define( 'ISN_VERSION', '1.0.8' );
 define( 'ISN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ISN_URL', plugin_dir_url( __FILE__ ) );
 define( 'ISN_BASENAME', plugin_basename( __FILE__ ) );
-define( 'ISN_DB_VERSION', '1.0.0' );
+define( 'ISN_DB_VERSION', '1.1.0' );
 
 /* ── Activation / deactivation ─────────────────────────────────── */
 register_activation_hook(
@@ -61,8 +61,13 @@ register_activation_hook(
 register_deactivation_hook(
 	__FILE__,
 	function () {
-		wp_clear_scheduled_hook( 'isn_send_notifications' );
 		wp_clear_scheduled_hook( 'isn_daily_cleanup' );
+		/* Unschedule all Action Scheduler actions. */
+		if ( function_exists( 'as_unschedule_all_actions' ) ) {
+			as_unschedule_all_actions( 'isn_send_notification' );
+		}
+		/* Clean up legacy cron hook from pre-1.0.8. */
+		wp_clear_scheduled_hook( 'isn_send_notifications' );
 		delete_transient( 'isn_processing_lock' );
 	}
 );

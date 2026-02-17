@@ -27,13 +27,16 @@ $wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}isn_subscriptions" );
 /* Delete options. */
 delete_option( 'isn_options' );
 delete_option( 'isn_db_version' );
-delete_option( 'isn_pending_queue' );
 
 /* Remove cron events. */
-wp_clear_scheduled_hook( 'isn_send_notifications' );
 wp_clear_scheduled_hook( 'isn_daily_cleanup' );
 
-/* Remove log files using WP_Filesystem. */
+/* Unschedule all Action Scheduler actions for this plugin. */
+if ( function_exists( 'as_unschedule_all_actions' ) ) {
+	as_unschedule_all_actions( 'isn_send_notification' );
+}
+
+/* Remove legacy log files if they exist (from pre-1.0.8 installs). */
 if ( ! function_exists( 'WP_Filesystem' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Cron worker that sends notification emails.
+ * Action Scheduler worker that sends notification emails.
  *
  * @package InStockNotifier
  */
@@ -18,67 +18,61 @@ use InStockNotifier\Email\BackInStockEmail;
 use InStockNotifier\Logging\LogViewer;
 
 /**
- * Processes the notification queue in batches via cron.
+ * Processes notification actions scheduled by NotificationQueue.
  */
 class NotificationSender {
 
 	/**
-	 * Register cron hooks.
+	 * Register action hooks.
 	 *
 	 * @return void
 	 */
 	public static function init() {
-		add_action( NotificationQueue::CRON_HOOK, array( __CLASS__, 'process_batch' ) );
+		add_action( NotificationQueue::ACTION_HOOK, array( __CLASS__, 'process_batch' ), 10, 2 );
 		add_action( 'isn_daily_cleanup', array( __CLASS__, 'cleanup' ) );
 	}
 
 	/**
-	 * Process one batch of notifications.
+	 * Process one batch of notifications for a product.
 	 *
+	 * @param int $product_id   Product ID.
+	 * @param int $variation_id Variation ID (0 for simple).
 	 * @return void
 	 */
-	public static function process_batch() {
-		/* Prevent concurrent processing. */
-		if ( get_transient( 'isn_processing_lock' ) ) {
-			return;
-		}
-		set_transient( 'isn_processing_lock', true, 5 * MINUTE_IN_SECONDS );
-
-		$item = NotificationQueue::dequeue();
-		if ( ! $item ) {
-			delete_transient( 'isn_processing_lock' );
+	public static function process_batch( $product_id = 0, $variation_id = 0 ) {
+		/* Bail if plugin is disabled. */
+		if ( Options::get( 'enabled' ) !== '1' ) {
 			return;
 		}
 
-		$product_id   = $item['product_id'];
-		$variation_id = $item['variation_id'];
-		$opts         = Options::get_all();
-		$batch_size   = absint( $opts['batch_size'] );
-		$throttle     = absint( $opts['throttle_seconds'] );
+		$product_id   = absint( $product_id );
+		$variation_id = absint( $variation_id );
+
+		if ( ! $product_id ) {
+			return;
+		}
+
+		$opts       = Options::get_all();
+		$batch_size = absint( $opts['batch_size'] );
+		$throttle   = absint( $opts['throttle_seconds'] );
 
 		/* Re-verify stock status. */
 		$check_id = $variation_id ? $variation_id : $product_id;
 		$product  = wc_get_product( $check_id );
 		if ( ! $product || ! $product->is_in_stock() ) {
 			LogViewer::log( 'SKIP product=' . $check_id . ' no_longer_in_stock' );
-			delete_transient( 'isn_processing_lock' );
-			self::maybe_continue();
 			return;
 		}
 
 		/* Get active subscriptions. */
 		$subs = Repository::get_active_for_product( $product_id, $variation_id, $batch_size );
-		if ( empty( $subs ) ) {
-			/* Try with variation_id=0 if we checked a specific variation. */
-			if ( $variation_id ) {
-				$subs = Repository::get_active_for_product( $product_id, 0, $batch_size );
-			}
+		if ( empty( $subs ) && $variation_id ) {
+			/* Try with variation_id=0 (generic "any variation" subscriptions). */
+			$subs = Repository::get_active_for_product( $product_id, 0, $batch_size );
 		}
 
 		if ( empty( $subs ) ) {
 			LogViewer::log( 'SKIP product=' . $product_id . ' no_active_subscriptions' );
-			delete_transient( 'isn_processing_lock' );
-			self::maybe_continue();
 			return;
 		}
 
@@ -113,7 +107,7 @@ class NotificationSender {
 				 */
 				do_action( 'instock_notifier_after_notification_sent', $sub, $product );
 			} else {
-				LogViewer::log( 'FAIL email=' . $sub->email . ' product=' . $product_id . ' wp_mail_failed' );
+				LogViewer::log( 'FAIL email=' . $sub->email . ' product=' . $product_id, 'error' );
 			}
 
 			if ( $throttle > 0 ) {
@@ -125,7 +119,7 @@ class NotificationSender {
 			if ( $max_time > 0 ) {
 				$elapsed = microtime( true ) - $start_time;
 				if ( $elapsed > ( $max_time * 0.8 ) ) {
-					LogViewer::log( 'BATCH_TIMEOUT product=' . $product_id . ' sent=' . $sent_count . ' approaching_max_execution_time' );
+					LogViewer::log( 'BATCH_TIMEOUT product=' . $product_id . ' sent=' . $sent_count . ' approaching_max_execution_time', 'warning' );
 					break;
 				}
 			}
@@ -142,18 +136,14 @@ class NotificationSender {
 
 		LogViewer::log( 'BATCH_DONE product=' . $product_id . ' sent=' . $sent_count );
 
-		/* If more subs remain, re-enqueue this product. */
+		/* If more subscribers remain, schedule a follow-up batch. */
 		$remaining = Repository::get_active_for_product( $product_id, $variation_id, 1 );
 		if ( empty( $remaining ) && $variation_id ) {
-			/* Also check variation_id=0 subscriptions (generic "any variation"). */
 			$remaining = Repository::get_active_for_product( $product_id, 0, 1 );
 		}
 		if ( ! empty( $remaining ) ) {
-			NotificationQueue::enqueue( $product_id, $variation_id );
+			NotificationQueue::enqueue_next_batch( $product_id, $variation_id );
 		}
-
-		delete_transient( 'isn_processing_lock' );
-		self::maybe_continue();
 	}
 
 	/**
@@ -167,17 +157,6 @@ class NotificationSender {
 			return $emails['ISN_Back_In_Stock'];
 		}
 		return new BackInStockEmail();
-	}
-
-	/**
-	 * Schedule next batch if queue has more items.
-	 *
-	 * @return void
-	 */
-	private static function maybe_continue() {
-		if ( NotificationQueue::has_items() ) {
-			wp_schedule_single_event( time() + 60, NotificationQueue::CRON_HOOK );
-		}
 	}
 
 	/**
