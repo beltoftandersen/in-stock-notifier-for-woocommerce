@@ -40,8 +40,9 @@ class NotificationSender {
 	 * @return void
 	 */
 	public static function process_batch( $product_id = 0, $variation_id = 0 ) {
-		/* Bail if plugin is disabled. */
+		/* If plugin is disabled, requeue so subscribers aren't orphaned. */
 		if ( Options::get( 'enabled' ) !== '1' ) {
+			NotificationQueue::enqueue_next_batch( absint( $product_id ), absint( $variation_id ) );
 			return;
 		}
 

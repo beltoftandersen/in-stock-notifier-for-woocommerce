@@ -55,6 +55,7 @@ class Installer {
 			KEY email (email(100)),
 			KEY status (status),
 			KEY product_status (product_id, status),
+			KEY batch_lookup (product_id, variation_id, status, created_at),
 			UNIQUE KEY unique_sub (product_id, variation_id, email(100)),
 			KEY ip_created (ip_address, created_at)
 		) {$charset};";

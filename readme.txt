@@ -26,7 +26,7 @@ In-Stock Notifier for WooCommerce adds a subscription form to out-of-stock produ
 9. One-click unsubscribe link in every email.
 10. Optional GDPR checkbox, honeypot spam protection, and rate limiting.
 11. Shortcode `[instock_notifier]` for custom placement.
-12. Activity logging with auto-trim.
+12. Activity logging via WooCommerce logger.
 
 === How It Works ===
 1. Customer visits an out-of-stock product and enters their email.
