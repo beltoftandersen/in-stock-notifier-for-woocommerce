@@ -105,6 +105,10 @@ Developers can extend the plugin:
 
 - Initial release.
 
+## About the Author
+
+In-Stock Notifier for WooCommerce is built and maintained by [Chimkins IT](https://chimkins.com), a team specializing in WooCommerce and Odoo ERP integrations. Check out our [Odoo WooCommerce Connector](https://chimkins.com) for real-time sync between your WooCommerce store and Odoo.
+
 ## License
 
 GPLv2 or later. See https://www.gnu.org/licenses/gpl-2.0.html.
