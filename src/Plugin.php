@@ -33,6 +33,8 @@ class Plugin {
 	 * @return void
 	 */
 	public static function init() {
+		load_plugin_textdomain( 'instock-notifier-for-woocommerce', false, dirname( ISN_BASENAME ) . '/languages' );
+
 		Options::init();
 		self::maybe_upgrade_db();
 
