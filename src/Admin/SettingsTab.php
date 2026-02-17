@@ -62,15 +62,6 @@ class SettingsTab {
 
 		echo '</tbody></table>';
 
-		/* ── Email Sender ───────────────────────────────────── */
-		echo '<h2>' . esc_html__( 'Email Sender', 'instock-notifier-for-woocommerce' ) . '</h2>';
-		echo '<table class="form-table"><tbody>';
-
-		self::text_row( 'from_name', __( 'From Name', 'instock-notifier-for-woocommerce' ), $opts, __( 'Leave empty to use WordPress default.', 'instock-notifier-for-woocommerce' ) );
-		self::email_row( 'from_email', __( 'From Email', 'instock-notifier-for-woocommerce' ), $opts, __( 'Leave empty to use WordPress default.', 'instock-notifier-for-woocommerce' ) );
-
-		echo '</tbody></table>';
-
 		/* ── Performance ────────────────────────────────────── */
 		echo '<h2>' . esc_html__( 'Performance', 'instock-notifier-for-woocommerce' ) . '</h2>';
 		echo '<table class="form-table"><tbody>';

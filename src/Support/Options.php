@@ -60,8 +60,6 @@ class Options {
 			'quantity_field_enabled' => '0',
 			'gdpr_enabled'          => '0',
 			'gdpr_text'             => 'I agree to be notified when this product is back in stock.',
-			'from_name'             => '',
-			'from_email'            => '',
 			'batch_size'            => '50',
 			'throttle_seconds'      => '0',
 			'cleanup_days'          => '90',
@@ -143,7 +141,6 @@ class Options {
 			'success_message',
 			'already_subscribed_msg',
 			'button_text',
-			'from_name',
 		);
 
 		foreach ( $text_fields as $key ) {
@@ -151,10 +148,6 @@ class Options {
 				? sanitize_text_field( wp_unslash( $input[ $key ] ) )
 				: $defaults[ $key ];
 		}
-
-		$clean['from_email'] = isset( $input['from_email'] ) && '' !== $input['from_email']
-			? sanitize_email( wp_unslash( $input['from_email'] ) )
-			: '';
 
 		$clean['custom_css'] = isset( $input['custom_css'] )
 			? wp_strip_all_tags( wp_unslash( $input['custom_css'] ) )
