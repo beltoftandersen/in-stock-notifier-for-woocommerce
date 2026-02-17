@@ -35,7 +35,7 @@ In-Stock Notifier for WooCommerce adds a subscription form to out-of-stock produ
 4. Custom hook available for CDN/Varnish cache purging if needed.
 
 == Installation ==
-1. Upload the `instock-notifier-for-woocommerce` folder to `/wp-content/plugins/` or install via the Plugins screen.
+1. Upload the `in-stock-notifier-for-woocommerce` folder to `/wp-content/plugins/` or install via the Plugins screen.
 2. Activate the plugin.
 3. Go to **WooCommerce > In-Stock Notifier** to configure.
 4. Optionally adjust the email under **WooCommerce > Settings > Emails > Back In Stock**.

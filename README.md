@@ -5,7 +5,7 @@ Let customers subscribe to out-of-stock product notifications and automatically 
 - Stable version: 1.0.8
 - Requires: WordPress 5.8+, PHP 7.4+, WooCommerce 6.0+
 - Author: Chimkins IT
-- Text domain: instock-notifier-for-woocommerce
+- Text domain: in-stock-notifier-for-woocommerce
 
 ## Overview
 
@@ -86,8 +86,8 @@ Developers can extend the plugin:
 
 ## Translations
 
-- Text domain: `instock-notifier-for-woocommerce`
-- Translation template: `languages/instock-notifier-for-woocommerce.pot`
+- Text domain: `in-stock-notifier-for-woocommerce`
+- Translation template: `languages/in-stock-notifier-for-woocommerce.pot`
 
 ## Changelog
 

@@ -40,8 +40,8 @@ class BackInStockEmail extends \WC_Email {
 	public function __construct() {
 		$this->id             = 'isn_back_in_stock';
 		$this->customer_email = true;
-		$this->title          = __( 'Back In Stock', 'instock-notifier-for-woocommerce' );
-		$this->description    = __( 'Sent to customers who subscribed for a back-in-stock notification when the product returns to stock.', 'instock-notifier-for-woocommerce' );
+		$this->title          = __( 'Back In Stock', 'in-stock-notifier-for-woocommerce' );
+		$this->description    = __( 'Sent to customers who subscribed for a back-in-stock notification when the product returns to stock.', 'in-stock-notifier-for-woocommerce' );
 
 		$this->template_html  = 'emails/back-in-stock.php';
 		$this->template_plain = 'emails/plain/back-in-stock.php';
@@ -53,8 +53,8 @@ class BackInStockEmail extends \WC_Email {
 		);
 
 		/* Default subject and heading. */
-		$this->heading = __( '{product_name} is back in stock!', 'instock-notifier-for-woocommerce' );
-		$this->subject = __( '{product_name} is back in stock!', 'instock-notifier-for-woocommerce' );
+		$this->heading = __( '{product_name} is back in stock!', 'in-stock-notifier-for-woocommerce' );
+		$this->subject = __( '{product_name} is back in stock!', 'in-stock-notifier-for-woocommerce' );
 
 		parent::__construct();
 	}
@@ -65,7 +65,7 @@ class BackInStockEmail extends \WC_Email {
 	 * @return string
 	 */
 	public function get_default_subject() {
-		return __( '{product_name} is back in stock!', 'instock-notifier-for-woocommerce' );
+		return __( '{product_name} is back in stock!', 'in-stock-notifier-for-woocommerce' );
 	}
 
 	/**
@@ -74,7 +74,7 @@ class BackInStockEmail extends \WC_Email {
 	 * @return string
 	 */
 	public function get_default_heading() {
-		return __( '{product_name} is back in stock!', 'instock-notifier-for-woocommerce' );
+		return __( '{product_name} is back in stock!', 'in-stock-notifier-for-woocommerce' );
 	}
 
 	/**
@@ -186,7 +186,7 @@ class BackInStockEmail extends \WC_Email {
 
 		/* Absolute fallback: create a dummy product object. */
 		$dummy = new \WC_Product();
-		$dummy->set_name( __( 'Sample Product', 'instock-notifier-for-woocommerce' ) );
+		$dummy->set_name( __( 'Sample Product', 'in-stock-notifier-for-woocommerce' ) );
 		return $dummy;
 	}
 
@@ -197,17 +197,17 @@ class BackInStockEmail extends \WC_Email {
 	 */
 	public function init_form_fields() {
 		/* translators: %s: list of available placeholders */
-		$placeholder_text = sprintf( __( 'Available placeholders: %s', 'instock-notifier-for-woocommerce' ), '<code>{product_name}, {site_title}</code>' );
+		$placeholder_text = sprintf( __( 'Available placeholders: %s', 'in-stock-notifier-for-woocommerce' ), '<code>{product_name}, {site_title}</code>' );
 
 		$this->form_fields = array(
 			'enabled'    => array(
-				'title'   => __( 'Enable/Disable', 'instock-notifier-for-woocommerce' ),
+				'title'   => __( 'Enable/Disable', 'in-stock-notifier-for-woocommerce' ),
 				'type'    => 'checkbox',
-				'label'   => __( 'Enable this email notification', 'instock-notifier-for-woocommerce' ),
+				'label'   => __( 'Enable this email notification', 'in-stock-notifier-for-woocommerce' ),
 				'default' => 'yes',
 			),
 			'subject'    => array(
-				'title'       => __( 'Subject', 'instock-notifier-for-woocommerce' ),
+				'title'       => __( 'Subject', 'in-stock-notifier-for-woocommerce' ),
 				'type'        => 'text',
 				'desc_tip'    => true,
 				'description' => $placeholder_text,
@@ -215,7 +215,7 @@ class BackInStockEmail extends \WC_Email {
 				'default'     => '',
 			),
 			'heading'    => array(
-				'title'       => __( 'Email heading', 'instock-notifier-for-woocommerce' ),
+				'title'       => __( 'Email heading', 'in-stock-notifier-for-woocommerce' ),
 				'type'        => 'text',
 				'desc_tip'    => true,
 				'description' => $placeholder_text,
@@ -223,9 +223,9 @@ class BackInStockEmail extends \WC_Email {
 				'default'     => '',
 			),
 			'email_type' => array(
-				'title'       => __( 'Email type', 'instock-notifier-for-woocommerce' ),
+				'title'       => __( 'Email type', 'in-stock-notifier-for-woocommerce' ),
 				'type'        => 'select',
-				'description' => __( 'Choose which format of email to send.', 'instock-notifier-for-woocommerce' ),
+				'description' => __( 'Choose which format of email to send.', 'in-stock-notifier-for-woocommerce' ),
 				'default'     => 'html',
 				'class'       => 'email_type wc-enhanced-select',
 				'options'     => $this->get_email_type_options(),

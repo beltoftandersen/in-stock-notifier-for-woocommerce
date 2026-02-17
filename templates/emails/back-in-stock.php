@@ -30,7 +30,7 @@ $isn_image_id    = $product->get_image_id();
 $isn_image_url   = $isn_image_id ? wp_get_attachment_url( $isn_image_id ) : '';
 $isn_stock_qty   = $product->get_stock_quantity();
 if ( null === $isn_stock_qty ) {
-	$isn_stock_qty = __( 'Available', 'instock-notifier-for-woocommerce' );
+	$isn_stock_qty = __( 'Available', 'in-stock-notifier-for-woocommerce' );
 }
 $isn_product_url = $product->get_permalink();
 $isn_site_name   = get_bloginfo( 'name' );
@@ -48,28 +48,28 @@ if ( $isn_image_url ) :
 <p>
 	<?php
 	/* translators: 1: product name, 2: site URL, 3: site name */
-	$isn_intro = sprintf( __( 'Good news! <strong>%1$s</strong> is back in stock at <a href="%2$s">%3$s</a>.', 'instock-notifier-for-woocommerce' ), esc_html( $product->get_name() ), esc_url( $isn_site_url ), esc_html( $isn_site_name ) );
+	$isn_intro = sprintf( __( 'Good news! <strong>%1$s</strong> is back in stock at <a href="%2$s">%3$s</a>.', 'in-stock-notifier-for-woocommerce' ), esc_html( $product->get_name() ), esc_url( $isn_site_url ), esc_html( $isn_site_name ) );
 	echo wp_kses_post( $isn_intro );
 	?>
 </p>
 
 <p style="text-align: center; margin: 1.5em 0;">
 	<a href="<?php echo esc_url( $isn_product_url ); ?>" style="display: inline-block; padding: 12px 24px; background-color: <?php echo esc_attr( $email->get_option( 'base_color', '#7f54b3' ) ); ?>; color: #ffffff; text-decoration: none; border-radius: 4px; font-weight: bold;">
-		<?php echo esc_html__( 'Shop Now', 'instock-notifier-for-woocommerce' ); ?>
+		<?php echo esc_html__( 'Shop Now', 'in-stock-notifier-for-woocommerce' ); ?>
 	</a>
 </p>
 
 <p>
 	<?php
 	/* translators: %s: stock quantity or "Available" */
-	echo esc_html( sprintf( __( 'Current stock: %s', 'instock-notifier-for-woocommerce' ), $isn_stock_qty ) );
+	echo esc_html( sprintf( __( 'Current stock: %s', 'in-stock-notifier-for-woocommerce' ), $isn_stock_qty ) );
 	?>
 </p>
 
 <p style="font-size: 12px; color: #888;">
 	<?php
 	/* translators: 1: site name, 2: unsubscribe URL */
-	$isn_footer = sprintf( __( 'You received this email because you subscribed to a back-in-stock notification on %1$s. <a href="%2$s">Unsubscribe</a>', 'instock-notifier-for-woocommerce' ), esc_html( $isn_site_name ), esc_url( $unsubscribe_url ) );
+	$isn_footer = sprintf( __( 'You received this email because you subscribed to a back-in-stock notification on %1$s. <a href="%2$s">Unsubscribe</a>', 'in-stock-notifier-for-woocommerce' ), esc_html( $isn_site_name ), esc_url( $unsubscribe_url ) );
 	echo wp_kses_post( $isn_footer );
 	?>
 </p>

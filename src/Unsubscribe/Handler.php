@@ -45,8 +45,8 @@ class Handler {
 		$token = isset( $_GET['token'] ) ? sanitize_text_field( wp_unslash( $_GET['token'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( empty( $token ) ) {
 			wp_die(
-				esc_html__( 'Invalid unsubscribe link.', 'instock-notifier-for-woocommerce' ),
-				esc_html__( 'Unsubscribe', 'instock-notifier-for-woocommerce' ),
+				esc_html__( 'Invalid unsubscribe link.', 'in-stock-notifier-for-woocommerce' ),
+				esc_html__( 'Unsubscribe', 'in-stock-notifier-for-woocommerce' ),
 				array( 'response' => 400 )
 			);
 		}
@@ -54,16 +54,16 @@ class Handler {
 		$sub = Repository::get_by_token( $token );
 		if ( ! $sub ) {
 			wp_die(
-				esc_html__( 'Invalid unsubscribe link.', 'instock-notifier-for-woocommerce' ),
-				esc_html__( 'Unsubscribe', 'instock-notifier-for-woocommerce' ),
+				esc_html__( 'Invalid unsubscribe link.', 'in-stock-notifier-for-woocommerce' ),
+				esc_html__( 'Unsubscribe', 'in-stock-notifier-for-woocommerce' ),
 				array( 'response' => 400 )
 			);
 		}
 
 		if ( 'active' !== $sub->status ) {
 			wp_die(
-				esc_html__( 'You have already been unsubscribed.', 'instock-notifier-for-woocommerce' ),
-				esc_html__( 'Unsubscribe', 'instock-notifier-for-woocommerce' ),
+				esc_html__( 'You have already been unsubscribed.', 'in-stock-notifier-for-woocommerce' ),
+				esc_html__( 'Unsubscribe', 'in-stock-notifier-for-woocommerce' ),
 				array( 'response' => 200 )
 			);
 		}
@@ -72,8 +72,8 @@ class Handler {
 		if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' === $_SERVER['REQUEST_METHOD'] ) {
 			if ( ! isset( $_POST['isn_unsub_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['isn_unsub_nonce'] ) ), 'isn_unsubscribe_' . $token ) ) {
 				wp_die(
-					esc_html__( 'Security check failed. Please try the link again.', 'instock-notifier-for-woocommerce' ),
-					esc_html__( 'Unsubscribe', 'instock-notifier-for-woocommerce' ),
+					esc_html__( 'Security check failed. Please try the link again.', 'in-stock-notifier-for-woocommerce' ),
+					esc_html__( 'Unsubscribe', 'in-stock-notifier-for-woocommerce' ),
 					array( 'response' => 403 )
 				);
 			}
@@ -82,8 +82,8 @@ class Handler {
 			LogViewer::log( 'UNSUBSCRIBE email=' . $sub->email . ' product=' . $sub->product_id );
 
 			wp_die(
-				esc_html__( 'You have been successfully unsubscribed. You will no longer receive back-in-stock notifications for this product.', 'instock-notifier-for-woocommerce' ),
-				esc_html__( 'Unsubscribed', 'instock-notifier-for-woocommerce' ),
+				esc_html__( 'You have been successfully unsubscribed. You will no longer receive back-in-stock notifications for this product.', 'in-stock-notifier-for-woocommerce' ),
+				esc_html__( 'Unsubscribed', 'in-stock-notifier-for-woocommerce' ),
 				array( 'response' => 200 )
 			);
 		}
@@ -97,17 +97,17 @@ class Handler {
 			home_url( '/' )
 		) );
 
-		$html  = '<p>' . esc_html__( 'Click the button below to confirm you want to unsubscribe from back-in-stock notifications for this product.', 'instock-notifier-for-woocommerce' ) . '</p>';
+		$html  = '<p>' . esc_html__( 'Click the button below to confirm you want to unsubscribe from back-in-stock notifications for this product.', 'in-stock-notifier-for-woocommerce' ) . '</p>';
 		$html .= '<form method="post" action="' . $action_url . '">';
 		$html .= '<input type="hidden" name="isn_unsub_nonce" value="' . esc_attr( wp_create_nonce( 'isn_unsubscribe_' . $token ) ) . '" />';
 		$html .= '<p><button type="submit" style="padding:10px 24px;background:#0073aa;color:#fff;border:none;border-radius:3px;cursor:pointer;font-size:14px;">';
-		$html .= esc_html__( 'Confirm Unsubscribe', 'instock-notifier-for-woocommerce' );
+		$html .= esc_html__( 'Confirm Unsubscribe', 'in-stock-notifier-for-woocommerce' );
 		$html .= '</button></p>';
 		$html .= '</form>';
 
 		wp_die(
 			$html, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- All parts escaped above.
-			esc_html__( 'Unsubscribe', 'instock-notifier-for-woocommerce' ),
+			esc_html__( 'Unsubscribe', 'in-stock-notifier-for-woocommerce' ),
 			array( 'response' => 200 )
 		);
 	}

@@ -40,7 +40,7 @@ class AjaxHandler {
 	public static function handle() {
 		// Verify nonce before accessing any other $_POST data.
 		if ( ! isset( $_POST['isn_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['isn_nonce'] ) ), 'isn_subscribe_nonce' ) ) {
-			wp_send_json_error( array( 'message' => esc_html__( 'Security check failed. Please refresh the page.', 'instock-notifier-for-woocommerce' ) ) );
+			wp_send_json_error( array( 'message' => esc_html__( 'Security check failed. Please refresh the page.', 'in-stock-notifier-for-woocommerce' ) ) );
 		}
 
 		$data = array(
@@ -87,7 +87,7 @@ class AjaxHandler {
 
 		if ( false === $result ) {
 			LogViewer::log( 'FAIL subscription email=' . $email . ' product=' . $data['isn_product_id'] . ' db_error' );
-			wp_send_json_error( array( 'message' => esc_html__( 'Something went wrong. Please try again.', 'instock-notifier-for-woocommerce' ) ) );
+			wp_send_json_error( array( 'message' => esc_html__( 'Something went wrong. Please try again.', 'in-stock-notifier-for-woocommerce' ) ) );
 		}
 
 		/**

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       In-Stock Notifier for WooCommerce
- * Plugin URI:        https://developer.wordpress.org/plugins/instock-notifier-for-woocommerce/
+ * Plugin URI:        https://developer.wordpress.org/plugins/in-stock-notifier-for-woocommerce/
  * Description:       Let customers subscribe to out-of-stock product notifications and automatically email them when items are back in stock.
  * Version:           1.0.8
  * Requires at least: 5.8
@@ -10,7 +10,7 @@
  * Author URI:        https://chimkins.com/
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       instock-notifier-for-woocommerce
+ * Text Domain:       in-stock-notifier-for-woocommerce
  * Domain Path:       /languages
  * Requires Plugins:  woocommerce
  *
@@ -52,7 +52,7 @@ register_activation_hook(
 	function () {
 		if ( ! class_exists( 'WooCommerce' ) ) {
 			/* translators: %s: WooCommerce plugin name */
-			wp_die( esc_html__( 'In-Stock Notifier requires WooCommerce to be installed and active.', 'instock-notifier-for-woocommerce' ) );
+			wp_die( esc_html__( 'In-Stock Notifier requires WooCommerce to be installed and active.', 'in-stock-notifier-for-woocommerce' ) );
 		}
 		InStockNotifier\Support\Installer::activate();
 	}
@@ -89,7 +89,7 @@ add_filter(
 	function ( $links ) {
 		$url           = admin_url( 'admin.php?page=isn-notifier' );
 		$settings_link = '<a href="' . esc_url( $url ) . '">'
-			. esc_html__( 'Settings', 'instock-notifier-for-woocommerce' )
+			. esc_html__( 'Settings', 'in-stock-notifier-for-woocommerce' )
 			. '</a>';
 		array_unshift( $links, $settings_link );
 		return $links;

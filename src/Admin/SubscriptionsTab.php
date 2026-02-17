@@ -36,7 +36,7 @@ class SubscriptionsTab {
 		echo '<form method="get">';
 		echo '<input type="hidden" name="page" value="' . esc_attr( AdminPage::PAGE_SLUG ) . '" />';
 		echo '<input type="hidden" name="tab" value="subscriptions" />';
-		$table->search_box( esc_html__( 'Search Email', 'instock-notifier-for-woocommerce' ), 'isn-search' );
+		$table->search_box( esc_html__( 'Search Email', 'in-stock-notifier-for-woocommerce' ), 'isn-search' );
 		$table->display();
 		echo '</form>';
 	}
@@ -56,7 +56,7 @@ class SubscriptionsTab {
 		check_admin_referer( 'isn_bulk_action_nonce' );
 
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
-			wp_die( esc_html__( 'You do not have permission to do this.', 'instock-notifier-for-woocommerce' ) );
+			wp_die( esc_html__( 'You do not have permission to do this.', 'in-stock-notifier-for-woocommerce' ) );
 		}
 
 		$action = sanitize_text_field( wp_unslash( $_REQUEST['isn_bulk_action'] ) );
@@ -67,7 +67,7 @@ class SubscriptionsTab {
 				$count = Repository::bulk_delete( $ids );
 				echo '<div class="notice notice-success"><p>';
 				/* translators: %d: number of deleted subscriptions */
-				echo esc_html( sprintf( _n( '%d subscription deleted.', '%d subscriptions deleted.', $count, 'instock-notifier-for-woocommerce' ), $count ) );
+				echo esc_html( sprintf( _n( '%d subscription deleted.', '%d subscriptions deleted.', $count, 'in-stock-notifier-for-woocommerce' ), $count ) );
 				echo '</p></div>';
 				break;
 
@@ -75,7 +75,7 @@ class SubscriptionsTab {
 				$count = Repository::bulk_mark_notified( $ids );
 				echo '<div class="notice notice-success"><p>';
 				/* translators: %d: number of updated subscriptions */
-				echo esc_html( sprintf( _n( '%d subscription marked as notified.', '%d subscriptions marked as notified.', $count, 'instock-notifier-for-woocommerce' ), $count ) );
+				echo esc_html( sprintf( _n( '%d subscription marked as notified.', '%d subscriptions marked as notified.', $count, 'in-stock-notifier-for-woocommerce' ), $count ) );
 				echo '</p></div>';
 				break;
 		}
@@ -115,11 +115,11 @@ class SubscriptionsListTable extends \WP_List_Table {
 	public function get_columns() {
 		return array(
 			'cb'         => '<input type="checkbox" />',
-			'email'      => __( 'Email', 'instock-notifier-for-woocommerce' ),
-			'product_id' => __( 'Product', 'instock-notifier-for-woocommerce' ),
-			'status'     => __( 'Status', 'instock-notifier-for-woocommerce' ),
-			'created_at' => __( 'Subscribed', 'instock-notifier-for-woocommerce' ),
-			'notified_at' => __( 'Notified', 'instock-notifier-for-woocommerce' ),
+			'email'      => __( 'Email', 'in-stock-notifier-for-woocommerce' ),
+			'product_id' => __( 'Product', 'in-stock-notifier-for-woocommerce' ),
+			'status'     => __( 'Status', 'in-stock-notifier-for-woocommerce' ),
+			'created_at' => __( 'Subscribed', 'in-stock-notifier-for-woocommerce' ),
+			'notified_at' => __( 'Notified', 'in-stock-notifier-for-woocommerce' ),
 		);
 	}
 
@@ -206,23 +206,23 @@ class SubscriptionsListTable extends \WP_List_Table {
 
 		echo '<div class="alignleft actions">';
 		echo '<select name="status_filter">';
-		echo '<option value="">' . esc_html__( 'All statuses', 'instock-notifier-for-woocommerce' ) . '</option>';
+		echo '<option value="">' . esc_html__( 'All statuses', 'in-stock-notifier-for-woocommerce' ) . '</option>';
 		foreach ( array( 'active', 'notified', 'unsubscribed' ) as $status ) {
 			echo '<option value="' . esc_attr( $status ) . '"' . selected( $current_status, $status, false ) . '>';
 			echo esc_html( ucfirst( $status ) );
 			echo '</option>';
 		}
 		echo '</select>';
-		submit_button( __( 'Filter', 'instock-notifier-for-woocommerce' ), '', 'filter_action', false );
+		submit_button( __( 'Filter', 'in-stock-notifier-for-woocommerce' ), '', 'filter_action', false );
 
 		echo '&nbsp;';
 		echo '<select name="isn_bulk_action">';
-		echo '<option value="">' . esc_html__( 'Bulk Actions', 'instock-notifier-for-woocommerce' ) . '</option>';
-		echo '<option value="delete">' . esc_html__( 'Delete', 'instock-notifier-for-woocommerce' ) . '</option>';
-		echo '<option value="mark_notified">' . esc_html__( 'Mark as Notified', 'instock-notifier-for-woocommerce' ) . '</option>';
+		echo '<option value="">' . esc_html__( 'Bulk Actions', 'in-stock-notifier-for-woocommerce' ) . '</option>';
+		echo '<option value="delete">' . esc_html__( 'Delete', 'in-stock-notifier-for-woocommerce' ) . '</option>';
+		echo '<option value="mark_notified">' . esc_html__( 'Mark as Notified', 'in-stock-notifier-for-woocommerce' ) . '</option>';
 		echo '</select>';
 		wp_nonce_field( 'isn_bulk_action_nonce' );
-		submit_button( __( 'Apply', 'instock-notifier-for-woocommerce' ), 'action', 'isn_apply_bulk', false );
+		submit_button( __( 'Apply', 'in-stock-notifier-for-woocommerce' ), 'action', 'isn_apply_bulk', false );
 		echo '</div>';
 	}
 
@@ -257,7 +257,7 @@ class SubscriptionsListTable extends \WP_List_Table {
 		$name    = $product ? $product->get_name() : ( '#' . $item->product_id );
 		$output  = esc_html( $name );
 		if ( absint( $item->variation_id ) > 0 ) {
-			$output .= '<br><small>' . esc_html__( 'Variation:', 'instock-notifier-for-woocommerce' ) . ' #' . absint( $item->variation_id ) . '</small>';
+			$output .= '<br><small>' . esc_html__( 'Variation:', 'in-stock-notifier-for-woocommerce' ) . ' #' . absint( $item->variation_id ) . '</small>';
 		}
 		return $output;
 	}
@@ -315,6 +315,6 @@ class SubscriptionsListTable extends \WP_List_Table {
 	 * @return void
 	 */
 	public function no_items() {
-		esc_html_e( 'No subscriptions found.', 'instock-notifier-for-woocommerce' );
+		esc_html_e( 'No subscriptions found.', 'in-stock-notifier-for-woocommerce' );
 	}
 }

@@ -27,59 +27,59 @@ class SettingsTab {
 		$opts = Options::get_all();
 
 		if ( isset( $_GET['settings-updated'] ) && 'true' === $_GET['settings-updated'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			echo '<div class="notice notice-success"><p>' . esc_html__( 'Settings saved.', 'instock-notifier-for-woocommerce' ) . '</p></div>';
+			echo '<div class="notice notice-success"><p>' . esc_html__( 'Settings saved.', 'in-stock-notifier-for-woocommerce' ) . '</p></div>';
 		}
 
 		echo '<form method="post" action="' . esc_url( admin_url( 'options.php' ) ) . '">';
 		settings_fields( 'isn_settings_group' );
 
 		/* ── General ────────────────────────────────────────── */
-		echo '<h2>' . esc_html__( 'General', 'instock-notifier-for-woocommerce' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'General', 'in-stock-notifier-for-woocommerce' ) . '</h2>';
 		echo '<table class="form-table"><tbody>';
 
-		self::checkbox_row( 'enabled', __( 'Enable Notifications', 'instock-notifier-for-woocommerce' ), $opts );
-		self::checkbox_row( 'form_position_enabled', __( 'Auto-place Form on Product Pages', 'instock-notifier-for-woocommerce' ), $opts, __( 'Uncheck to use the [instock_notifier] shortcode only.', 'instock-notifier-for-woocommerce' ) );
-		self::checkbox_row( 'quantity_field_enabled', __( 'Show Quantity Field', 'instock-notifier-for-woocommerce' ), $opts );
-		self::text_row( 'button_text', __( 'Button Text', 'instock-notifier-for-woocommerce' ), $opts );
+		self::checkbox_row( 'enabled', __( 'Enable Notifications', 'in-stock-notifier-for-woocommerce' ), $opts );
+		self::checkbox_row( 'form_position_enabled', __( 'Auto-place Form on Product Pages', 'in-stock-notifier-for-woocommerce' ), $opts, __( 'Uncheck to use the [instock_notifier] shortcode only.', 'in-stock-notifier-for-woocommerce' ) );
+		self::checkbox_row( 'quantity_field_enabled', __( 'Show Quantity Field', 'in-stock-notifier-for-woocommerce' ), $opts );
+		self::text_row( 'button_text', __( 'Button Text', 'in-stock-notifier-for-woocommerce' ), $opts );
 
 		echo '</tbody></table>';
 
 		/* ── GDPR ───────────────────────────────────────────── */
-		echo '<h2>' . esc_html__( 'GDPR / Consent', 'instock-notifier-for-woocommerce' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'GDPR / Consent', 'in-stock-notifier-for-woocommerce' ) . '</h2>';
 		echo '<table class="form-table"><tbody>';
 
-		self::checkbox_row( 'gdpr_enabled', __( 'Require GDPR Consent', 'instock-notifier-for-woocommerce' ), $opts );
-		self::textarea_row( 'gdpr_text', __( 'Consent Text', 'instock-notifier-for-woocommerce' ), $opts );
+		self::checkbox_row( 'gdpr_enabled', __( 'Require GDPR Consent', 'in-stock-notifier-for-woocommerce' ), $opts );
+		self::textarea_row( 'gdpr_text', __( 'Consent Text', 'in-stock-notifier-for-woocommerce' ), $opts );
 
 		echo '</tbody></table>';
 
 		/* ── Messages ───────────────────────────────────────── */
-		echo '<h2>' . esc_html__( 'Messages', 'instock-notifier-for-woocommerce' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'Messages', 'in-stock-notifier-for-woocommerce' ) . '</h2>';
 		echo '<table class="form-table"><tbody>';
 
-		self::text_row( 'success_message', __( 'Success Message', 'instock-notifier-for-woocommerce' ), $opts );
-		self::text_row( 'already_subscribed_msg', __( 'Already Subscribed Message', 'instock-notifier-for-woocommerce' ), $opts );
+		self::text_row( 'success_message', __( 'Success Message', 'in-stock-notifier-for-woocommerce' ), $opts );
+		self::text_row( 'already_subscribed_msg', __( 'Already Subscribed Message', 'in-stock-notifier-for-woocommerce' ), $opts );
 
 		echo '</tbody></table>';
 
 		/* ── Performance ────────────────────────────────────── */
-		echo '<h2>' . esc_html__( 'Performance', 'instock-notifier-for-woocommerce' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'Performance', 'in-stock-notifier-for-woocommerce' ) . '</h2>';
 		echo '<table class="form-table"><tbody>';
 
-		self::number_row( 'batch_size', __( 'Batch Size', 'instock-notifier-for-woocommerce' ), $opts, __( 'Emails per cron run (1-500).', 'instock-notifier-for-woocommerce' ) );
-		self::number_row( 'throttle_seconds', __( 'Throttle (seconds)', 'instock-notifier-for-woocommerce' ), $opts, __( 'Delay between each email (0 = no delay).', 'instock-notifier-for-woocommerce' ) );
-		self::number_row( 'rate_limit_per_ip', __( 'Rate Limit per IP', 'instock-notifier-for-woocommerce' ), $opts, __( 'Max subscriptions per IP per hour.', 'instock-notifier-for-woocommerce' ) );
+		self::number_row( 'batch_size', __( 'Batch Size', 'in-stock-notifier-for-woocommerce' ), $opts, __( 'Emails per cron run (1-500).', 'in-stock-notifier-for-woocommerce' ) );
+		self::number_row( 'throttle_seconds', __( 'Throttle (seconds)', 'in-stock-notifier-for-woocommerce' ), $opts, __( 'Delay between each email (0 = no delay).', 'in-stock-notifier-for-woocommerce' ) );
+		self::number_row( 'rate_limit_per_ip', __( 'Rate Limit per IP', 'in-stock-notifier-for-woocommerce' ), $opts, __( 'Max subscriptions per IP per hour.', 'in-stock-notifier-for-woocommerce' ) );
 
 		echo '</tbody></table>';
 
 		/* ── Advanced ───────────────────────────────────────── */
-		echo '<h2>' . esc_html__( 'Advanced', 'instock-notifier-for-woocommerce' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'Advanced', 'in-stock-notifier-for-woocommerce' ) . '</h2>';
 		echo '<table class="form-table"><tbody>';
 
-		self::number_row( 'cleanup_days', __( 'Cleanup After (days)', 'instock-notifier-for-woocommerce' ), $opts, __( 'Delete notified subscriptions older than this. 0 = never delete.', 'instock-notifier-for-woocommerce' ) );
-		self::checkbox_row( 'disable_logging', __( 'Disable Logging', 'instock-notifier-for-woocommerce' ), $opts );
-		self::checkbox_row( 'cleanup_on_uninstall', __( 'Remove Data on Uninstall', 'instock-notifier-for-woocommerce' ), $opts, __( 'Delete all plugin data when the plugin is deleted.', 'instock-notifier-for-woocommerce' ) );
-		self::textarea_row( 'custom_css', __( 'Custom CSS', 'instock-notifier-for-woocommerce' ), $opts, __( 'Additional CSS for the notification form.', 'instock-notifier-for-woocommerce' ) );
+		self::number_row( 'cleanup_days', __( 'Cleanup After (days)', 'in-stock-notifier-for-woocommerce' ), $opts, __( 'Delete notified subscriptions older than this. 0 = never delete.', 'in-stock-notifier-for-woocommerce' ) );
+		self::checkbox_row( 'disable_logging', __( 'Disable Logging', 'in-stock-notifier-for-woocommerce' ), $opts );
+		self::checkbox_row( 'cleanup_on_uninstall', __( 'Remove Data on Uninstall', 'in-stock-notifier-for-woocommerce' ), $opts, __( 'Delete all plugin data when the plugin is deleted.', 'in-stock-notifier-for-woocommerce' ) );
+		self::textarea_row( 'custom_css', __( 'Custom CSS', 'in-stock-notifier-for-woocommerce' ), $opts, __( 'Additional CSS for the notification form.', 'in-stock-notifier-for-woocommerce' ) );
 
 		echo '</tbody></table>';
 

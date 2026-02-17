@@ -33,8 +33,6 @@ class Plugin {
 	 * @return void
 	 */
 	public static function init() {
-		load_plugin_textdomain( 'instock-notifier-for-woocommerce', false, dirname( ISN_BASENAME ) . '/languages' );
-
 		Options::init();
 		self::maybe_upgrade_db();
 
@@ -159,8 +157,8 @@ class Plugin {
 			array(
 				'ajax_url'      => admin_url( 'admin-ajax.php' ),
 				'nonce'         => wp_create_nonce( 'isn_subscribe_nonce' ),
-				'error_generic' => esc_html__( 'An error occurred.', 'instock-notifier-for-woocommerce' ),
-				'error_network' => esc_html__( 'An error occurred. Please try again.', 'instock-notifier-for-woocommerce' ),
+				'error_generic' => esc_html__( 'An error occurred.', 'in-stock-notifier-for-woocommerce' ),
+				'error_network' => esc_html__( 'An error occurred. Please try again.', 'in-stock-notifier-for-woocommerce' ),
 			)
 		);
 	}

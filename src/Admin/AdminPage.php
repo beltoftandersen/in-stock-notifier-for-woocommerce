@@ -35,8 +35,8 @@ class AdminPage {
 	public static function add_menu() {
 		add_submenu_page(
 			'woocommerce',
-			__( 'In-Stock Notifier', 'instock-notifier-for-woocommerce' ),
-			__( 'In-Stock Notifier', 'instock-notifier-for-woocommerce' ),
+			__( 'In-Stock Notifier', 'in-stock-notifier-for-woocommerce' ),
+			__( 'In-Stock Notifier', 'in-stock-notifier-for-woocommerce' ),
 			'manage_woocommerce',
 			self::PAGE_SLUG,
 			array( __CLASS__, 'render_page' )
@@ -50,9 +50,9 @@ class AdminPage {
 	 */
 	public static function render_page() {
 		$tabs = array(
-			'dashboard'     => __( 'Dashboard', 'instock-notifier-for-woocommerce' ),
-			'subscriptions' => __( 'Subscriptions', 'instock-notifier-for-woocommerce' ),
-			'settings'      => __( 'Settings', 'instock-notifier-for-woocommerce' ),
+			'dashboard'     => __( 'Dashboard', 'in-stock-notifier-for-woocommerce' ),
+			'subscriptions' => __( 'Subscriptions', 'in-stock-notifier-for-woocommerce' ),
+			'settings'      => __( 'Settings', 'in-stock-notifier-for-woocommerce' ),
 		);
 
 		$current_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'dashboard'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -61,7 +61,7 @@ class AdminPage {
 		}
 
 		echo '<div class="wrap">';
-		echo '<h1>' . esc_html__( 'In-Stock Notifier', 'instock-notifier-for-woocommerce' ) . '</h1>';
+		echo '<h1>' . esc_html__( 'In-Stock Notifier', 'in-stock-notifier-for-woocommerce' ) . '</h1>';
 
 		echo '<nav class="nav-tab-wrapper">';
 		foreach ( $tabs as $slug => $label ) {
