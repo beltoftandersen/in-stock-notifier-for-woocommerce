@@ -54,7 +54,7 @@ if ( $isn_image_url ) :
 </p>
 
 <p style="text-align: center; margin: 1.5em 0;">
-	<a href="<?php echo esc_url( $isn_product_url ); ?>" style="display: inline-block; padding: 12px 24px; background-color: <?php echo esc_attr( $email->get_option( 'base_color', '#7f54b3' ) ); ?>; color: #ffffff; text-decoration: none; border-radius: 4px; font-weight: bold;">
+	<a href="<?php echo esc_url( $isn_product_url ); ?>" style="display: inline-block; padding: 12px 24px; background-color: <?php echo esc_attr( get_option( 'woocommerce_email_base_color', '#7f54b3' ) ); ?>; color: #ffffff; text-decoration: none; border-radius: 4px; font-weight: bold;">
 		<?php echo esc_html__( 'Shop Now', 'in-stock-notifier-for-woocommerce' ); ?>
 	</a>
 </p>
