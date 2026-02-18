@@ -61,6 +61,13 @@ class AdminPage {
 			'settings'      => __( 'Settings', 'in-stock-notifier-for-woocommerce' ),
 		);
 
+		/**
+		 * Filter admin page tabs so add-ons can register their own.
+		 *
+		 * @param array<string, string> $tabs Slug => label pairs.
+		 */
+		$tabs = apply_filters( 'instock_notifier_admin_tabs', $tabs );
+
 		$current_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'dashboard'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! isset( $tabs[ $current_tab ] ) ) {
 			$current_tab = 'dashboard';
@@ -88,6 +95,9 @@ class AdminPage {
 		echo '<div class="isn-tab-content" style="margin-top:20px;">';
 
 		switch ( $current_tab ) {
+			case 'dashboard':
+				DashboardTab::render();
+				break;
 			case 'subscriptions':
 				SubscriptionsTab::render();
 				break;
@@ -95,7 +105,12 @@ class AdminPage {
 				SettingsTab::render();
 				break;
 			default:
-				DashboardTab::render();
+				/**
+				 * Render a custom admin tab registered by an add-on.
+				 *
+				 * @param string $current_tab The active tab slug.
+				 */
+				do_action( "instock_notifier_admin_tab_{$current_tab}" );
 				break;
 		}
 
