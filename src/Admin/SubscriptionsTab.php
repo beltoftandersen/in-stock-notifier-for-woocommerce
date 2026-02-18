@@ -126,6 +126,13 @@ class SubscriptionsListTable extends \WP_List_Table {
 	private $product_map = array();
 
 	/**
+	 * Variation lookup map to avoid N+1 queries.
+	 *
+	 * @var array<int, \WC_Product_Variation>
+	 */
+	private $variation_map = array();
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
@@ -204,6 +211,17 @@ class SubscriptionsListTable extends \WP_List_Table {
 			$products = wc_get_products( array( 'include' => $product_ids, 'limit' => -1 ) );
 			foreach ( $products as $isn_product ) {
 				$this->product_map[ $isn_product->get_id() ] = $isn_product;
+			}
+		}
+
+		// Batch-load all variations.
+		$variation_ids = array_unique( array_filter( array_map( function ( $item ) { return absint( $item->variation_id ); }, $this->items ) ) );
+		if ( ! empty( $variation_ids ) ) {
+			foreach ( $variation_ids as $vid ) {
+				$variation = wc_get_product( $vid );
+				if ( $variation ) {
+					$this->variation_map[ $vid ] = $variation;
+				}
 			}
 		}
 
@@ -299,18 +317,24 @@ class SubscriptionsListTable extends \WP_List_Table {
 	}
 
 	/**
-	 * Product column.
+	 * Product column — shows name and SKU.
 	 *
 	 * @param object $item Row item.
 	 * @return string
 	 */
 	protected function column_product_id( $item ) {
-		$product = isset( $this->product_map[ $item->product_id ] ) ? $this->product_map[ $item->product_id ] : null;
-		$name    = $product ? $product->get_name() : ( '#' . $item->product_id );
-		$output  = esc_html( $name );
-		if ( absint( $item->variation_id ) > 0 ) {
-			$output .= '<br><small>' . esc_html__( 'Variation:', 'in-stock-notifier-for-woocommerce' ) . ' #' . absint( $item->variation_id ) . '</small>';
+		$product   = isset( $this->product_map[ $item->product_id ] ) ? $this->product_map[ $item->product_id ] : null;
+		$variation = ( absint( $item->variation_id ) > 0 && isset( $this->variation_map[ $item->variation_id ] ) ) ? $this->variation_map[ $item->variation_id ] : null;
+
+		$name = $product ? $product->get_name() : ( '#' . $item->product_id );
+		$output = esc_html( $name );
+
+		// Show variation SKU if available, otherwise product SKU.
+		$sku = $variation ? $variation->get_sku() : ( $product ? $product->get_sku() : '' );
+		if ( $sku ) {
+			$output .= '<br><small>' . esc_html__( 'SKU:', 'in-stock-notifier-for-woocommerce' ) . ' ' . esc_html( $sku ) . '</small>';
 		}
+
 		return $output;
 	}
 
