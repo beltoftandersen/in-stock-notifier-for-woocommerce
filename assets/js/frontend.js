@@ -84,7 +84,18 @@
 
 	$(function () {
 		$(document.body).on('submit', '.isn-form', handleFormSubmit);
-		$(document.body).on('found_variation', '.variations_form', onVariationFound);
-		$(document.body).on('reset_data', '.variations_form', onVariationReset);
+
+		/* Ignore variation events during WooCommerce init to prevent flash. */
+		var initialized = false;
+		setTimeout(function () { initialized = true; }, 500);
+
+		$(document.body).on('found_variation', '.variations_form', function (event, variation) {
+			if (!initialized) { return; }
+			onVariationFound(event, variation);
+		});
+		$(document.body).on('reset_data', '.variations_form', function (event) {
+			if (!initialized) { return; }
+			onVariationReset(event);
+		});
 	});
 })(jQuery);
