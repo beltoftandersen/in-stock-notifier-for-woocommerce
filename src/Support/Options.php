@@ -66,7 +66,6 @@ class Options {
 			'success_message'       => 'You will be notified when this product is back in stock.',
 			'already_subscribed_msg' => 'You are already subscribed for this product.',
 			'button_text'           => 'Notify Me',
-			'custom_css'            => '',
 			'rate_limit_per_ip'     => '10',
 			'disable_logging'       => '0',
 			'cleanup_on_uninstall'  => '0',
@@ -141,10 +140,6 @@ class Options {
 				? sanitize_text_field( wp_unslash( $input[ $key ] ) )
 				: $defaults[ $key ];
 		}
-
-		$clean['custom_css'] = isset( $input['custom_css'] )
-			? wp_strip_all_tags( wp_unslash( $input['custom_css'] ) )
-			: '';
 
 		$int_fields = array(
 			'batch_size'        => array( 1, 500 ),

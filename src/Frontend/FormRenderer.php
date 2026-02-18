@@ -19,13 +19,6 @@ use InStockNotifier\Support\Options;
 class FormRenderer {
 
 	/**
-	 * Track if custom CSS has been output.
-	 *
-	 * @var bool
-	 */
-	private static $css_output = false;
-
-	/**
 	 * Register hooks.
 	 *
 	 * @return void
@@ -202,12 +195,6 @@ class FormRenderer {
 
 		$html .= '</form>';
 		$html .= '<div class="isn-form-message" role="status" aria-live="polite"></div>';
-
-		/* Custom CSS: add as inline style attached to the enqueued stylesheet. */
-		if ( ! empty( $opts['custom_css'] ) && ! self::$css_output ) {
-			wp_add_inline_style( 'isn-frontend', wp_strip_all_tags( $opts['custom_css'] ) );
-			self::$css_output = true;
-		}
 
 		$html .= '</div>';
 

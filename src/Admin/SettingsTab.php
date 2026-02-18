@@ -79,7 +79,6 @@ class SettingsTab {
 		self::number_row( 'cleanup_days', __( 'Cleanup After (days)', 'in-stock-notifier-for-woocommerce' ), $opts, __( 'Delete notified subscriptions older than this. 0 = never delete.', 'in-stock-notifier-for-woocommerce' ) );
 		self::checkbox_row( 'disable_logging', __( 'Disable Logging', 'in-stock-notifier-for-woocommerce' ), $opts );
 		self::checkbox_row( 'cleanup_on_uninstall', __( 'Remove Data on Uninstall', 'in-stock-notifier-for-woocommerce' ), $opts, __( 'Delete all plugin data when the plugin is deleted.', 'in-stock-notifier-for-woocommerce' ) );
-		self::textarea_row( 'custom_css', __( 'Custom CSS', 'in-stock-notifier-for-woocommerce' ), $opts, __( 'Additional CSS for the notification form.', 'in-stock-notifier-for-woocommerce' ) );
 
 		echo '</tbody></table>';
 
