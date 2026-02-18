@@ -70,7 +70,7 @@ class BackInStockEmail extends \WC_Email {
 	 * @return string
 	 */
 	public function get_default_heading() {
-		return __( '{product_name} is back in stock!', 'in-stock-notifier-for-woocommerce' );
+		return __( 'It\'s back in stock!', 'in-stock-notifier-for-woocommerce' );
 	}
 
 	/**
