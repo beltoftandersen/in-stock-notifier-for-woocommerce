@@ -251,9 +251,15 @@ class SubscriptionsListTable extends \WP_List_Table {
 			return;
 		}
 
-		$current_status = isset( $_GET['status_filter'] ) ? sanitize_text_field( wp_unslash( $_GET['status_filter'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$current_status  = isset( $_GET['status_filter'] ) ? sanitize_text_field( wp_unslash( $_GET['status_filter'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$current_product = isset( $_GET['product_filter'] ) ? absint( $_GET['product_filter'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		// Ensure WooCommerce admin scripts are loaded for product search.
+		wp_enqueue_script( 'wc-enhanced-select' );
+		wp_enqueue_style( 'woocommerce_admin_styles' );
 
 		echo '<div class="alignleft actions">';
+
 		echo '<select name="status_filter">';
 		echo '<option value="">' . esc_html__( 'All statuses', 'in-stock-notifier-for-woocommerce' ) . '</option>';
 		foreach ( array( 'active', 'notified', 'unsubscribed' ) as $status ) {
@@ -262,6 +268,21 @@ class SubscriptionsListTable extends \WP_List_Table {
 			echo '</option>';
 		}
 		echo '</select>';
+
+		// WooCommerce AJAX product search.
+		$product_name = '';
+		if ( $current_product ) {
+			$p = wc_get_product( $current_product );
+			if ( $p ) {
+				$product_name = $p->get_name() . ' (#' . $current_product . ')';
+			}
+		}
+		echo '<select class="wc-product-search" name="product_filter" data-placeholder="' . esc_attr__( 'Search product or SKU...', 'in-stock-notifier-for-woocommerce' ) . '" data-action="woocommerce_json_search_products_and_variations" data-allow_clear="true" style="min-width:250px;">';
+		if ( $current_product && $product_name ) {
+			echo '<option value="' . absint( $current_product ) . '" selected>' . esc_html( $product_name ) . '</option>';
+		}
+		echo '</select>';
+
 		submit_button( __( 'Filter', 'in-stock-notifier-for-woocommerce' ), '', 'filter_action', false );
 		echo '</div>';
 
