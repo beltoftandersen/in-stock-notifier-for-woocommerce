@@ -263,8 +263,9 @@ class SubscriptionsListTable extends \WP_List_Table {
 		}
 		echo '</select>';
 		submit_button( __( 'Filter', 'in-stock-notifier-for-woocommerce' ), '', 'filter_action', false );
+		echo '</div>';
 
-		echo '&nbsp;';
+		echo '<div class="alignleft actions" style="margin-left:8px;">';
 		echo '<select name="isn_bulk_action">';
 		echo '<option value="">' . esc_html__( 'Bulk Actions', 'in-stock-notifier-for-woocommerce' ) . '</option>';
 		echo '<option value="delete">' . esc_html__( 'Delete Selected', 'in-stock-notifier-for-woocommerce' ) . '</option>';
