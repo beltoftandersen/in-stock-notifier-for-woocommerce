@@ -336,21 +336,14 @@ class Repository {
 	public static function bulk_delete( $ids ) {
 		global $wpdb;
 
-		$ids   = array_map( 'absint', $ids );
-		$ids   = array_filter( $ids );
-		$count = 0;
-		foreach ( $ids as $id ) {
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-			$deleted = $wpdb->delete(
-				$wpdb->prefix . 'isn_subscriptions',
-				array( 'id' => $id ),
-				array( '%d' )
-			);
-			if ( $deleted ) {
-				++$count;
-			}
+		$ids = array_filter( array_map( 'absint', $ids ) );
+		if ( empty( $ids ) ) {
+			return 0;
 		}
-		return $count;
+
+		$placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
+		return (int) $wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->prefix}isn_subscriptions WHERE id IN ($placeholders)", ...$ids ) );
 	}
 
 	/**
@@ -362,27 +355,15 @@ class Repository {
 	public static function bulk_mark_notified( $ids ) {
 		global $wpdb;
 
-		$ids   = array_map( 'absint', $ids );
-		$ids   = array_filter( $ids );
-		$count = 0;
-		$now   = current_time( 'mysql', true );
-		foreach ( $ids as $id ) {
-			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-			$updated = $wpdb->update(
-				$wpdb->prefix . 'isn_subscriptions',
-				array(
-					'status'      => 'notified',
-					'notified_at' => $now,
-				),
-				array( 'id' => $id ),
-				array( '%s', '%s' ),
-				array( '%d' )
-			);
-			if ( $updated ) {
-				++$count;
-			}
+		$ids = array_filter( array_map( 'absint', $ids ) );
+		if ( empty( $ids ) ) {
+			return 0;
 		}
-		return $count;
+
+		$placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
+		$now          = current_time( 'mysql', true );
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare, WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber
+		return (int) $wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->prefix}isn_subscriptions SET status = 'notified', notified_at = %s WHERE id IN ($placeholders)", $now, ...$ids ) );
 	}
 
 	/**

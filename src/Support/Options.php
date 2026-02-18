@@ -99,14 +99,7 @@ class Options {
 	 */
 	public static function get( $key, $default = null ) {
 		$all = self::get_all();
-		if ( isset( $all[ $key ] ) ) {
-			return $all[ $key ];
-		}
-		$defaults = self::defaults();
-		if ( null === $default && isset( $defaults[ $key ] ) ) {
-			return $defaults[ $key ];
-		}
-		return $default;
+		return isset( $all[ $key ] ) ? $all[ $key ] : $default;
 	}
 
 	/**

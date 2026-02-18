@@ -18,6 +18,12 @@ class AdminPage {
 
 	const PAGE_SLUG = 'isn-notifier';
 
+	const STATUS_COLORS = array(
+		'active'       => '#0073aa',
+		'notified'     => '#46b450',
+		'unsubscribed' => '#dc3232',
+	);
+
 	/**
 	 * Register hooks.
 	 *

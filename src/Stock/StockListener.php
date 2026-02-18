@@ -45,22 +45,9 @@ class StockListener {
 	 * @return void
 	 */
 	public static function on_stock_status_change( $product_id, $status, $product = null ) {
-		if ( Options::get( 'enabled' ) !== '1' ) {
-			return;
+		if ( self::is_trigger_status( $status ) ) {
+			self::maybe_queue_product( $product_id );
 		}
-
-		/**
-		 * Filter the stock statuses that trigger notifications.
-		 *
-		 * @param array $statuses Stock status values.
-		 */
-		$trigger_statuses = apply_filters( 'instock_notifier_stock_status_triggers', array( 'instock', 'onbackorder' ) );
-
-		if ( ! in_array( $status, $trigger_statuses, true ) ) {
-			return;
-		}
-
-		self::maybe_queue_product( $product_id );
 	}
 
 	/**
@@ -71,25 +58,34 @@ class StockListener {
 	 * @return void
 	 */
 	public static function on_product_props_updated( $product, $updated_props ) {
-		if ( Options::get( 'enabled' ) !== '1' ) {
-			return;
-		}
-
 		if ( ! is_array( $updated_props ) || ! in_array( 'stock_status', $updated_props, true ) ) {
 			return;
 		}
 
-		$status = $product->get_stock_status();
+		if ( self::is_trigger_status( $product->get_stock_status() ) ) {
+			self::maybe_queue_product( $product->get_id() );
+		}
+	}
 
-		/** This filter is documented in StockListener::on_stock_status_change. */
-		$trigger_statuses = apply_filters( 'instock_notifier_stock_status_triggers', array( 'instock', 'onbackorder' ) );
-
-		if ( ! in_array( $status, $trigger_statuses, true ) ) {
-			return;
+	/**
+	 * Check if the plugin is enabled and the status triggers notifications.
+	 *
+	 * @param string $status Stock status value.
+	 * @return bool
+	 */
+	private static function is_trigger_status( $status ) {
+		if ( Options::get( 'enabled' ) !== '1' ) {
+			return false;
 		}
 
-		$product_id = $product->get_id();
-		self::maybe_queue_product( $product_id );
+		/**
+		 * Filter the stock statuses that trigger notifications.
+		 *
+		 * @param array $statuses Stock status values.
+		 */
+		$trigger_statuses = apply_filters( 'instock_notifier_stock_status_triggers', array( 'instock', 'onbackorder' ) );
+
+		return in_array( $status, $trigger_statuses, true );
 	}
 
 	/**
@@ -104,20 +100,19 @@ class StockListener {
 			return;
 		}
 
-		/* Check the parent product ID too for variations. */
-		$check_id = $product_id;
-		$product  = wc_get_product( $product_id );
+		$product = wc_get_product( $product_id );
 		if ( ! $product ) {
 			return;
 		}
 
-		$parent_id = $product->get_parent_id();
+		$parent_id  = $product->get_parent_id();
+		$enqueue_id = $product_id;
 
 		$has_subs = Repository::has_active_subscriptions( $product_id );
 		if ( ! $has_subs && $parent_id ) {
 			$has_subs = Repository::has_active_subscriptions( $parent_id );
 			if ( $has_subs ) {
-				$check_id = $parent_id;
+				$enqueue_id = $parent_id;
 			}
 		}
 
@@ -128,7 +123,7 @@ class StockListener {
 		LogViewer::log( 'STOCK_CHANGE product=' . $product_id . ' status=instock queuing_notifications' );
 
 		$variation = ( $parent_id && $parent_id !== $product_id ) ? $product_id : 0;
-		NotificationQueue::enqueue( $check_id, $variation );
+		NotificationQueue::enqueue( $enqueue_id, $variation );
 
 		/**
 		 * Fires after a product comes back in stock, for custom cache purge logic (CDN, Varnish, etc.).

@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: In-Stock Notifier for WooCommerce 1.0.8\n"
+"Project-Id-Version: In-Stock Notifier for WooCommerce 1.0.12\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/in-stock-notifier-for-woocommerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-17T14:39:45+00:00\n"
+"POT-Creation-Date: 2026-02-18T07:44:02+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: in-stock-notifier-for-woocommerce\n"
@@ -45,21 +45,21 @@ msgid "In-Stock Notifier requires WooCommerce to be installed and active."
 msgstr ""
 
 #: instock-notifier.php:92
-#: src/Admin/AdminPage.php:55
+#: src/Admin/AdminPage.php:61
 msgid "Settings"
 msgstr ""
 
-#: src/Admin/AdminPage.php:38
-#: src/Admin/AdminPage.php:39
-#: src/Admin/AdminPage.php:64
+#: src/Admin/AdminPage.php:44
+#: src/Admin/AdminPage.php:45
+#: src/Admin/AdminPage.php:70
 msgid "In-Stock Notifier"
 msgstr ""
 
-#: src/Admin/AdminPage.php:53
+#: src/Admin/AdminPage.php:59
 msgid "Dashboard"
 msgstr ""
 
-#: src/Admin/AdminPage.php:54
+#: src/Admin/AdminPage.php:60
 msgid "Subscriptions"
 msgstr ""
 
@@ -67,75 +67,75 @@ msgstr ""
 msgid "Notifications queued. They will be sent shortly via cron."
 msgstr ""
 
-#: src/Admin/DashboardTab.php:41
+#: src/Admin/DashboardTab.php:42
 msgid "Active"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:42
+#: src/Admin/DashboardTab.php:43
 #: src/Admin/SubscriptionsTab.php:122
 msgid "Notified"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:43
+#: src/Admin/DashboardTab.php:44
 #: src/Unsubscribe/Handler.php:86
 msgid "Unsubscribed"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:44
+#: src/Admin/DashboardTab.php:45
 msgid "Total"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:47
+#: src/Admin/DashboardTab.php:48
 msgid "Top Products by Active Subscriptions"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:51
+#: src/Admin/DashboardTab.php:52
 msgid "No active subscriptions yet."
 msgstr ""
 
-#: src/Admin/DashboardTab.php:80
+#: src/Admin/DashboardTab.php:81
 #: src/Admin/SubscriptionsTab.php:119
 msgid "Product"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:81
+#: src/Admin/DashboardTab.php:82
 msgid "Variation"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:82
+#: src/Admin/DashboardTab.php:83
 msgid "Subscribers"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:83
+#: src/Admin/DashboardTab.php:84
 msgid "Stock Status"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:84
+#: src/Admin/DashboardTab.php:85
 msgid "Actions"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:139
+#: src/Admin/DashboardTab.php:140
 msgid "Send notifications to all active subscribers for this product?"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:140
+#: src/Admin/DashboardTab.php:141
 msgid "Send Notifications"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:162
+#: src/Admin/DashboardTab.php:163
 #: src/Admin/SubscriptionsTab.php:59
 msgid "You do not have permission to do this."
 msgstr ""
 
-#: src/Admin/DashboardTab.php:211
+#: src/Admin/DashboardTab.php:212
 msgid "In stock"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:212
+#: src/Admin/DashboardTab.php:213
 msgid "Out of stock"
 msgstr ""
 
-#: src/Admin/DashboardTab.php:213
+#: src/Admin/DashboardTab.php:214
 msgid "On backorder"
 msgstr ""
 
@@ -311,7 +311,7 @@ msgstr ""
 msgid "Variation:"
 msgstr ""
 
-#: src/Admin/SubscriptionsTab.php:318
+#: src/Admin/SubscriptionsTab.php:314
 msgid "No subscriptions found."
 msgstr ""
 
@@ -323,44 +323,42 @@ msgstr ""
 msgid "Sent to customers who subscribed for a back-in-stock notification when the product returns to stock."
 msgstr ""
 
-#: src/Email/BackInStockEmail.php:56
-#: src/Email/BackInStockEmail.php:57
-#: src/Email/BackInStockEmail.php:68
-#: src/Email/BackInStockEmail.php:77
+#: src/Email/BackInStockEmail.php:64
+#: src/Email/BackInStockEmail.php:73
 msgid "{product_name} is back in stock!"
 msgstr ""
 
-#: src/Email/BackInStockEmail.php:189
+#: src/Email/BackInStockEmail.php:180
 msgid "Sample Product"
 msgstr ""
 
 #. translators: %s: list of available placeholders
-#: src/Email/BackInStockEmail.php:200
+#: src/Email/BackInStockEmail.php:191
 #, php-format
 msgid "Available placeholders: %s"
 msgstr ""
 
-#: src/Email/BackInStockEmail.php:204
+#: src/Email/BackInStockEmail.php:195
 msgid "Enable/Disable"
 msgstr ""
 
-#: src/Email/BackInStockEmail.php:206
+#: src/Email/BackInStockEmail.php:197
 msgid "Enable this email notification"
 msgstr ""
 
-#: src/Email/BackInStockEmail.php:210
+#: src/Email/BackInStockEmail.php:201
 msgid "Subject"
 msgstr ""
 
-#: src/Email/BackInStockEmail.php:218
+#: src/Email/BackInStockEmail.php:209
 msgid "Email heading"
 msgstr ""
 
-#: src/Email/BackInStockEmail.php:226
+#: src/Email/BackInStockEmail.php:217
 msgid "Email type"
 msgstr ""
 
-#: src/Email/BackInStockEmail.php:228
+#: src/Email/BackInStockEmail.php:219
 msgid "Choose which format of email to send."
 msgstr ""
 
@@ -372,30 +370,28 @@ msgstr ""
 msgid "Something went wrong. Please try again."
 msgstr ""
 
-#: src/Frontend/FormRenderer.php:103
-msgid "Want to know when it's back? Leave your email below."
-msgstr ""
-
-#: src/Frontend/FormRenderer.php:115
-msgid "Desired quantity"
-msgstr ""
-
-#: src/Frontend/FormRenderer.php:134
-msgid "Email address"
-msgstr ""
-
-#: src/Frontend/FormRenderer.php:135
-msgid "Your email address"
-msgstr ""
-
-#: src/Frontend/Shortcode.php:108
-#: src/Plugin.php:160
+#: src/Frontend/FormRenderer.php:116
 msgid "An error occurred."
 msgstr ""
 
-#: src/Frontend/Shortcode.php:109
-#: src/Plugin.php:161
+#: src/Frontend/FormRenderer.php:117
 msgid "An error occurred. Please try again."
+msgstr ""
+
+#: src/Frontend/FormRenderer.php:141
+msgid "Want to know when it's back? Leave your email below."
+msgstr ""
+
+#: src/Frontend/FormRenderer.php:153
+msgid "Desired quantity"
+msgstr ""
+
+#: src/Frontend/FormRenderer.php:172
+msgid "Email address"
+msgstr ""
+
+#: src/Frontend/FormRenderer.php:173
+msgid "Your email address"
 msgstr ""
 
 #: src/Subscription/Validator.php:33

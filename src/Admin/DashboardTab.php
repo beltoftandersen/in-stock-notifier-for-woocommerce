@@ -38,9 +38,10 @@ class DashboardTab {
 		$total  = $counts['active'] + $counts['notified'] + $counts['unsubscribed'];
 
 		echo '<div class="isn-stats-cards">';
-		self::stat_card( __( 'Active', 'in-stock-notifier-for-woocommerce' ), $counts['active'], '#0073aa' );
-		self::stat_card( __( 'Notified', 'in-stock-notifier-for-woocommerce' ), $counts['notified'], '#46b450' );
-		self::stat_card( __( 'Unsubscribed', 'in-stock-notifier-for-woocommerce' ), $counts['unsubscribed'], '#dc3232' );
+		$c = AdminPage::STATUS_COLORS;
+		self::stat_card( __( 'Active', 'in-stock-notifier-for-woocommerce' ), $counts['active'], $c['active'] );
+		self::stat_card( __( 'Notified', 'in-stock-notifier-for-woocommerce' ), $counts['notified'], $c['notified'] );
+		self::stat_card( __( 'Unsubscribed', 'in-stock-notifier-for-woocommerce' ), $counts['unsubscribed'], $c['unsubscribed'] );
 		self::stat_card( __( 'Total', 'in-stock-notifier-for-woocommerce' ), $total, '#666' );
 		echo '</div>';
 

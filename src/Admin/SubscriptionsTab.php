@@ -269,11 +269,7 @@ class SubscriptionsListTable extends \WP_List_Table {
 	 * @return string
 	 */
 	protected function column_status( $item ) {
-		$colors = array(
-			'active'       => '#0073aa',
-			'notified'     => '#46b450',
-			'unsubscribed' => '#dc3232',
-		);
+		$colors = AdminPage::STATUS_COLORS;
 		$color  = isset( $colors[ $item->status ] ) ? $colors[ $item->status ] : '#666';
 		return '<span style="color:' . esc_attr( $color ) . ';font-weight:600;">' . esc_html( ucfirst( $item->status ) ) . '</span>';
 	}

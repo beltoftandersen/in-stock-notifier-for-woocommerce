@@ -76,46 +76,9 @@ class Shortcode {
 			return '';
 		}
 
-		/* Ensure frontend assets are enqueued even outside product pages. */
-		self::ensure_assets();
+		FormRenderer::enqueue_assets();
 
 		return FormRenderer::get_form_html( $product_id, $variation_id, $hidden );
 	}
 
-	/**
-	 * Enqueue frontend assets when the shortcode is used outside product pages.
-	 *
-	 * @return void
-	 */
-	private static function ensure_assets() {
-		if ( wp_script_is( 'isn-frontend', 'enqueued' ) ) {
-			return;
-		}
-
-		wp_enqueue_style(
-			'isn-frontend',
-			ISN_URL . 'assets/css/frontend.css',
-			array(),
-			ISN_VERSION
-		);
-
-		wp_enqueue_script(
-			'isn-frontend',
-			ISN_URL . 'assets/js/frontend.js',
-			array( 'jquery' ),
-			ISN_VERSION,
-			true
-		);
-
-		wp_localize_script(
-			'isn-frontend',
-			'isn_vars',
-			array(
-				'ajax_url'      => admin_url( 'admin-ajax.php' ),
-				'nonce'         => wp_create_nonce( 'isn_subscribe_nonce' ),
-				'error_generic' => esc_html__( 'An error occurred.', 'in-stock-notifier-for-woocommerce' ),
-				'error_network' => esc_html__( 'An error occurred. Please try again.', 'in-stock-notifier-for-woocommerce' ),
-			)
-		);
-	}
 }

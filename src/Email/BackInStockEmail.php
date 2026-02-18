@@ -52,10 +52,6 @@ class BackInStockEmail extends \WC_Email {
 			'{site_title}'   => $this->get_blogname(),
 		);
 
-		/* Default subject and heading. */
-		$this->heading = __( '{product_name} is back in stock!', 'in-stock-notifier-for-woocommerce' );
-		$this->subject = __( '{product_name} is back in stock!', 'in-stock-notifier-for-woocommerce' );
-
 		parent::__construct();
 	}
 
@@ -118,23 +114,7 @@ class BackInStockEmail extends \WC_Email {
 	 * @return string
 	 */
 	public function get_content_html() {
-		$product = $this->get_product_for_render();
-
-		$this->placeholders['{product_name}'] = $product->get_name();
-
-		return wc_get_template_html(
-			$this->template_html,
-			array(
-				'product'         => $product,
-				'email_heading'   => $this->get_heading(),
-				'unsubscribe_url' => $this->unsubscribe_url ? $this->unsubscribe_url : '#',
-				'sent_to_admin'   => false,
-				'plain_text'      => false,
-				'email'           => $this,
-			),
-			'',
-			$this->template_base
-		);
+		return $this->render_template( $this->template_html, false );
 	}
 
 	/**
@@ -143,18 +123,29 @@ class BackInStockEmail extends \WC_Email {
 	 * @return string
 	 */
 	public function get_content_plain() {
+		return $this->render_template( $this->template_plain, true );
+	}
+
+	/**
+	 * Render a template with shared variables.
+	 *
+	 * @param string $template   Template file path.
+	 * @param bool   $plain_text Whether this is a plain-text render.
+	 * @return string
+	 */
+	private function render_template( $template, $plain_text ) {
 		$product = $this->get_product_for_render();
 
 		$this->placeholders['{product_name}'] = $product->get_name();
 
 		return wc_get_template_html(
-			$this->template_plain,
+			$template,
 			array(
 				'product'         => $product,
 				'email_heading'   => $this->get_heading(),
 				'unsubscribe_url' => $this->unsubscribe_url ? $this->unsubscribe_url : '#',
 				'sent_to_admin'   => false,
-				'plain_text'      => true,
+				'plain_text'      => $plain_text,
 				'email'           => $this,
 			),
 			'',
