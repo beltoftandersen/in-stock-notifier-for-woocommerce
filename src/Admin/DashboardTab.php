@@ -35,14 +35,10 @@ class DashboardTab {
 		}
 
 		$counts = Repository::count_by_status();
-		$total  = $counts['active'] + $counts['notified'] + $counts['unsubscribed'];
 
 		echo '<div class="isn-stats-cards">';
 		$c = AdminPage::STATUS_COLORS;
-		self::stat_card( __( 'Active', 'in-stock-notifier-for-woocommerce' ), $counts['active'], $c['active'] );
-		self::stat_card( __( 'Notified', 'in-stock-notifier-for-woocommerce' ), $counts['notified'], $c['notified'] );
-		self::stat_card( __( 'Unsubscribed', 'in-stock-notifier-for-woocommerce' ), $counts['unsubscribed'], $c['unsubscribed'] );
-		self::stat_card( __( 'Total', 'in-stock-notifier-for-woocommerce' ), $total, '#666' );
+		self::stat_card( __( 'Active Subscribers', 'in-stock-notifier-for-woocommerce' ), $counts['active'], $c['active'] );
 		echo '</div>';
 
 		echo '<h2>' . esc_html__( 'Top Products by Active Subscriptions', 'in-stock-notifier-for-woocommerce' ) . '</h2>';
