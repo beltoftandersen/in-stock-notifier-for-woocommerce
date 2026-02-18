@@ -55,47 +55,26 @@
 		});
 	}
 
-	/**
-	 * Handle WooCommerce variation found event.
-	 */
-	function onVariationFound(event, variation) {
-		var $form = $(event.target).closest('.product').find('.isn-notify-form');
-		if (!$form.length) {
-			return;
-		}
-
-		if (variation && !variation.is_in_stock) {
-			$form.find('[name="isn_variation_id"]').val(variation.variation_id);
-			$form.slideDown(200);
-		} else {
-			$form.slideUp(200);
-		}
-	}
-
-	/**
-	 * Handle WooCommerce variation reset.
-	 */
-	function onVariationReset(event) {
-		var $form = $(event.target).closest('.product').find('.isn-notify-form');
-		if ($form.length) {
-			$form.slideUp(200);
-		}
-	}
-
 	$(function () {
 		$(document.body).on('submit', '.isn-form', handleFormSubmit);
 
-		/* Ignore variation events during WooCommerce init to prevent flash. */
-		var initialized = false;
-		setTimeout(function () { initialized = true; }, 500);
-
 		$(document.body).on('found_variation', '.variations_form', function (event, variation) {
-			if (!initialized) { return; }
-			onVariationFound(event, variation);
+			var $form = $(event.target).closest('.product').find('.isn-notify-form');
+			if (!$form.length) { return; }
+
+			if (variation && !variation.is_in_stock) {
+				$form.find('[name="isn_variation_id"]').val(variation.variation_id);
+				$form.stop(true).slideDown(200);
+			} else {
+				$form.stop(true).slideUp(200);
+			}
 		});
+
 		$(document.body).on('reset_data', '.variations_form', function (event) {
-			if (!initialized) { return; }
-			onVariationReset(event);
+			var $form = $(event.target).closest('.product').find('.isn-notify-form');
+			if ($form.length) {
+				$form.stop(true).slideUp(200);
+			}
 		});
 	});
 })(jQuery);

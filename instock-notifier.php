@@ -40,7 +40,7 @@ spl_autoload_register(
 );
 
 /* ── Constants ─────────────────────────────────────────────────── */
-define( 'ISN_VERSION', '1.0.8' );
+define( 'ISN_VERSION', '1.0.12' );
 define( 'ISN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ISN_URL', plugin_dir_url( __FILE__ ) );
 define( 'ISN_BASENAME', plugin_basename( __FILE__ ) );

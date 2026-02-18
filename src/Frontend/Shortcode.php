@@ -64,14 +64,22 @@ class Shortcode {
 
 		/* Check stock status: only show form for out-of-stock products. */
 		$isn_product = wc_get_product( $variation_id ? $variation_id : $product_id );
-		if ( $isn_product && $isn_product->is_in_stock() && ! $isn_product->is_type( 'variable' ) ) {
+		if ( ! $isn_product ) {
+			return '';
+		}
+
+		/* Variable products: render hidden, JS shows on out-of-stock variation select. */
+		$hidden = false;
+		if ( $isn_product->is_type( 'variable' ) ) {
+			$hidden = true;
+		} elseif ( $isn_product->is_in_stock() ) {
 			return '';
 		}
 
 		/* Ensure frontend assets are enqueued even outside product pages. */
 		self::ensure_assets();
 
-		return FormRenderer::get_form_html( $product_id, $variation_id );
+		return FormRenderer::get_form_html( $product_id, $variation_id, $hidden );
 	}
 
 	/**
