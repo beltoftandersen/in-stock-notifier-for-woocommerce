@@ -75,8 +75,16 @@ class DashboardTab {
 		/* ── Top products ─────────────────────────────────── */
 		echo '<h2>' . esc_html__( 'Top Products by Active Subscriptions', 'in-stock-notifier-for-woocommerce' ) . '</h2>';
 
-		$top = Repository::top_products( 10 );
-		if ( empty( $top ) ) {
+		$per_page  = 20;
+		$top_paged = isset( $_GET['top_paged'] ) ? max( 1, absint( $_GET['top_paged'] ) ) : 1; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$offset    = ( $top_paged - 1 ) * $per_page;
+
+		$result      = Repository::top_products( $per_page, $offset );
+		$top         = $result['items'];
+		$total       = $result['total'];
+		$total_pages = (int) ceil( $total / $per_page );
+
+		if ( empty( $top ) && 1 === $top_paged ) {
 			echo '<p>' . esc_html__( 'No active subscriptions yet.', 'in-stock-notifier-for-woocommerce' ) . '</p>';
 			return;
 		}
@@ -173,6 +181,39 @@ class DashboardTab {
 		}
 
 		echo '</tbody></table>';
+
+		/* ── Pagination ──────────────────────────────────── */
+		if ( $total_pages > 1 ) {
+			$base_url = add_query_arg(
+				array(
+					'page' => AdminPage::PAGE_SLUG,
+					'tab'  => 'dashboard',
+				),
+				admin_url( 'admin.php' )
+			);
+
+			echo '<div class="tablenav bottom"><div class="tablenav-pages">';
+			/* translators: %s: total number of products */
+			echo '<span class="displaying-num">' . esc_html( sprintf( _n( '%s product', '%s products', $total, 'in-stock-notifier-for-woocommerce' ), number_format_i18n( $total ) ) ) . '</span>';
+			echo '<span class="pagination-links">';
+
+			if ( $top_paged > 1 ) {
+				echo '<a class="prev-page button" href="' . esc_url( add_query_arg( 'top_paged', $top_paged - 1, $base_url ) ) . '">&lsaquo;</a> ';
+			} else {
+				echo '<span class="tablenav-pages-navspan button disabled">&lsaquo;</span> ';
+			}
+
+			/* translators: 1: current page, 2: total pages */
+			echo '<span class="paging-input">' . esc_html( sprintf( __( '%1$d of %2$d', 'in-stock-notifier-for-woocommerce' ), $top_paged, $total_pages ) ) . '</span>';
+
+			if ( $top_paged < $total_pages ) {
+				echo ' <a class="next-page button" href="' . esc_url( add_query_arg( 'top_paged', $top_paged + 1, $base_url ) ) . '">&rsaquo;</a>';
+			} else {
+				echo ' <span class="tablenav-pages-navspan button disabled">&rsaquo;</span>';
+			}
+
+			echo '</span></div></div>';
+		}
 	}
 
 	/**

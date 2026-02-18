@@ -244,19 +244,34 @@ class Repository {
 	/**
 	 * Get top products by active subscription count.
 	 *
-	 * @param int $limit Number of products.
-	 * @return array<int, object>
+	 * @param int $limit  Number of products per page.
+	 * @param int $offset Offset for pagination.
+	 * @return array{items: array<int, object>, total: int}
 	 */
-	public static function top_products( $limit = 10 ) {
+	public static function top_products( $limit = 20, $offset = 0 ) {
 		global $wpdb;
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		return $wpdb->get_results(
+		$total = (int) $wpdb->get_var(
 			$wpdb->prepare(
-				"SELECT product_id, variation_id, COUNT(*) as sub_count FROM {$wpdb->prefix}isn_subscriptions WHERE status = %s GROUP BY product_id, variation_id ORDER BY sub_count DESC LIMIT %d",
-				'active',
-				absint( $limit )
+				"SELECT COUNT(*) FROM (SELECT product_id, variation_id FROM {$wpdb->prefix}isn_subscriptions WHERE status = %s GROUP BY product_id, variation_id) AS t",
+				'active'
 			)
+		);
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$items = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT product_id, variation_id, COUNT(*) as sub_count FROM {$wpdb->prefix}isn_subscriptions WHERE status = %s GROUP BY product_id, variation_id ORDER BY sub_count DESC LIMIT %d OFFSET %d",
+				'active',
+				absint( $limit ),
+				absint( $offset )
+			)
+		);
+
+		return array(
+			'items' => $items,
+			'total' => $total,
 		);
 	}
 
