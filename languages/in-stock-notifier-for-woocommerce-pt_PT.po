@@ -19,7 +19,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #: instock-notifier.php
 msgid "In-Stock Notifier for WooCommerce"
-msgstr "Notificador de Stock para WooCommerce"
+msgstr ""
 
 #. Description of the plugin
 #: instock-notifier.php

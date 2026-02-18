@@ -44,7 +44,7 @@ define( 'ISN_VERSION', '1.0.26' );
 define( 'ISN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ISN_URL', plugin_dir_url( __FILE__ ) );
 define( 'ISN_BASENAME', plugin_basename( __FILE__ ) );
-define( 'ISN_DB_VERSION', '1.1.1' );
+define( 'ISN_DB_VERSION', '1.1.2' );
 
 /* ── Activation / deactivation ─────────────────────────────────── */
 register_activation_hook(

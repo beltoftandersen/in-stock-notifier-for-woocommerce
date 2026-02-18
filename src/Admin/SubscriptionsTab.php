@@ -217,11 +217,9 @@ class SubscriptionsListTable extends \WP_List_Table {
 		// Batch-load all variations.
 		$variation_ids = array_unique( array_filter( array_map( function ( $item ) { return absint( $item->variation_id ); }, $this->items ) ) );
 		if ( ! empty( $variation_ids ) ) {
-			foreach ( $variation_ids as $vid ) {
-				$variation = wc_get_product( $vid );
-				if ( $variation ) {
-					$this->variation_map[ $vid ] = $variation;
-				}
+			$variations_list = wc_get_products( array( 'include' => $variation_ids, 'type' => 'variation', 'limit' => -1 ) );
+			foreach ( $variations_list as $isn_variation ) {
+				$this->variation_map[ $isn_variation->get_id() ] = $isn_variation;
 			}
 		}
 

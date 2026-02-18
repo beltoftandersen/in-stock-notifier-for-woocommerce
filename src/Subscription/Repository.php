@@ -206,14 +206,20 @@ class Repository {
 
 		global $wpdb;
 
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		return (int) $wpdb->query(
-			$wpdb->prepare(
-				"DELETE FROM {$wpdb->prefix}isn_subscriptions WHERE status = %s AND notified_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL %d DAY)",
-				'notified',
-				$days
-			)
-		);
+		$total = 0;
+		do {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+			$deleted = (int) $wpdb->query(
+				$wpdb->prepare(
+					"DELETE FROM {$wpdb->prefix}isn_subscriptions WHERE status = %s AND notified_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL %d DAY) LIMIT 1000",
+					'notified',
+					$days
+				)
+			);
+			$total += $deleted;
+		} while ( $deleted >= 1000 );
+
+		return $total;
 	}
 
 	/**

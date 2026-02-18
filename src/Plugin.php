@@ -115,8 +115,7 @@ class Plugin {
 			return;
 		}
 
-		$opts = Options::get_all();
-		if ( empty( $opts['enabled'] ) ) {
+		if ( empty( Options::get_all()['enabled'] ) ) {
 			return;
 		}
 
