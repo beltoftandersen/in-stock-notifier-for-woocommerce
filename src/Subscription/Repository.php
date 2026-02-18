@@ -347,6 +347,18 @@ class Repository {
 	}
 
 	/**
+	 * Delete all subscriptions.
+	 *
+	 * @return int Number of deleted rows.
+	 */
+	public static function delete_all() {
+		global $wpdb;
+
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return (int) $wpdb->query( "DELETE FROM {$wpdb->prefix}isn_subscriptions" );
+	}
+
+	/**
 	 * Bulk mark as notified.
 	 *
 	 * @param array<int, int> $ids Subscription IDs.

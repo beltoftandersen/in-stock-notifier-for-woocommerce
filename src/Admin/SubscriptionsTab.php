@@ -49,6 +49,37 @@ class SubscriptionsTab {
 	 * @return void
 	 */
 	private static function handle_bulk_actions() {
+		// Handle single-row delete via row action link.
+		if ( isset( $_GET['isn_action'], $_GET['isn_id'] ) && 'delete' === $_GET['isn_action'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			check_admin_referer( 'isn_delete_' . absint( $_GET['isn_id'] ) );
+
+			if ( ! current_user_can( 'manage_woocommerce' ) ) {
+				wp_die( esc_html__( 'You do not have permission to do this.', 'in-stock-notifier-for-woocommerce' ) );
+			}
+
+			$count = Repository::bulk_delete( array( absint( $_GET['isn_id'] ) ) );
+			if ( $count ) {
+				echo '<div class="notice notice-success"><p>' . esc_html__( 'Subscription deleted.', 'in-stock-notifier-for-woocommerce' ) . '</p></div>';
+			}
+			return;
+		}
+
+		// Handle "Delete All" action.
+		if ( isset( $_REQUEST['isn_bulk_action'] ) && 'delete_all' === $_REQUEST['isn_bulk_action'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			check_admin_referer( 'isn_bulk_action_nonce' );
+
+			if ( ! current_user_can( 'manage_woocommerce' ) ) {
+				wp_die( esc_html__( 'You do not have permission to do this.', 'in-stock-notifier-for-woocommerce' ) );
+			}
+
+			$count = Repository::delete_all();
+			echo '<div class="notice notice-success"><p>';
+			/* translators: %d: number of deleted subscriptions */
+			echo esc_html( sprintf( _n( '%d subscription deleted.', '%d subscriptions deleted.', $count, 'in-stock-notifier-for-woocommerce' ), $count ) );
+			echo '</p></div>';
+			return;
+		}
+
 		if ( ! isset( $_REQUEST['isn_bulk_action'] ) || empty( $_REQUEST['isn_ids'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
@@ -218,12 +249,16 @@ class SubscriptionsListTable extends \WP_List_Table {
 		echo '&nbsp;';
 		echo '<select name="isn_bulk_action">';
 		echo '<option value="">' . esc_html__( 'Bulk Actions', 'in-stock-notifier-for-woocommerce' ) . '</option>';
-		echo '<option value="delete">' . esc_html__( 'Delete', 'in-stock-notifier-for-woocommerce' ) . '</option>';
+		echo '<option value="delete">' . esc_html__( 'Delete Selected', 'in-stock-notifier-for-woocommerce' ) . '</option>';
+		echo '<option value="delete_all">' . esc_html__( 'Delete All Subscriptions', 'in-stock-notifier-for-woocommerce' ) . '</option>';
 		echo '<option value="mark_notified">' . esc_html__( 'Mark as Notified', 'in-stock-notifier-for-woocommerce' ) . '</option>';
 		echo '</select>';
 		wp_nonce_field( 'isn_bulk_action_nonce' );
 		submit_button( __( 'Apply', 'in-stock-notifier-for-woocommerce' ), 'action', 'isn_apply_bulk', false );
 		echo '</div>';
+
+		// Inline JS to confirm destructive "Delete All" action.
+		echo '<script>document.querySelector(\'[name="isn_apply_bulk"]\')&&document.querySelector(\'[name="isn_apply_bulk"]\').addEventListener("click",function(e){var s=document.querySelector(\'[name="isn_bulk_action"]\');if(s&&s.value==="delete_all"&&!confirm("' . esc_js( __( 'Are you sure you want to delete ALL subscriptions? This cannot be undone.', 'in-stock-notifier-for-woocommerce' ) ) . '"))e.preventDefault();});</script>';
 	}
 
 	/**
@@ -237,13 +272,30 @@ class SubscriptionsListTable extends \WP_List_Table {
 	}
 
 	/**
-	 * Email column.
+	 * Email column with row actions.
 	 *
 	 * @param object $item Row item.
 	 * @return string
 	 */
 	protected function column_email( $item ) {
-		return esc_html( $item->email );
+		$delete_url = wp_nonce_url(
+			add_query_arg(
+				array(
+					'page'       => AdminPage::PAGE_SLUG,
+					'tab'        => 'subscriptions',
+					'isn_action' => 'delete',
+					'isn_id'     => absint( $item->id ),
+				),
+				admin_url( 'admin.php' )
+			),
+			'isn_delete_' . absint( $item->id )
+		);
+
+		$actions = array(
+			'delete' => '<a href="' . esc_url( $delete_url ) . '" style="color:#b32d2e;" onclick="return confirm(\'' . esc_js( __( 'Delete this subscription?', 'in-stock-notifier-for-woocommerce' ) ) . '\');">' . esc_html__( 'Delete', 'in-stock-notifier-for-woocommerce' ) . '</a>',
+		);
+
+		return esc_html( $item->email ) . $this->row_actions( $actions );
 	}
 
 	/**
