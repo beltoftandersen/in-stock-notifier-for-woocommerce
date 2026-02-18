@@ -41,7 +41,7 @@
 	border-radius: 0;
 	color: var(--_text);
 	font-family: inherit;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.04);
+	box-shadow: none;
 	animation: isn-enter 0.4s var(--_ease) both;
 }
 
@@ -90,12 +90,11 @@
 	max-width: 480px;
 	border-radius: 0;
 	overflow: hidden;
-	box-shadow: 0 0 0 1px var(--_border);
-	transition: box-shadow 0.2s var(--_ease);
+	box-shadow: none;
 }
 
 .isn-fields-row:focus-within {
-	box-shadow: 0 0 0 2px var(--_accent);
+	box-shadow: none;
 }
 
 /* ── Email input ────────────────────────────────────────────────── */
@@ -158,7 +157,7 @@
 .isn-notify-form .isn-quantity-input:focus {
 	outline: none;
 	border-color: var(--_accent);
-	box-shadow: 0 0 0 3px var(--_accent-glow);
+	box-shadow: none;
 }
 
 /* ── GDPR checkbox ──────────────────────────────────────────────── */
