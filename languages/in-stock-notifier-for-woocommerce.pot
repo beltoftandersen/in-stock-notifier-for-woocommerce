@@ -324,8 +324,11 @@ msgid "Sent to customers who subscribed for a back-in-stock notification when th
 msgstr ""
 
 #: src/Email/BackInStockEmail.php:64
-#: src/Email/BackInStockEmail.php:73
 msgid "{product_name} is back in stock!"
+msgstr ""
+
+#: src/Email/BackInStockEmail.php:73
+msgid "It's back in stock!"
 msgstr ""
 
 #: src/Email/BackInStockEmail.php:180
