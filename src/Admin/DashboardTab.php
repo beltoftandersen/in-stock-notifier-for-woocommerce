@@ -41,6 +41,38 @@ class DashboardTab {
 		self::stat_card( __( 'Active Subscribers', 'in-stock-notifier-for-woocommerce' ), $counts['active'], $c['active'] );
 		echo '</div>';
 
+		/* ── Product search ────────────────────────────────── */
+		wp_enqueue_script( 'wc-enhanced-select' );
+		wp_enqueue_style( 'woocommerce_admin_styles' );
+
+		$search_product_id = isset( $_GET['isn_product'] ) ? absint( $_GET['isn_product'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		echo '<h2>' . esc_html__( 'Look Up Product Subscribers', 'in-stock-notifier-for-woocommerce' ) . '</h2>';
+		echo '<form method="get" style="margin-bottom:20px;">';
+		echo '<input type="hidden" name="page" value="' . esc_attr( AdminPage::PAGE_SLUG ) . '" />';
+		echo '<input type="hidden" name="tab" value="dashboard" />';
+
+		$search_product_name = '';
+		if ( $search_product_id ) {
+			$p = wc_get_product( $search_product_id );
+			if ( $p ) {
+				$sku = $p->get_sku();
+				$search_product_name = $p->get_name() . ( $sku ? ' (SKU: ' . $sku . ')' : '' ) . ' (#' . $search_product_id . ')';
+			}
+		}
+		echo '<select class="wc-product-search" name="isn_product" data-placeholder="' . esc_attr__( 'Search by product name or SKU...', 'in-stock-notifier-for-woocommerce' ) . '" data-action="woocommerce_json_search_products_and_variations" data-allow_clear="true" style="min-width:350px;">';
+		if ( $search_product_id && $search_product_name ) {
+			echo '<option value="' . absint( $search_product_id ) . '" selected>' . esc_html( $search_product_name ) . '</option>';
+		}
+		echo '</select> ';
+		submit_button( __( 'Look Up', 'in-stock-notifier-for-woocommerce' ), 'secondary', 'isn_lookup', false );
+		echo '</form>';
+
+		if ( $search_product_id ) {
+			self::render_product_subscribers( $search_product_id );
+		}
+
+		/* ── Top products ─────────────────────────────────── */
 		echo '<h2>' . esc_html__( 'Top Products by Active Subscriptions', 'in-stock-notifier-for-woocommerce' ) . '</h2>';
 
 		$top = Repository::top_products( 10 );
@@ -180,6 +212,82 @@ class DashboardTab {
 		);
 		wp_safe_redirect( $redirect );
 		exit;
+	}
+
+	/**
+	 * Render subscribers for a specific product.
+	 *
+	 * @param int $product_id Product or variation ID.
+	 * @return void
+	 */
+	private static function render_product_subscribers( $product_id ) {
+		$product = wc_get_product( $product_id );
+		if ( ! $product ) {
+			echo '<p>' . esc_html__( 'Product not found.', 'in-stock-notifier-for-woocommerce' ) . '</p>';
+			return;
+		}
+
+		$sku  = $product->get_sku();
+		$name = $product->get_name();
+
+		// Determine if this is a variation or a parent product.
+		$is_variation = $product->is_type( 'variation' );
+		if ( $is_variation ) {
+			$query_product_id   = $product->get_parent_id();
+			$query_variation_id = $product_id;
+		} else {
+			$query_product_id   = $product_id;
+			$query_variation_id = 0;
+		}
+
+		// Get all subscriptions for this product (any status).
+		$result = Repository::get_admin_list( array(
+			'product_id' => $query_product_id,
+			'per_page'   => 100,
+			'offset'     => 0,
+		) );
+
+		// If variation, filter to that specific variation.
+		$items = $result['items'];
+		if ( $is_variation ) {
+			$items = array_filter( $items, function ( $item ) use ( $query_variation_id ) {
+				return absint( $item->variation_id ) === $query_variation_id;
+			} );
+		}
+
+		echo '<div style="background:#fff;border:1px solid #ccd0d4;padding:15px 20px;margin-bottom:20px;">';
+		echo '<h3 style="margin-top:0;">' . esc_html( $name );
+		if ( $sku ) {
+			echo ' <span style="color:#666;font-weight:normal;">(SKU: ' . esc_html( $sku ) . ')</span>';
+		}
+		echo '</h3>';
+
+		if ( empty( $items ) ) {
+			echo '<p>' . esc_html__( 'No subscribers for this product.', 'in-stock-notifier-for-woocommerce' ) . '</p>';
+		} else {
+			echo '<table class="widefat fixed striped">';
+			echo '<thead><tr>';
+			echo '<th>' . esc_html__( 'Email', 'in-stock-notifier-for-woocommerce' ) . '</th>';
+			echo '<th>' . esc_html__( 'Status', 'in-stock-notifier-for-woocommerce' ) . '</th>';
+			echo '<th>' . esc_html__( 'Subscribed', 'in-stock-notifier-for-woocommerce' ) . '</th>';
+			echo '<th>' . esc_html__( 'Notified', 'in-stock-notifier-for-woocommerce' ) . '</th>';
+			echo '</tr></thead><tbody>';
+
+			$colors = AdminPage::STATUS_COLORS;
+			foreach ( $items as $item ) {
+				$color = isset( $colors[ $item->status ] ) ? $colors[ $item->status ] : '#666';
+				echo '<tr>';
+				echo '<td>' . esc_html( $item->email ) . '</td>';
+				echo '<td><span style="color:' . esc_attr( $color ) . ';font-weight:600;">' . esc_html( ucfirst( $item->status ) ) . '</span></td>';
+				echo '<td>' . esc_html( $item->created_at ) . '</td>';
+				echo '<td>' . ( $item->notified_at ? esc_html( $item->notified_at ) : '—' ) . '</td>';
+				echo '</tr>';
+			}
+
+			echo '</tbody></table>';
+		}
+
+		echo '</div>';
 	}
 
 	/**
