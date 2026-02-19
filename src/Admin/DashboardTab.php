@@ -41,6 +41,13 @@ class DashboardTab {
 		self::stat_card( __( 'Active Subscribers', 'in-stock-notifier-for-woocommerce' ), $counts['active'], $c['active'] );
 		echo '</div>';
 
+		/**
+		 * Fires after the dashboard stats cards.
+		 *
+		 * Used by Pro to inject conversion tracking stats.
+		 */
+		do_action( 'instock_notifier_dashboard_after_stats' );
+
 		/* ── Product search ────────────────────────────────── */
 		wp_enqueue_script( 'wc-enhanced-select' );
 		wp_enqueue_style( 'woocommerce_admin_styles' );
@@ -115,6 +122,7 @@ class DashboardTab {
 		echo '<table class="widefat fixed striped">';
 		echo '<thead><tr>';
 		echo '<th>' . esc_html__( 'Product', 'in-stock-notifier-for-woocommerce' ) . '</th>';
+		echo '<th>' . esc_html__( 'SKU', 'in-stock-notifier-for-woocommerce' ) . '</th>';
 		echo '<th>' . esc_html__( 'Variation', 'in-stock-notifier-for-woocommerce' ) . '</th>';
 		echo '<th>' . esc_html__( 'Subscribers', 'in-stock-notifier-for-woocommerce' ) . '</th>';
 		echo '<th>' . esc_html__( 'Stock Status', 'in-stock-notifier-for-woocommerce' ) . '</th>';
@@ -145,6 +153,16 @@ class DashboardTab {
 			} else {
 				echo esc_html( $name );
 			}
+			echo '</td>';
+			echo '<td>';
+			$sku = '';
+			if ( $variation_id > 0 && isset( $variation_map[ $variation_id ] ) ) {
+				$sku = $variation_map[ $variation_id ]->get_sku();
+			}
+			if ( ! $sku && $product ) {
+				$sku = $product->get_sku();
+			}
+			echo $sku ? esc_html( $sku ) : '—';
 			echo '</td>';
 			echo '<td>';
 			if ( $variation_id > 0 && isset( $variation_map[ $variation_id ] ) ) {
