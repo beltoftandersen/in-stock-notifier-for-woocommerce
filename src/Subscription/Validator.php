@@ -96,7 +96,8 @@ class Validator {
 		if ( apply_filters( 'instock_notifier_trust_forwarded_for', false )
 			&& ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
 			$ips = explode( ',', sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) );
-			return trim( $ips[0] );
+			// Use the rightmost IP (closest to the trusted proxy), not the leftmost (client-provided).
+			return trim( end( $ips ) );
 		}
 
 		return '';

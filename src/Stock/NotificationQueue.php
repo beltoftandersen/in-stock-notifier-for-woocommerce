@@ -61,6 +61,11 @@ class NotificationQueue {
 			'variation_id' => absint( $variation_id ),
 		);
 
+		/* Don't schedule a duplicate if one is already pending for this product+variation. */
+		if ( function_exists( 'as_has_scheduled_action' ) && as_has_scheduled_action( self::ACTION_HOOK, $args ) ) {
+			return;
+		}
+
 		$delay = max( 1, absint( $delay ) );
 
 		if ( function_exists( 'as_schedule_single_action' ) ) {

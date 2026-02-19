@@ -21,6 +21,13 @@ use InStockNotifier\Logging\LogViewer;
 class StockListener {
 
 	/**
+	 * Track products already queued in this request to prevent duplicate notifications.
+	 *
+	 * @var array<int, true>
+	 */
+	private static $queued_this_request = array();
+
+	/**
 	 * Register stock change hooks.
 	 *
 	 * @return void
@@ -100,6 +107,11 @@ class StockListener {
 			return;
 		}
 
+		// Prevent duplicate queueing from multiple hooks firing in the same request.
+		if ( isset( self::$queued_this_request[ $product_id ] ) ) {
+			return;
+		}
+
 		$product = wc_get_product( $product_id );
 		if ( ! $product ) {
 			return;
@@ -123,6 +135,7 @@ class StockListener {
 			return;
 		}
 
+		self::$queued_this_request[ $product_id ] = true;
 		LogViewer::log( 'STOCK_CHANGE product=' . $product_id . ' status=instock queuing_notifications' );
 
 		$variation = ( $parent_id && $parent_id !== $product_id ) ? $product_id : 0;
