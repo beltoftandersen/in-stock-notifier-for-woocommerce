@@ -2,7 +2,7 @@
 
 Let customers subscribe to out-of-stock product notifications and automatically email them when items are back in stock.
 
-- Stable version: 1.0.8
+- Stable version: 1.0.29
 - Requires: WordPress 5.8+, PHP 7.4+, WooCommerce 6.0+
 - Author: Chimkins IT
 - Text domain: in-stock-notifier-for-woocommerce
@@ -21,7 +21,8 @@ Stock changes are detected regardless of source: admin UI, REST API, CLI, or ERP
 - Email configurable under WooCommerce > Settings > Emails > Back In Stock
 - Batch sending via Action Scheduler with configurable batch size and throttle
 - Detects stock changes from admin, REST API, CLI, and ERP systems
-- Admin dashboard with stats and manual "Send Notifications" button
+- Admin dashboard with stats, SKU and Brand columns, and manual "Send Notifications" button
+- Brand column appears automatically when WooCommerce Brands is active (WooCommerce 9.4+)
 - Subscription list with search, filters, pagination, and bulk actions
 - One-click unsubscribe link in every email
 - Optional GDPR checkbox, honeypot spam protection, and rate limiting
@@ -90,6 +91,23 @@ Developers can extend the plugin:
 - Translation template: `languages/in-stock-notifier-for-woocommerce.pot`
 
 ## Changelog
+
+### 1.0.29
+
+- Simplified token generation to use `wp_generate_password()`.
+- Rate limiter now uses REMOTE_ADDR only; X-Forwarded-For requires explicit opt-in via filter.
+- `delete_all()` requires explicit confirmation parameter to prevent accidental data loss.
+- Product subscriber lookup now shows truncation notice when results exceed limit.
+- Notification throttle now uses Action Scheduler delay instead of blocking `sleep()`.
+- Skip redundant subscription check for variations (query parent directly).
+- Added Brand column to Dashboard top products table (conditional on WooCommerce Brands 9.4+).
+
+### 1.0.28
+
+- Added database index on `unsubscribe_token` column for faster token lookups.
+- Added `instock_notifier_email_product_url` filter to email templates for URL customization.
+- Added `instock_notifier_dashboard_after_stats` action hook for extending the dashboard.
+- Added SKU column to the Top Products table on the Dashboard tab.
 
 ### 1.0.8
 
