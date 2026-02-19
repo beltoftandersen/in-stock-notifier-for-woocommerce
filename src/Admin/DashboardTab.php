@@ -104,6 +104,18 @@ class DashboardTab {
 			$product_map[ $isn_product->get_id() ] = $isn_product;
 		}
 
+		// Batch-load brands if the product_brand taxonomy exists (WooCommerce 9.4+).
+		$show_brands      = taxonomy_exists( 'product_brand' );
+		$brands_by_product = array();
+		if ( $show_brands && ! empty( $product_ids ) ) {
+			$brand_terms = wp_get_object_terms( $product_ids, 'product_brand' );
+			if ( ! is_wp_error( $brand_terms ) ) {
+				foreach ( $brand_terms as $term ) {
+					$brands_by_product[ $term->object_id ][] = $term->name;
+				}
+			}
+		}
+
 		// Batch-load variations where needed.
 		$variation_ids = array();
 		foreach ( $top as $row ) {
@@ -123,6 +135,9 @@ class DashboardTab {
 		echo '<thead><tr>';
 		echo '<th>' . esc_html__( 'Product', 'in-stock-notifier-for-woocommerce' ) . '</th>';
 		echo '<th>' . esc_html__( 'SKU', 'in-stock-notifier-for-woocommerce' ) . '</th>';
+		if ( $show_brands ) {
+			echo '<th>' . esc_html__( 'Brand', 'in-stock-notifier-for-woocommerce' ) . '</th>';
+		}
 		echo '<th>' . esc_html__( 'Variation', 'in-stock-notifier-for-woocommerce' ) . '</th>';
 		echo '<th>' . esc_html__( 'Subscribers', 'in-stock-notifier-for-woocommerce' ) . '</th>';
 		echo '<th>' . esc_html__( 'Stock Status', 'in-stock-notifier-for-woocommerce' ) . '</th>';
@@ -164,6 +179,10 @@ class DashboardTab {
 			}
 			echo $sku ? esc_html( $sku ) : '—';
 			echo '</td>';
+			if ( $show_brands ) {
+				$brand_names = isset( $brands_by_product[ $row->product_id ] ) ? $brands_by_product[ $row->product_id ] : array();
+				echo '<td>' . ( ! empty( $brand_names ) ? esc_html( implode( ', ', $brand_names ) ) : '—' ) . '</td>';
+			}
 			echo '<td>';
 			if ( $variation_id > 0 && isset( $variation_map[ $variation_id ] ) ) {
 				$attrs = $variation_map[ $variation_id ]->get_attributes();
