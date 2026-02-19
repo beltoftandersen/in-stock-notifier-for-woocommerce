@@ -72,7 +72,7 @@ class SubscriptionsTab {
 				wp_die( esc_html__( 'You do not have permission to do this.', 'in-stock-notifier-for-woocommerce' ) );
 			}
 
-			$count = Repository::delete_all();
+			$count = Repository::delete_all( true );
 			echo '<div class="notice notice-success"><p>';
 			/* translators: %d: number of deleted subscriptions */
 			echo esc_html( sprintf( _n( '%d subscription deleted.', '%d subscriptions deleted.', $count, 'in-stock-notifier-for-woocommerce' ), $count ) );

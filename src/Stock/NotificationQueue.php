@@ -52,16 +52,19 @@ class NotificationQueue {
 	 *
 	 * @param int $product_id   Product ID.
 	 * @param int $variation_id Variation ID.
+	 * @param int $delay        Seconds to wait before executing (default 60).
 	 * @return void
 	 */
-	public static function enqueue_next_batch( $product_id, $variation_id = 0 ) {
+	public static function enqueue_next_batch( $product_id, $variation_id = 0, $delay = 60 ) {
 		$args = array(
 			'product_id'   => absint( $product_id ),
 			'variation_id' => absint( $variation_id ),
 		);
 
+		$delay = max( 1, absint( $delay ) );
+
 		if ( function_exists( 'as_schedule_single_action' ) ) {
-			$action_id = as_schedule_single_action( time() + 60, self::ACTION_HOOK, $args, 'instock-notifier' );
+			$action_id = as_schedule_single_action( time() + $delay, self::ACTION_HOOK, $args, 'instock-notifier' );
 			if ( ! $action_id ) {
 				\InStockNotifier\Logging\LogViewer::log( 'SCHEDULE_FAIL product=' . $args['product_id'] . ' variation=' . $args['variation_id'], 'error' );
 			}

@@ -75,9 +75,9 @@ class Validator {
 	/**
 	 * Get the client IP address.
 	 *
-	 * Prefers REMOTE_ADDR as it cannot be spoofed by the client.
-	 * Falls back to X-Forwarded-For only when REMOTE_ADDR is absent
-	 * (e.g., behind a trusted reverse proxy that strips REMOTE_ADDR).
+	 * Uses REMOTE_ADDR only, as it cannot be spoofed by the client.
+	 * X-Forwarded-For is only trusted when explicitly opted in via filter
+	 * (for sites behind a trusted reverse proxy).
 	 *
 	 * @return string
 	 */
@@ -85,10 +85,20 @@ class Validator {
 		if ( ! empty( $_SERVER['REMOTE_ADDR'] ) ) {
 			return sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) );
 		}
-		if ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+
+		/**
+		 * Whether to trust X-Forwarded-For for IP detection.
+		 *
+		 * Only enable this if the site is behind a trusted reverse proxy.
+		 *
+		 * @param bool $trust Default false.
+		 */
+		if ( apply_filters( 'instock_notifier_trust_forwarded_for', false )
+			&& ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
 			$ips = explode( ',', sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) );
 			return trim( $ips[0] );
 		}
+
 		return '';
 	}
 }

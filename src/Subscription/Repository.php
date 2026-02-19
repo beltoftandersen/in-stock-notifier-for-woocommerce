@@ -370,9 +370,16 @@ class Repository {
 	/**
 	 * Delete all subscriptions.
 	 *
+	 * Requires explicit confirmation to prevent accidental data loss.
+	 *
+	 * @param bool $confirm Must be true to execute.
 	 * @return int Number of deleted rows.
 	 */
-	public static function delete_all() {
+	public static function delete_all( $confirm = false ) {
+		if ( ! $confirm ) {
+			return 0;
+		}
+
 		global $wpdb;
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared

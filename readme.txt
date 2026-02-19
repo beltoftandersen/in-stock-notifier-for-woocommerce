@@ -4,7 +4,7 @@ Tags: woocommerce, back in stock, restock, notification, waitlist
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.28
+Stable tag: 1.0.29
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,14 @@ WooCommerce and popular caching plugins already purge product pages when stock c
 5. Back In Stock email in WooCommerce email settings.
 
 == Changelog ==
+
+= 1.0.29 =
+* Simplified token generation to use `wp_generate_password()` (no dependency on wp_salt).
+* Rate limiter now uses REMOTE_ADDR only; X-Forwarded-For requires explicit opt-in via filter.
+* `delete_all()` requires explicit confirmation parameter to prevent accidental data loss.
+* Product subscriber lookup now shows truncation notice when results exceed limit.
+* Notification throttle now uses Action Scheduler delay instead of blocking `sleep()`.
+* Skip redundant subscription check for variations (query parent directly).
 
 = 1.0.28 =
 * Added database index on `unsubscribe_token` column for faster token lookups.

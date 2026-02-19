@@ -111,7 +111,9 @@ class NotificationSender {
 			}
 
 			if ( $throttle > 0 ) {
-				sleep( $throttle );
+				// Schedule next batch with throttle delay instead of blocking with sleep().
+				NotificationQueue::enqueue_next_batch( $product_id, $variation_id, $throttle );
+				break;
 			}
 
 			/* Break if approaching PHP timeout to avoid abrupt termination. */

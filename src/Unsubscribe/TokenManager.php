@@ -23,9 +23,7 @@ class TokenManager {
 	 * @return string 64-character hex token.
 	 */
 	public static function generate( $email ) {
-		$unique = wp_generate_uuid4();
-		$data   = $unique . '|' . sanitize_email( $email );
-		return hash_hmac( 'sha256', $data, wp_salt( 'auth' ) );
+		return wp_generate_password( 64, false );
 	}
 
 	/**

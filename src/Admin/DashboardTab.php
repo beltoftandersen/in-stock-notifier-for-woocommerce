@@ -299,10 +299,11 @@ class DashboardTab {
 			$query_variation_id = 0;
 		}
 
-		// Get all subscriptions for this product (any status).
-		$result = Repository::get_admin_list( array(
+		// Get subscriptions for this product (any status).
+		$per_page = 100;
+		$result   = Repository::get_admin_list( array(
 			'product_id' => $query_product_id,
-			'per_page'   => 100,
+			'per_page'   => $per_page,
 			'offset'     => 0,
 		) );
 
@@ -320,6 +321,13 @@ class DashboardTab {
 			echo ' <span style="color:#666;font-weight:normal;">(SKU: ' . esc_html( $sku ) . ')</span>';
 		}
 		echo '</h3>';
+
+		if ( $result['total'] > $per_page ) {
+			echo '<p style="color:#d63638;"><strong>';
+			/* translators: 1: displayed count, 2: total count */
+			echo esc_html( sprintf( __( 'Showing first %1$d of %2$d subscribers. Use the Subscriptions tab for full results.', 'in-stock-notifier-for-woocommerce' ), $per_page, $result['total'] ) );
+			echo '</strong></p>';
+		}
 
 		if ( empty( $items ) ) {
 			echo '<p>' . esc_html__( 'No subscribers for this product.', 'in-stock-notifier-for-woocommerce' ) . '</p>';

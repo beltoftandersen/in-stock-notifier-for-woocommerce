@@ -108,12 +108,15 @@ class StockListener {
 		$parent_id  = $product->get_parent_id();
 		$enqueue_id = $product_id;
 
-		$has_subs = Repository::has_active_subscriptions( $product_id );
-		if ( ! $has_subs && $parent_id ) {
+		// For variations, check the parent directly since subscriptions are stored
+		// against the parent product_id. Checking the variation_id would always miss.
+		if ( $parent_id ) {
 			$has_subs = Repository::has_active_subscriptions( $parent_id );
 			if ( $has_subs ) {
 				$enqueue_id = $parent_id;
 			}
+		} else {
+			$has_subs = Repository::has_active_subscriptions( $product_id );
 		}
 
 		if ( ! $has_subs ) {
