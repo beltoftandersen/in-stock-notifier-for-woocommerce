@@ -3,7 +3,7 @@
  * Plugin Name:       In-Stock Notifier for WooCommerce
  * Plugin URI:        https://developer.wordpress.org/plugins/in-stock-notifier-for-woocommerce/
  * Description:       Let customers subscribe to out-of-stock product notifications and automatically email them when items are back in stock.
- * Version:           1.0.27
+ * Version:           1.0.28
  * Requires at least: 5.8
  * Requires PHP:      7.4
  * Author:            Chimkins IT
@@ -40,11 +40,11 @@ spl_autoload_register(
 );
 
 /* ── Constants ─────────────────────────────────────────────────── */
-define( 'ISN_VERSION', '1.0.27' );
+define( 'ISN_VERSION', '1.0.28' );
 define( 'ISN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'ISN_URL', plugin_dir_url( __FILE__ ) );
 define( 'ISN_BASENAME', plugin_basename( __FILE__ ) );
-define( 'ISN_DB_VERSION', '1.1.2' );
+define( 'ISN_DB_VERSION', '1.1.3' );
 
 /* ── Activation / deactivation ─────────────────────────────────── */
 register_activation_hook(

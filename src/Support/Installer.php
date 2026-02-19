@@ -58,7 +58,8 @@ class Installer {
 			KEY batch_lookup (product_id, variation_id, status, created_at),
 			UNIQUE KEY unique_sub (product_id, variation_id, email(100)),
 			KEY ip_created (ip_address, created_at),
-			KEY cleanup_lookup (status, notified_at)
+			KEY cleanup_lookup (status, notified_at),
+			KEY unsubscribe_token (unsubscribe_token)
 		) {$charset};";
 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';

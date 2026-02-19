@@ -4,7 +4,7 @@ Tags: woocommerce, back in stock, restock, notification, waitlist
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.27
+Stable tag: 1.0.28
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,7 +101,8 @@ WooCommerce and popular caching plugins already purge product pages when stock c
 
 == Changelog ==
 
-= 1.0.27 =
+= 1.0.28 =
+* Added database index on `unsubscribe_token` column for faster token lookups.
 * Added `instock_notifier_email_product_url` filter to email templates for URL customization.
 * Added `instock_notifier_dashboard_after_stats` action hook for extending the dashboard.
 * Added SKU column to the Top Products table on the Dashboard tab.
