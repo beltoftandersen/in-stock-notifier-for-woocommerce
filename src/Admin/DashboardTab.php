@@ -108,7 +108,7 @@ class DashboardTab {
 		$show_brands      = taxonomy_exists( 'product_brand' );
 		$brands_by_product = array();
 		if ( $show_brands && ! empty( $product_ids ) ) {
-			$brand_terms = wp_get_object_terms( $product_ids, 'product_brand' );
+			$brand_terms = wp_get_object_terms( $product_ids, 'product_brand', array( 'fields' => 'all_with_object_id' ) );
 			if ( ! is_wp_error( $brand_terms ) ) {
 				foreach ( $brand_terms as $term ) {
 					$brands_by_product[ $term->object_id ][] = $term->name;
