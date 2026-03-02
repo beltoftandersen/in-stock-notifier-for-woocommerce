@@ -1,11 +1,11 @@
 # Portuguese (Portugal) translation for In-Stock Notifier for WooCommerce.
-# Copyright (C) 2026 Chimkins IT
+# Copyright (C) 2026 beltoftnet
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
 "Project-Id-Version: In-Stock Notifier for WooCommerce 1.0.26\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/in-stock-notifier-for-woocommerce\n"
-"Last-Translator: Chimkins IT <info@chimkins.com>\n"
+"Last-Translator: beltoftnet <info@beltoft.net>\n"
 "Language-Team: Portuguese (Portugal)\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
@@ -189,8 +189,8 @@ msgid "Auto-place Form on Product Pages"
 msgstr "Colocar Formulário Automaticamente nas Páginas de Produto"
 
 #: src/Admin/SettingsTab.php:41
-msgid "Uncheck to use the [instock_notifier] shortcode only."
-msgstr "Desmarque para usar apenas o shortcode [instock_notifier]."
+msgid "Uncheck to use the [bisn_form] shortcode only."
+msgstr "Desmarque para usar apenas o shortcode [bisn_form]."
 
 #: src/Admin/SettingsTab.php:42
 msgid "Show Quantity Field"

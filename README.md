@@ -4,7 +4,7 @@ Let customers subscribe to out-of-stock product notifications and automatically 
 
 - Stable version: 1.0.29
 - Requires: WordPress 5.8+, PHP 7.4+, WooCommerce 6.0+
-- Author: Chimkins IT
+- Author: beltoft.net
 - Text domain: in-stock-notifier-for-woocommerce
 
 ## Overview
@@ -26,7 +26,7 @@ Stock changes are detected regardless of source: admin UI, REST API, CLI, or ERP
 - Subscription list with search, filters, pagination, and bulk actions
 - One-click unsubscribe link in every email
 - Optional GDPR checkbox, honeypot spam protection, and rate limiting
-- Shortcode `[instock_notifier]` for custom placement
+- Shortcode `[bisn_form]` for custom placement
 - Activity logging via WooCommerce logger (WooCommerce > Status > Logs)
 - Clean uninstall with opt-in data removal
 - PSR-4 codebase, no Composer dependency
@@ -52,8 +52,8 @@ Stock changes are detected regardless of source: admin UI, REST API, CLI, or ERP
 The form shows automatically on out-of-stock product pages. To place it manually, disable auto-placement in settings and use the shortcode:
 
 ```
-[instock_notifier]
-[instock_notifier product_id="123"]
+[bisn_form]
+[bisn_form product_id="123"]
 ```
 
 ### Email Template
@@ -133,7 +133,7 @@ Developers can extend the plugin:
 
 ## About the Author
 
-In-Stock Notifier for WooCommerce is built and maintained by [Chimkins IT](https://chimkins.com), a team specializing in WooCommerce and Odoo ERP integrations. Check out our [Odoo WooCommerce Connector](https://chimkins.com) for real-time sync between your WooCommerce store and Odoo.
+In-Stock Notifier for WooCommerce is built and maintained by [beltoft.net](https://beltoft.net).
 
 ## License
 

@@ -1,5 +1,5 @@
 === In-Stock Notifier for WooCommerce ===
-Contributors: christian198521, Chimkins IT
+Contributors: beltoftnet
 Tags: woocommerce, back in stock, restock, notification, waitlist
 Requires at least: 5.8
 Tested up to: 6.9
@@ -25,7 +25,7 @@ In-Stock Notifier for WooCommerce adds a subscription form to out-of-stock produ
 8. Subscription list with search, filters, pagination, and bulk actions.
 9. One-click unsubscribe link in every email.
 10. Optional GDPR checkbox, honeypot spam protection, and rate limiting.
-11. Shortcode `[instock_notifier]` for custom placement.
+11. Shortcode `[bisn_form]` for custom placement.
 12. Activity logging via WooCommerce logger.
 
 === How It Works ===
@@ -44,7 +44,7 @@ In-Stock Notifier for WooCommerce adds a subscription form to out-of-stock produ
 
 === Form Placement ===
 - The form shows automatically on out-of-stock product pages.
-- To place it yourself, disable auto-placement in settings and use `[instock_notifier]` or `[instock_notifier product_id="123"]`.
+- To place it yourself, disable auto-placement in settings and use `[bisn_form]` or `[bisn_form product_id="123"]`.
 
 === Email Template ===
 - Uses WooCommerce's email system — same header, footer, and colours as your other store emails.

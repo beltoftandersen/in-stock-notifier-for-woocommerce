@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 use InStockNotifier\Support\Options;
 
 /**
- * Registers the [instock_notifier] shortcode.
+ * Registers the [bisn_form] shortcode.
  */
 class Shortcode {
 
@@ -24,6 +24,9 @@ class Shortcode {
 	 * @return void
 	 */
 	public static function init() {
+		add_shortcode( 'bisn_form', array( __CLASS__, 'render' ) );
+
+		// Backward-compatible alias for the old unprefixed shortcode.
 		add_shortcode( 'instock_notifier', array( __CLASS__, 'render' ) );
 	}
 
@@ -45,7 +48,7 @@ class Shortcode {
 				'variation_id' => '0',
 			),
 			$atts,
-			'instock_notifier'
+			'bisn_form'
 		);
 
 		$product_id   = absint( $atts['product_id'] );

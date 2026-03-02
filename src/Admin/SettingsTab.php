@@ -38,7 +38,7 @@ class SettingsTab {
 		echo '<table class="form-table"><tbody>';
 
 		self::checkbox_row( 'enabled', __( 'Enable Notifications', 'in-stock-notifier-for-woocommerce' ), $opts );
-		self::checkbox_row( 'form_position_enabled', __( 'Auto-place Form on Product Pages', 'in-stock-notifier-for-woocommerce' ), $opts, __( 'Uncheck to use the [instock_notifier] shortcode only.', 'in-stock-notifier-for-woocommerce' ) );
+		self::checkbox_row( 'form_position_enabled', __( 'Auto-place Form on Product Pages', 'in-stock-notifier-for-woocommerce' ), $opts, __( 'Uncheck to use the [bisn_form] shortcode only.', 'in-stock-notifier-for-woocommerce' ) );
 		self::checkbox_row( 'quantity_field_enabled', __( 'Show Quantity Field', 'in-stock-notifier-for-woocommerce' ), $opts );
 		self::text_row( 'button_text', __( 'Button Text', 'in-stock-notifier-for-woocommerce' ), $opts );
 
