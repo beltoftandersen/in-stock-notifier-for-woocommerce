@@ -1,7 +1,7 @@
 <?php
 /**
- * Plugin Name:       In-Stock Notifier for WooCommerce
- * Plugin URI:        https://developer.wordpress.org/plugins/in-stock-notifier-for-woocommerce/
+ * Plugin Name:       Beltoft In-Stock Notifier for WooCommerce
+ * Plugin URI:        https://wordpress.org/plugins/beltoft-in-stock-notifier/
  * Description:       Let customers subscribe to out-of-stock product notifications and automatically email them when items are back in stock.
  * Version:           1.0.29
  * Requires at least: 5.8
@@ -10,14 +10,14 @@
  * Author URI:        https://beltoft.net
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       in-stock-notifier-for-woocommerce
+ * Text Domain:       beltoft-in-stock-notifier
  * Domain Path:       /languages
  * Requires Plugins:  woocommerce
  *
  * WC requires at least: 6.0
  * WC tested up to:      9.6
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -27,10 +27,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 /* ── PSR-4 autoloader ──────────────────────────────────────────── */
 spl_autoload_register(
 	function ( $class ) {
-		if ( strpos( $class, 'InStockNotifier\\' ) !== 0 ) {
+		if ( strpos( $class, 'BeltoftInStockNotifier\\' ) !== 0 ) {
 			return;
 		}
-		$relative = substr( $class, strlen( 'InStockNotifier\\' ) );
+		$relative = substr( $class, strlen( 'BeltoftInStockNotifier\\' ) );
 		$relative = str_replace( '\\', DIRECTORY_SEPARATOR, $relative ) . '.php';
 		$file     = plugin_dir_path( __FILE__ ) . 'src/' . $relative;
 		if ( file_exists( $file ) ) {
@@ -52,9 +52,9 @@ register_activation_hook(
 	function () {
 		if ( ! class_exists( 'WooCommerce' ) ) {
 			/* translators: %s: WooCommerce plugin name */
-			wp_die( esc_html__( 'In-Stock Notifier requires WooCommerce to be installed and active.', 'in-stock-notifier-for-woocommerce' ) );
+			wp_die( esc_html__( 'In-Stock Notifier requires WooCommerce to be installed and active.', 'beltoft-in-stock-notifier' ) );
 		}
-		InStockNotifier\Support\Installer::activate();
+		BeltoftInStockNotifier\Support\Installer::activate();
 	}
 );
 
@@ -79,7 +79,7 @@ add_action(
 		if ( ! class_exists( 'WooCommerce' ) ) {
 			return;
 		}
-		InStockNotifier\Plugin::init();
+		BeltoftInStockNotifier\Plugin::init();
 	}
 );
 
@@ -89,7 +89,7 @@ add_filter(
 	function ( $links ) {
 		$url           = admin_url( 'admin.php?page=isn-notifier' );
 		$settings_link = '<a href="' . esc_url( $url ) . '">'
-			. esc_html__( 'Settings', 'in-stock-notifier-for-woocommerce' )
+			. esc_html__( 'Settings', 'beltoft-in-stock-notifier' )
 			. '</a>';
 		array_unshift( $links, $settings_link );
 		return $links;

@@ -2,18 +2,18 @@
 /**
  * Listens for WooCommerce stock changes.
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
-namespace InStockNotifier\Stock;
+namespace BeltoftInStockNotifier\Stock;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use InStockNotifier\Support\Options;
-use InStockNotifier\Subscription\Repository;
-use InStockNotifier\Logging\LogViewer;
+use BeltoftInStockNotifier\Support\Options;
+use BeltoftInStockNotifier\Subscription\Repository;
+use BeltoftInStockNotifier\Logging\LogViewer;
 
 /**
  * Hooks into WooCommerce stock events and triggers notification queue.

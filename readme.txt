@@ -1,4 +1,4 @@
-=== In-Stock Notifier for WooCommerce ===
+=== Beltoft In-Stock Notifier for WooCommerce ===
 Contributors: beltoftnet
 Tags: woocommerce, back in stock, restock, notification, waitlist
 Requires at least: 5.8
@@ -12,7 +12,7 @@ Let customers subscribe to out-of-stock product notifications and automatically 
 
 == Description ==
 
-In-Stock Notifier for WooCommerce adds a subscription form to out-of-stock products so customers can leave their email and get notified when the product is restocked. Emails are sent using WooCommerce's email template so they match your store's design.
+Beltoft In-Stock Notifier for WooCommerce adds a subscription form to out-of-stock products so customers can leave their email and get notified when the product is restocked. Emails are sent using WooCommerce's email template so they match your store's design.
 
 === Key Features ===
 1. Subscription form on out-of-stock products — works with simple, variable, grouped, and external products.
@@ -35,7 +35,7 @@ In-Stock Notifier for WooCommerce adds a subscription form to out-of-stock produ
 4. Custom hook available for CDN/Varnish cache purging if needed.
 
 == Installation ==
-1. Upload the `in-stock-notifier-for-woocommerce` folder to `/wp-content/plugins/` or install via the Plugins screen.
+1. Upload the `beltoft-in-stock-notifier` folder to `/wp-content/plugins/` or install via the Plugins screen.
 2. Activate the plugin.
 3. Go to **WooCommerce > In-Stock Notifier** to configure.
 4. Optionally adjust the email under **WooCommerce > Settings > Emails > Back In Stock**.

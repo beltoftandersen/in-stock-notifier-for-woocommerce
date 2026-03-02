@@ -2,20 +2,20 @@
 /**
  * AJAX handler for subscription form submissions.
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
-namespace InStockNotifier\Frontend;
+namespace BeltoftInStockNotifier\Frontend;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use InStockNotifier\Support\Options;
-use InStockNotifier\Subscription\Repository;
-use InStockNotifier\Subscription\Validator;
-use InStockNotifier\Unsubscribe\TokenManager;
-use InStockNotifier\Logging\LogViewer;
+use BeltoftInStockNotifier\Support\Options;
+use BeltoftInStockNotifier\Subscription\Repository;
+use BeltoftInStockNotifier\Subscription\Validator;
+use BeltoftInStockNotifier\Unsubscribe\TokenManager;
+use BeltoftInStockNotifier\Logging\LogViewer;
 
 /**
  * Processes subscription AJAX requests.
@@ -40,7 +40,7 @@ class AjaxHandler {
 	public static function handle() {
 		// Verify nonce before accessing any other $_POST data.
 		if ( ! isset( $_POST['isn_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['isn_nonce'] ) ), 'isn_subscribe_nonce' ) ) {
-			wp_send_json_error( array( 'message' => esc_html__( 'Security check failed. Please refresh the page.', 'in-stock-notifier-for-woocommerce' ) ) );
+			wp_send_json_error( array( 'message' => esc_html__( 'Security check failed. Please refresh the page.', 'beltoft-in-stock-notifier' ) ) );
 		}
 
 		$data = array(
@@ -87,7 +87,7 @@ class AjaxHandler {
 
 		if ( false === $result ) {
 			LogViewer::log( 'FAIL subscription email=' . $email . ' product=' . $data['isn_product_id'] . ' db_error' );
-			wp_send_json_error( array( 'message' => esc_html__( 'Something went wrong. Please try again.', 'in-stock-notifier-for-woocommerce' ) ) );
+			wp_send_json_error( array( 'message' => esc_html__( 'Something went wrong. Please try again.', 'beltoft-in-stock-notifier' ) ) );
 		}
 
 		/**

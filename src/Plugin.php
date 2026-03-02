@@ -2,25 +2,25 @@
 /**
  * Central plugin initialization.
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
-namespace InStockNotifier;
+namespace BeltoftInStockNotifier;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use InStockNotifier\Admin\AdminPage;
-use InStockNotifier\Frontend\FormRenderer;
-use InStockNotifier\Frontend\AjaxHandler;
-use InStockNotifier\Frontend\Shortcode;
-use InStockNotifier\Stock\StockListener;
-use InStockNotifier\Stock\NotificationSender;
-use InStockNotifier\Unsubscribe\Handler as UnsubscribeHandler;
-use InStockNotifier\Email\BackInStockEmail;
-use InStockNotifier\Support\Installer;
-use InStockNotifier\Support\Options;
+use BeltoftInStockNotifier\Admin\AdminPage;
+use BeltoftInStockNotifier\Frontend\FormRenderer;
+use BeltoftInStockNotifier\Frontend\AjaxHandler;
+use BeltoftInStockNotifier\Frontend\Shortcode;
+use BeltoftInStockNotifier\Stock\StockListener;
+use BeltoftInStockNotifier\Stock\NotificationSender;
+use BeltoftInStockNotifier\Unsubscribe\Handler as UnsubscribeHandler;
+use BeltoftInStockNotifier\Email\BackInStockEmail;
+use BeltoftInStockNotifier\Support\Installer;
+use BeltoftInStockNotifier\Support\Options;
 
 /**
  * Plugin bootstrap.

@@ -2,16 +2,16 @@
 /**
  * Subscription input validation.
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
-namespace InStockNotifier\Subscription;
+namespace BeltoftInStockNotifier\Subscription;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use InStockNotifier\Support\Options;
+use BeltoftInStockNotifier\Support\Options;
 
 /**
  * Validates subscription form submissions.
@@ -30,32 +30,32 @@ class Validator {
 	public static function validate( $data ) {
 		/* Honeypot check. */
 		if ( ! empty( $data['isn_website'] ) ) {
-			return new \WP_Error( 'isn_spam', __( 'Spam detected.', 'in-stock-notifier-for-woocommerce' ) );
+			return new \WP_Error( 'isn_spam', __( 'Spam detected.', 'beltoft-in-stock-notifier' ) );
 		}
 
 		/* Email. */
 		$email = isset( $data['isn_email'] ) ? sanitize_email( wp_unslash( $data['isn_email'] ) ) : '';
 		if ( empty( $email ) || ! is_email( $email ) ) {
-			return new \WP_Error( 'isn_email', __( 'Please enter a valid email address.', 'in-stock-notifier-for-woocommerce' ) );
+			return new \WP_Error( 'isn_email', __( 'Please enter a valid email address.', 'beltoft-in-stock-notifier' ) );
 		}
 
 		/* Product ID. */
 		$product_id = isset( $data['isn_product_id'] ) ? absint( $data['isn_product_id'] ) : 0;
 		if ( ! $product_id ) {
-			return new \WP_Error( 'isn_product', __( 'Invalid product.', 'in-stock-notifier-for-woocommerce' ) );
+			return new \WP_Error( 'isn_product', __( 'Invalid product.', 'beltoft-in-stock-notifier' ) );
 		}
 
 		/* GDPR consent. */
 		$opts = Options::get_all();
 		if ( '1' === $opts['gdpr_enabled'] && empty( $data['isn_gdpr'] ) ) {
-			return new \WP_Error( 'isn_gdpr', __( 'Please accept the consent checkbox.', 'in-stock-notifier-for-woocommerce' ) );
+			return new \WP_Error( 'isn_gdpr', __( 'Please accept the consent checkbox.', 'beltoft-in-stock-notifier' ) );
 		}
 
 		/* Rate limiting. */
 		$ip    = self::get_client_ip();
 		$limit = absint( $opts['rate_limit_per_ip'] );
 		if ( $limit > 0 && Repository::count_recent_by_ip( $ip ) >= $limit ) {
-			return new \WP_Error( 'isn_rate_limit', __( 'Too many requests. Please try again later.', 'in-stock-notifier-for-woocommerce' ) );
+			return new \WP_Error( 'isn_rate_limit', __( 'Too many requests. Please try again later.', 'beltoft-in-stock-notifier' ) );
 		}
 
 		/**

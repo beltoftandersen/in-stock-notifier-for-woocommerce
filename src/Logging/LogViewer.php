@@ -2,16 +2,16 @@
 /**
  * Logging via WooCommerce logger.
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
-namespace InStockNotifier\Logging;
+namespace BeltoftInStockNotifier\Logging;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use InStockNotifier\Support\Options;
+use BeltoftInStockNotifier\Support\Options;
 
 /**
  * Writes log entries via wc_get_logger(). View logs under WooCommerce > Status > Logs.

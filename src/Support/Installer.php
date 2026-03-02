@@ -2,10 +2,10 @@
 /**
  * Plugin activation handler.
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
-namespace InStockNotifier\Support;
+namespace BeltoftInStockNotifier\Support;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

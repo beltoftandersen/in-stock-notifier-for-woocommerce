@@ -2,10 +2,10 @@
 /**
  * Notification queue using Action Scheduler (bundled with WooCommerce).
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
-namespace InStockNotifier\Stock;
+namespace BeltoftInStockNotifier\Stock;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -42,7 +42,7 @@ class NotificationQueue {
 		if ( function_exists( 'as_schedule_single_action' ) ) {
 			$action_id = as_schedule_single_action( time() + 30, self::ACTION_HOOK, $args, 'instock-notifier' );
 			if ( ! $action_id ) {
-				\InStockNotifier\Logging\LogViewer::log( 'SCHEDULE_FAIL product=' . $args['product_id'] . ' variation=' . $args['variation_id'], 'error' );
+				\BeltoftInStockNotifier\Logging\LogViewer::log( 'SCHEDULE_FAIL product=' . $args['product_id'] . ' variation=' . $args['variation_id'], 'error' );
 			}
 		}
 	}
@@ -71,7 +71,7 @@ class NotificationQueue {
 		if ( function_exists( 'as_schedule_single_action' ) ) {
 			$action_id = as_schedule_single_action( time() + $delay, self::ACTION_HOOK, $args, 'instock-notifier' );
 			if ( ! $action_id ) {
-				\InStockNotifier\Logging\LogViewer::log( 'SCHEDULE_FAIL product=' . $args['product_id'] . ' variation=' . $args['variation_id'], 'error' );
+				\BeltoftInStockNotifier\Logging\LogViewer::log( 'SCHEDULE_FAIL product=' . $args['product_id'] . ' variation=' . $args['variation_id'], 'error' );
 			}
 		}
 	}

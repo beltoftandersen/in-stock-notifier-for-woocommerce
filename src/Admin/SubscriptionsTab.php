@@ -2,16 +2,16 @@
 /**
  * Subscriptions admin tab with WP_List_Table.
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
-namespace InStockNotifier\Admin;
+namespace BeltoftInStockNotifier\Admin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use InStockNotifier\Subscription\Repository;
+use BeltoftInStockNotifier\Subscription\Repository;
 
 /**
  * Renders and handles the Subscriptions list table.
@@ -36,7 +36,7 @@ class SubscriptionsTab {
 		echo '<form method="get">';
 		echo '<input type="hidden" name="page" value="' . esc_attr( AdminPage::PAGE_SLUG ) . '" />';
 		echo '<input type="hidden" name="tab" value="subscriptions" />';
-		$table->search_box( esc_html__( 'Search Email', 'in-stock-notifier-for-woocommerce' ), 'isn-search' );
+		$table->search_box( esc_html__( 'Search Email', 'beltoft-in-stock-notifier' ), 'isn-search' );
 		$table->display();
 		echo '</form>';
 	}
@@ -54,12 +54,12 @@ class SubscriptionsTab {
 			check_admin_referer( 'isn_delete_' . absint( $_GET['isn_id'] ) );
 
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
-				wp_die( esc_html__( 'You do not have permission to do this.', 'in-stock-notifier-for-woocommerce' ) );
+				wp_die( esc_html__( 'You do not have permission to do this.', 'beltoft-in-stock-notifier' ) );
 			}
 
 			$count = Repository::bulk_delete( array( absint( $_GET['isn_id'] ) ) );
 			if ( $count ) {
-				echo '<div class="notice notice-success"><p>' . esc_html__( 'Subscription deleted.', 'in-stock-notifier-for-woocommerce' ) . '</p></div>';
+				echo '<div class="notice notice-success"><p>' . esc_html__( 'Subscription deleted.', 'beltoft-in-stock-notifier' ) . '</p></div>';
 			}
 			return;
 		}
@@ -69,13 +69,13 @@ class SubscriptionsTab {
 			check_admin_referer( 'isn_bulk_action_nonce' );
 
 			if ( ! current_user_can( 'manage_woocommerce' ) ) {
-				wp_die( esc_html__( 'You do not have permission to do this.', 'in-stock-notifier-for-woocommerce' ) );
+				wp_die( esc_html__( 'You do not have permission to do this.', 'beltoft-in-stock-notifier' ) );
 			}
 
 			$count = Repository::delete_all( true );
 			echo '<div class="notice notice-success"><p>';
 			/* translators: %d: number of deleted subscriptions */
-			echo esc_html( sprintf( _n( '%d subscription deleted.', '%d subscriptions deleted.', $count, 'in-stock-notifier-for-woocommerce' ), $count ) );
+			echo esc_html( sprintf( _n( '%d subscription deleted.', '%d subscriptions deleted.', $count, 'beltoft-in-stock-notifier' ), $count ) );
 			echo '</p></div>';
 			return;
 		}
@@ -87,7 +87,7 @@ class SubscriptionsTab {
 		check_admin_referer( 'isn_bulk_action_nonce' );
 
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
-			wp_die( esc_html__( 'You do not have permission to do this.', 'in-stock-notifier-for-woocommerce' ) );
+			wp_die( esc_html__( 'You do not have permission to do this.', 'beltoft-in-stock-notifier' ) );
 		}
 
 		$action = sanitize_text_field( wp_unslash( $_REQUEST['isn_bulk_action'] ) );
@@ -98,7 +98,7 @@ class SubscriptionsTab {
 				$count = Repository::bulk_delete( $ids );
 				echo '<div class="notice notice-success"><p>';
 				/* translators: %d: number of deleted subscriptions */
-				echo esc_html( sprintf( _n( '%d subscription deleted.', '%d subscriptions deleted.', $count, 'in-stock-notifier-for-woocommerce' ), $count ) );
+				echo esc_html( sprintf( _n( '%d subscription deleted.', '%d subscriptions deleted.', $count, 'beltoft-in-stock-notifier' ), $count ) );
 				echo '</p></div>';
 				break;
 
@@ -106,7 +106,7 @@ class SubscriptionsTab {
 				$count = Repository::bulk_mark_notified( $ids );
 				echo '<div class="notice notice-success"><p>';
 				/* translators: %d: number of updated subscriptions */
-				echo esc_html( sprintf( _n( '%d subscription marked as notified.', '%d subscriptions marked as notified.', $count, 'in-stock-notifier-for-woocommerce' ), $count ) );
+				echo esc_html( sprintf( _n( '%d subscription marked as notified.', '%d subscriptions marked as notified.', $count, 'beltoft-in-stock-notifier' ), $count ) );
 				echo '</p></div>';
 				break;
 		}
@@ -153,11 +153,11 @@ class SubscriptionsListTable extends \WP_List_Table {
 	public function get_columns() {
 		return array(
 			'cb'         => '<input type="checkbox" />',
-			'email'      => __( 'Email', 'in-stock-notifier-for-woocommerce' ),
-			'product_id' => __( 'Product', 'in-stock-notifier-for-woocommerce' ),
-			'status'     => __( 'Status', 'in-stock-notifier-for-woocommerce' ),
-			'created_at' => __( 'Subscribed', 'in-stock-notifier-for-woocommerce' ),
-			'notified_at' => __( 'Notified', 'in-stock-notifier-for-woocommerce' ),
+			'email'      => __( 'Email', 'beltoft-in-stock-notifier' ),
+			'product_id' => __( 'Product', 'beltoft-in-stock-notifier' ),
+			'status'     => __( 'Status', 'beltoft-in-stock-notifier' ),
+			'created_at' => __( 'Subscribed', 'beltoft-in-stock-notifier' ),
+			'notified_at' => __( 'Notified', 'beltoft-in-stock-notifier' ),
 		);
 	}
 
@@ -253,29 +253,29 @@ class SubscriptionsListTable extends \WP_List_Table {
 
 		echo '<div class="alignleft actions">';
 		echo '<select name="status_filter">';
-		echo '<option value="">' . esc_html__( 'All statuses', 'in-stock-notifier-for-woocommerce' ) . '</option>';
+		echo '<option value="">' . esc_html__( 'All statuses', 'beltoft-in-stock-notifier' ) . '</option>';
 		foreach ( array( 'active', 'notified', 'unsubscribed' ) as $status ) {
 			echo '<option value="' . esc_attr( $status ) . '"' . selected( $current_status, $status, false ) . '>';
 			echo esc_html( ucfirst( $status ) );
 			echo '</option>';
 		}
 		echo '</select>';
-		submit_button( __( 'Filter', 'in-stock-notifier-for-woocommerce' ), '', 'filter_action', false );
+		submit_button( __( 'Filter', 'beltoft-in-stock-notifier' ), '', 'filter_action', false );
 		echo '</div>';
 
 		echo '<div class="alignleft actions" style="margin-left:8px;">';
 		echo '<select name="isn_bulk_action">';
-		echo '<option value="">' . esc_html__( 'Bulk Actions', 'in-stock-notifier-for-woocommerce' ) . '</option>';
-		echo '<option value="delete">' . esc_html__( 'Delete Selected', 'in-stock-notifier-for-woocommerce' ) . '</option>';
-		echo '<option value="delete_all">' . esc_html__( 'Delete All Subscriptions', 'in-stock-notifier-for-woocommerce' ) . '</option>';
-		echo '<option value="mark_notified">' . esc_html__( 'Mark as Notified', 'in-stock-notifier-for-woocommerce' ) . '</option>';
+		echo '<option value="">' . esc_html__( 'Bulk Actions', 'beltoft-in-stock-notifier' ) . '</option>';
+		echo '<option value="delete">' . esc_html__( 'Delete Selected', 'beltoft-in-stock-notifier' ) . '</option>';
+		echo '<option value="delete_all">' . esc_html__( 'Delete All Subscriptions', 'beltoft-in-stock-notifier' ) . '</option>';
+		echo '<option value="mark_notified">' . esc_html__( 'Mark as Notified', 'beltoft-in-stock-notifier' ) . '</option>';
 		echo '</select>';
 		wp_nonce_field( 'isn_bulk_action_nonce' );
-		submit_button( __( 'Apply', 'in-stock-notifier-for-woocommerce' ), 'action', 'isn_apply_bulk', false );
+		submit_button( __( 'Apply', 'beltoft-in-stock-notifier' ), 'action', 'isn_apply_bulk', false );
 		echo '</div>';
 
 		// Inline JS to confirm destructive "Delete All" action.
-		echo '<script>document.querySelector(\'[name="isn_apply_bulk"]\')&&document.querySelector(\'[name="isn_apply_bulk"]\').addEventListener("click",function(e){var s=document.querySelector(\'[name="isn_bulk_action"]\');if(s&&s.value==="delete_all"&&!confirm("' . esc_js( __( 'Are you sure you want to delete ALL subscriptions? This cannot be undone.', 'in-stock-notifier-for-woocommerce' ) ) . '"))e.preventDefault();});</script>';
+		echo '<script>document.querySelector(\'[name="isn_apply_bulk"]\')&&document.querySelector(\'[name="isn_apply_bulk"]\').addEventListener("click",function(e){var s=document.querySelector(\'[name="isn_bulk_action"]\');if(s&&s.value==="delete_all"&&!confirm("' . esc_js( __( 'Are you sure you want to delete ALL subscriptions? This cannot be undone.', 'beltoft-in-stock-notifier' ) ) . '"))e.preventDefault();});</script>';
 	}
 
 	/**
@@ -309,7 +309,7 @@ class SubscriptionsListTable extends \WP_List_Table {
 		);
 
 		$actions = array(
-			'delete' => '<a href="' . esc_url( $delete_url ) . '" style="color:#b32d2e;" onclick="return confirm(\'' . esc_js( __( 'Delete this subscription?', 'in-stock-notifier-for-woocommerce' ) ) . '\');">' . esc_html__( 'Delete', 'in-stock-notifier-for-woocommerce' ) . '</a>',
+			'delete' => '<a href="' . esc_url( $delete_url ) . '" style="color:#b32d2e;" onclick="return confirm(\'' . esc_js( __( 'Delete this subscription?', 'beltoft-in-stock-notifier' ) ) . '\');">' . esc_html__( 'Delete', 'beltoft-in-stock-notifier' ) . '</a>',
 		);
 
 		return esc_html( $item->email ) . $this->row_actions( $actions );
@@ -331,7 +331,7 @@ class SubscriptionsListTable extends \WP_List_Table {
 		// Show variation SKU if available, otherwise product SKU.
 		$sku = $variation ? $variation->get_sku() : ( $product ? $product->get_sku() : '' );
 		if ( $sku ) {
-			$output .= '<br><small>' . esc_html__( 'SKU:', 'in-stock-notifier-for-woocommerce' ) . ' ' . esc_html( $sku ) . '</small>';
+			$output .= '<br><small>' . esc_html__( 'SKU:', 'beltoft-in-stock-notifier' ) . ' ' . esc_html( $sku ) . '</small>';
 		}
 
 		return $output;
@@ -386,6 +386,6 @@ class SubscriptionsListTable extends \WP_List_Table {
 	 * @return void
 	 */
 	public function no_items() {
-		esc_html_e( 'No subscriptions found.', 'in-stock-notifier-for-woocommerce' );
+		esc_html_e( 'No subscriptions found.', 'beltoft-in-stock-notifier' );
 	}
 }

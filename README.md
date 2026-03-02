@@ -1,11 +1,11 @@
-# In-Stock Notifier for WooCommerce
+# Beltoft In-Stock Notifier for WooCommerce
 
 Let customers subscribe to out-of-stock product notifications and automatically email them when items are back in stock.
 
 - Stable version: 1.0.29
 - Requires: WordPress 5.8+, PHP 7.4+, WooCommerce 6.0+
 - Author: beltoft.net
-- Text domain: in-stock-notifier-for-woocommerce
+- Text domain: beltoft-in-stock-notifier
 
 ## Overview
 
@@ -87,8 +87,8 @@ Developers can extend the plugin:
 
 ## Translations
 
-- Text domain: `in-stock-notifier-for-woocommerce`
-- Translation template: `languages/in-stock-notifier-for-woocommerce.pot`
+- Text domain: `beltoft-in-stock-notifier`
+- Translation template: `languages/beltoft-in-stock-notifier.pot`
 
 ## Changelog
 
@@ -133,7 +133,7 @@ Developers can extend the plugin:
 
 ## About the Author
 
-In-Stock Notifier for WooCommerce is built and maintained by [beltoft.net](https://beltoft.net).
+Beltoft In-Stock Notifier for WooCommerce is built and maintained by [beltoft.net](https://beltoft.net).
 
 ## License
 

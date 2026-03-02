@@ -2,10 +2,10 @@
 /**
  * WooCommerce email class for back-in-stock notifications.
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
-namespace InStockNotifier\Email;
+namespace BeltoftInStockNotifier\Email;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -40,8 +40,8 @@ class BackInStockEmail extends \WC_Email {
 	public function __construct() {
 		$this->id             = 'isn_back_in_stock';
 		$this->customer_email = true;
-		$this->title          = __( 'Back In Stock', 'in-stock-notifier-for-woocommerce' );
-		$this->description    = __( 'Sent to customers who subscribed for a back-in-stock notification when the product returns to stock.', 'in-stock-notifier-for-woocommerce' );
+		$this->title          = __( 'Back In Stock', 'beltoft-in-stock-notifier' );
+		$this->description    = __( 'Sent to customers who subscribed for a back-in-stock notification when the product returns to stock.', 'beltoft-in-stock-notifier' );
 
 		$this->template_html  = 'emails/back-in-stock.php';
 		$this->template_plain = 'emails/plain/back-in-stock.php';
@@ -61,7 +61,7 @@ class BackInStockEmail extends \WC_Email {
 	 * @return string
 	 */
 	public function get_default_subject() {
-		return __( '{product_name} is back in stock!', 'in-stock-notifier-for-woocommerce' );
+		return __( '{product_name} is back in stock!', 'beltoft-in-stock-notifier' );
 	}
 
 	/**
@@ -70,7 +70,7 @@ class BackInStockEmail extends \WC_Email {
 	 * @return string
 	 */
 	public function get_default_heading() {
-		return __( 'It\'s back in stock!', 'in-stock-notifier-for-woocommerce' );
+		return __( 'It\'s back in stock!', 'beltoft-in-stock-notifier' );
 	}
 
 	/**
@@ -177,7 +177,7 @@ class BackInStockEmail extends \WC_Email {
 
 		/* Absolute fallback: create a dummy product object. */
 		$dummy = new \WC_Product();
-		$dummy->set_name( __( 'Sample Product', 'in-stock-notifier-for-woocommerce' ) );
+		$dummy->set_name( __( 'Sample Product', 'beltoft-in-stock-notifier' ) );
 		return $dummy;
 	}
 
@@ -188,17 +188,17 @@ class BackInStockEmail extends \WC_Email {
 	 */
 	public function init_form_fields() {
 		/* translators: %s: list of available placeholders */
-		$placeholder_text = sprintf( __( 'Available placeholders: %s', 'in-stock-notifier-for-woocommerce' ), '<code>{product_name}, {site_title}</code>' );
+		$placeholder_text = sprintf( __( 'Available placeholders: %s', 'beltoft-in-stock-notifier' ), '<code>{product_name}, {site_title}</code>' );
 
 		$this->form_fields = array(
 			'enabled'    => array(
-				'title'   => __( 'Enable/Disable', 'in-stock-notifier-for-woocommerce' ),
+				'title'   => __( 'Enable/Disable', 'beltoft-in-stock-notifier' ),
 				'type'    => 'checkbox',
-				'label'   => __( 'Enable this email notification', 'in-stock-notifier-for-woocommerce' ),
+				'label'   => __( 'Enable this email notification', 'beltoft-in-stock-notifier' ),
 				'default' => 'yes',
 			),
 			'subject'    => array(
-				'title'       => __( 'Subject', 'in-stock-notifier-for-woocommerce' ),
+				'title'       => __( 'Subject', 'beltoft-in-stock-notifier' ),
 				'type'        => 'text',
 				'desc_tip'    => true,
 				'description' => $placeholder_text,
@@ -206,7 +206,7 @@ class BackInStockEmail extends \WC_Email {
 				'default'     => '',
 			),
 			'heading'    => array(
-				'title'       => __( 'Email heading', 'in-stock-notifier-for-woocommerce' ),
+				'title'       => __( 'Email heading', 'beltoft-in-stock-notifier' ),
 				'type'        => 'text',
 				'desc_tip'    => true,
 				'description' => $placeholder_text,
@@ -214,9 +214,9 @@ class BackInStockEmail extends \WC_Email {
 				'default'     => '',
 			),
 			'email_type' => array(
-				'title'       => __( 'Email type', 'in-stock-notifier-for-woocommerce' ),
+				'title'       => __( 'Email type', 'beltoft-in-stock-notifier' ),
 				'type'        => 'select',
-				'description' => __( 'Choose which format of email to send.', 'in-stock-notifier-for-woocommerce' ),
+				'description' => __( 'Choose which format of email to send.', 'beltoft-in-stock-notifier' ),
 				'default'     => 'html',
 				'class'       => 'email_type wc-enhanced-select',
 				'options'     => $this->get_email_type_options(),

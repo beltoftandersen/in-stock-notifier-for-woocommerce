@@ -2,7 +2,7 @@
 /**
  * Uninstall handler - cleans up plugin data on deletion.
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

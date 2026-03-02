@@ -2,20 +2,20 @@
 /**
  * Action Scheduler worker that sends notification emails.
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
-namespace InStockNotifier\Stock;
+namespace BeltoftInStockNotifier\Stock;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use InStockNotifier\Support\Options;
-use InStockNotifier\Subscription\Repository;
-use InStockNotifier\Unsubscribe\TokenManager;
-use InStockNotifier\Email\BackInStockEmail;
-use InStockNotifier\Logging\LogViewer;
+use BeltoftInStockNotifier\Support\Options;
+use BeltoftInStockNotifier\Subscription\Repository;
+use BeltoftInStockNotifier\Unsubscribe\TokenManager;
+use BeltoftInStockNotifier\Email\BackInStockEmail;
+use BeltoftInStockNotifier\Logging\LogViewer;
 
 /**
  * Processes notification actions scheduled by NotificationQueue.

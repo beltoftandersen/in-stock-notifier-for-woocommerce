@@ -2,16 +2,16 @@
 /**
  * Renders the subscription form on product pages.
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
-namespace InStockNotifier\Frontend;
+namespace BeltoftInStockNotifier\Frontend;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use InStockNotifier\Support\Options;
+use BeltoftInStockNotifier\Support\Options;
 
 /**
  * Hooks into WooCommerce to display the notify form.
@@ -106,8 +106,8 @@ class FormRenderer {
 			array(
 				'ajax_url'      => admin_url( 'admin-ajax.php' ),
 				'nonce'         => wp_create_nonce( 'isn_subscribe_nonce' ),
-				'error_generic' => esc_html__( 'An error occurred.', 'in-stock-notifier-for-woocommerce' ),
-				'error_network' => esc_html__( 'An error occurred. Please try again.', 'in-stock-notifier-for-woocommerce' ),
+				'error_generic' => esc_html__( 'An error occurred.', 'beltoft-in-stock-notifier' ),
+				'error_network' => esc_html__( 'An error occurred. Please try again.', 'beltoft-in-stock-notifier' ),
 			)
 		);
 	}
@@ -131,7 +131,7 @@ class FormRenderer {
 		 */
 		$heading = apply_filters(
 			'instock_notifier_form_heading_text',
-			__( 'Want to know when it\'s back? Leave your email below.', 'in-stock-notifier-for-woocommerce' ),
+			__( 'Want to know when it\'s back? Leave your email below.', 'beltoft-in-stock-notifier' ),
 			$product_id
 		);
 
@@ -143,7 +143,7 @@ class FormRenderer {
 		/* Quantity field (optional) — above the inline row. */
 		if ( '1' === $opts['quantity_field_enabled'] ) {
 			$html .= '<div class="isn-field isn-field-quantity">';
-			$html .= '<label for="isn-quantity-' . absint( $product_id ) . '">' . esc_html__( 'Desired quantity', 'in-stock-notifier-for-woocommerce' ) . '</label>';
+			$html .= '<label for="isn-quantity-' . absint( $product_id ) . '">' . esc_html__( 'Desired quantity', 'beltoft-in-stock-notifier' ) . '</label>';
 			$html .= '<input type="number" id="isn-quantity-' . absint( $product_id ) . '" name="isn_quantity" min="1" value="1" class="isn-quantity-input" />';
 			$html .= '</div>';
 		}
@@ -162,8 +162,8 @@ class FormRenderer {
 
 		/* Email field — prefill for logged-in users. */
 		$user_email = is_user_logged_in() ? wp_get_current_user()->user_email : '';
-		$html .= '<label for="isn-email-' . absint( $product_id ) . '" class="screen-reader-text">' . esc_html__( 'Email address', 'in-stock-notifier-for-woocommerce' ) . '</label>';
-		$html .= '<input type="email" id="isn-email-' . absint( $product_id ) . '" name="isn_email" placeholder="' . esc_attr__( 'Your email address', 'in-stock-notifier-for-woocommerce' ) . '" value="' . esc_attr( $user_email ) . '" required class="isn-email-input" />';
+		$html .= '<label for="isn-email-' . absint( $product_id ) . '" class="screen-reader-text">' . esc_html__( 'Email address', 'beltoft-in-stock-notifier' ) . '</label>';
+		$html .= '<input type="email" id="isn-email-' . absint( $product_id ) . '" name="isn_email" placeholder="' . esc_attr__( 'Your email address', 'beltoft-in-stock-notifier' ) . '" value="' . esc_attr( $user_email ) . '" required class="isn-email-input" />';
 
 		/* Submit button. */
 		$html .= '<button type="submit" class="isn-submit">';

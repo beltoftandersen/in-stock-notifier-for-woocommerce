@@ -5,7 +5,7 @@
  * This template can be overridden by copying it to
  * yourtheme/woocommerce/emails/plain/back-in-stock.php
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  * @var \WC_Product $product         Product object.
  * @var string      $email_heading   Email heading.
  * @var string      $unsubscribe_url Unsubscribe URL.
@@ -26,20 +26,20 @@ echo "════════════════════════�
 
 $isn_stock_qty = $product->get_stock_quantity();
 if ( null === $isn_stock_qty ) {
-	$isn_stock_qty = __( 'Available', 'in-stock-notifier-for-woocommerce' );
+	$isn_stock_qty = __( 'Available', 'beltoft-in-stock-notifier' );
 }
 
 /* translators: 1: product name, 2: site name */
-echo esc_html( sprintf( __( 'Good news! %1$s is back in stock at %2$s.', 'in-stock-notifier-for-woocommerce' ), $product->get_name(), get_bloginfo( 'name' ) ) ) . "\n\n";
+echo esc_html( sprintf( __( 'Good news! %1$s is back in stock at %2$s.', 'beltoft-in-stock-notifier' ), $product->get_name(), get_bloginfo( 'name' ) ) ) . "\n\n";
 
 $isn_product_url = apply_filters( 'instock_notifier_email_product_url', $product->get_permalink(), $product, $email );
-echo esc_html__( 'Shop Now:', 'in-stock-notifier-for-woocommerce' ) . ' ' . esc_url( $isn_product_url ) . "\n\n";
+echo esc_html__( 'Shop Now:', 'beltoft-in-stock-notifier' ) . ' ' . esc_url( $isn_product_url ) . "\n\n";
 
 /* translators: %s: stock quantity or "Available" */
-echo esc_html( sprintf( __( 'Current stock: %s', 'in-stock-notifier-for-woocommerce' ), $isn_stock_qty ) ) . "\n\n";
+echo esc_html( sprintf( __( 'Current stock: %s', 'beltoft-in-stock-notifier' ), $isn_stock_qty ) ) . "\n\n";
 
 echo "────────────────────────────────────────────\n\n";
 
 /* translators: %s: site name */
-echo esc_html( sprintf( __( 'You received this email because you subscribed to a back-in-stock notification on %s.', 'in-stock-notifier-for-woocommerce' ), get_bloginfo( 'name' ) ) ) . "\n";
-echo esc_html__( 'Unsubscribe:', 'in-stock-notifier-for-woocommerce' ) . ' ' . esc_url( $unsubscribe_url ) . "\n";
+echo esc_html( sprintf( __( 'You received this email because you subscribed to a back-in-stock notification on %s.', 'beltoft-in-stock-notifier' ), get_bloginfo( 'name' ) ) ) . "\n";
+echo esc_html__( 'Unsubscribe:', 'beltoft-in-stock-notifier' ) . ' ' . esc_url( $unsubscribe_url ) . "\n";

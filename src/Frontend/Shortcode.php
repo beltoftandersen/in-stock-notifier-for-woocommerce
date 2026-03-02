@@ -2,16 +2,16 @@
 /**
  * Shortcode for the notify form.
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
-namespace InStockNotifier\Frontend;
+namespace BeltoftInStockNotifier\Frontend;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use InStockNotifier\Support\Options;
+use BeltoftInStockNotifier\Support\Options;
 
 /**
  * Registers the [bisn_form] shortcode.

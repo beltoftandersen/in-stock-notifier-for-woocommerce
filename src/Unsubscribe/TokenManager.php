@@ -2,10 +2,10 @@
 /**
  * HMAC token generation for unsubscribe links.
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
-namespace InStockNotifier\Unsubscribe;
+namespace BeltoftInStockNotifier\Unsubscribe;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

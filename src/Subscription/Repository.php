@@ -2,10 +2,10 @@
 /**
  * Database repository for subscriptions.
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
-namespace InStockNotifier\Subscription;
+namespace BeltoftInStockNotifier\Subscription;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

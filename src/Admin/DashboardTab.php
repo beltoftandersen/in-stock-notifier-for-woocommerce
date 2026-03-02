@@ -2,18 +2,18 @@
 /**
  * Dashboard tab with stats cards and top products.
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
-namespace InStockNotifier\Admin;
+namespace BeltoftInStockNotifier\Admin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-use InStockNotifier\Subscription\Repository;
-use InStockNotifier\Stock\NotificationQueue;
-use InStockNotifier\Logging\LogViewer;
+use BeltoftInStockNotifier\Subscription\Repository;
+use BeltoftInStockNotifier\Stock\NotificationQueue;
+use BeltoftInStockNotifier\Logging\LogViewer;
 
 /**
  * Renders the Dashboard admin tab.
@@ -30,7 +30,7 @@ class DashboardTab {
 
 		if ( ! empty( $_GET['isn_sent'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			echo '<div class="notice notice-success is-dismissible"><p>';
-			echo esc_html__( 'Notifications queued. They will be sent shortly via cron.', 'in-stock-notifier-for-woocommerce' );
+			echo esc_html__( 'Notifications queued. They will be sent shortly via cron.', 'beltoft-in-stock-notifier' );
 			echo '</p></div>';
 		}
 
@@ -38,7 +38,7 @@ class DashboardTab {
 
 		echo '<div class="isn-stats-cards">';
 		$c = AdminPage::STATUS_COLORS;
-		self::stat_card( __( 'Active Subscribers', 'in-stock-notifier-for-woocommerce' ), $counts['active'], $c['active'] );
+		self::stat_card( __( 'Active Subscribers', 'beltoft-in-stock-notifier' ), $counts['active'], $c['active'] );
 		echo '</div>';
 
 		/**
@@ -54,7 +54,7 @@ class DashboardTab {
 
 		$search_product_id = isset( $_GET['isn_product'] ) ? absint( $_GET['isn_product'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-		echo '<h2>' . esc_html__( 'Look Up Product Subscribers', 'in-stock-notifier-for-woocommerce' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'Look Up Product Subscribers', 'beltoft-in-stock-notifier' ) . '</h2>';
 		echo '<form method="get" style="margin-bottom:20px;">';
 		echo '<input type="hidden" name="page" value="' . esc_attr( AdminPage::PAGE_SLUG ) . '" />';
 		echo '<input type="hidden" name="tab" value="dashboard" />';
@@ -67,12 +67,12 @@ class DashboardTab {
 				$search_product_name = $p->get_name() . ( $sku ? ' (SKU: ' . $sku . ')' : '' ) . ' (#' . $search_product_id . ')';
 			}
 		}
-		echo '<select class="wc-product-search" name="isn_product" data-placeholder="' . esc_attr__( 'Search by product name or SKU...', 'in-stock-notifier-for-woocommerce' ) . '" data-action="woocommerce_json_search_products_and_variations" data-allow_clear="true" style="min-width:350px;">';
+		echo '<select class="wc-product-search" name="isn_product" data-placeholder="' . esc_attr__( 'Search by product name or SKU...', 'beltoft-in-stock-notifier' ) . '" data-action="woocommerce_json_search_products_and_variations" data-allow_clear="true" style="min-width:350px;">';
 		if ( $search_product_id && $search_product_name ) {
 			echo '<option value="' . absint( $search_product_id ) . '" selected>' . esc_html( $search_product_name ) . '</option>';
 		}
 		echo '</select> ';
-		submit_button( __( 'Look Up', 'in-stock-notifier-for-woocommerce' ), 'secondary', 'isn_lookup', false );
+		submit_button( __( 'Look Up', 'beltoft-in-stock-notifier' ), 'secondary', 'isn_lookup', false );
 		echo '</form>';
 
 		if ( $search_product_id ) {
@@ -80,7 +80,7 @@ class DashboardTab {
 		}
 
 		/* ── Top products ─────────────────────────────────── */
-		echo '<h2>' . esc_html__( 'Top Products by Active Subscriptions', 'in-stock-notifier-for-woocommerce' ) . '</h2>';
+		echo '<h2>' . esc_html__( 'Top Products by Active Subscriptions', 'beltoft-in-stock-notifier' ) . '</h2>';
 
 		$per_page  = 20;
 		$top_paged = isset( $_GET['top_paged'] ) ? max( 1, absint( $_GET['top_paged'] ) ) : 1; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -92,7 +92,7 @@ class DashboardTab {
 		$total_pages = (int) ceil( $total / $per_page );
 
 		if ( empty( $top ) && 1 === $top_paged ) {
-			echo '<p>' . esc_html__( 'No active subscriptions yet.', 'in-stock-notifier-for-woocommerce' ) . '</p>';
+			echo '<p>' . esc_html__( 'No active subscriptions yet.', 'beltoft-in-stock-notifier' ) . '</p>';
 			return;
 		}
 
@@ -133,15 +133,15 @@ class DashboardTab {
 
 		echo '<table class="widefat fixed striped">';
 		echo '<thead><tr>';
-		echo '<th>' . esc_html__( 'Product', 'in-stock-notifier-for-woocommerce' ) . '</th>';
-		echo '<th>' . esc_html__( 'SKU', 'in-stock-notifier-for-woocommerce' ) . '</th>';
+		echo '<th>' . esc_html__( 'Product', 'beltoft-in-stock-notifier' ) . '</th>';
+		echo '<th>' . esc_html__( 'SKU', 'beltoft-in-stock-notifier' ) . '</th>';
 		if ( $show_brands ) {
-			echo '<th>' . esc_html__( 'Brand', 'in-stock-notifier-for-woocommerce' ) . '</th>';
+			echo '<th>' . esc_html__( 'Brand', 'beltoft-in-stock-notifier' ) . '</th>';
 		}
-		echo '<th>' . esc_html__( 'Variation', 'in-stock-notifier-for-woocommerce' ) . '</th>';
-		echo '<th>' . esc_html__( 'Subscribers', 'in-stock-notifier-for-woocommerce' ) . '</th>';
-		echo '<th>' . esc_html__( 'Stock Status', 'in-stock-notifier-for-woocommerce' ) . '</th>';
-		echo '<th>' . esc_html__( 'Actions', 'in-stock-notifier-for-woocommerce' ) . '</th>';
+		echo '<th>' . esc_html__( 'Variation', 'beltoft-in-stock-notifier' ) . '</th>';
+		echo '<th>' . esc_html__( 'Subscribers', 'beltoft-in-stock-notifier' ) . '</th>';
+		echo '<th>' . esc_html__( 'Stock Status', 'beltoft-in-stock-notifier' ) . '</th>';
+		echo '<th>' . esc_html__( 'Actions', 'beltoft-in-stock-notifier' ) . '</th>';
 		echo '</tr></thead>';
 		echo '<tbody>';
 
@@ -210,8 +210,8 @@ class DashboardTab {
 				),
 				'isn_manual_send'
 			);
-			echo '<a href="' . esc_url( $send_url ) . '" class="button button-small" onclick="return confirm(\'' . esc_js( __( 'Send notifications to all active subscribers for this product?', 'in-stock-notifier-for-woocommerce' ) ) . '\');">';
-			echo esc_html__( 'Send Notifications', 'in-stock-notifier-for-woocommerce' );
+			echo '<a href="' . esc_url( $send_url ) . '" class="button button-small" onclick="return confirm(\'' . esc_js( __( 'Send notifications to all active subscribers for this product?', 'beltoft-in-stock-notifier' ) ) . '\');">';
+			echo esc_html__( 'Send Notifications', 'beltoft-in-stock-notifier' );
 			echo '</a>';
 			echo '</td>';
 			echo '</tr>';
@@ -231,7 +231,7 @@ class DashboardTab {
 
 			echo '<div class="tablenav bottom"><div class="tablenav-pages">';
 			/* translators: %s: total number of products */
-			echo '<span class="displaying-num">' . esc_html( sprintf( _n( '%s product', '%s products', $total, 'in-stock-notifier-for-woocommerce' ), number_format_i18n( $total ) ) ) . '</span>';
+			echo '<span class="displaying-num">' . esc_html( sprintf( _n( '%s product', '%s products', $total, 'beltoft-in-stock-notifier' ), number_format_i18n( $total ) ) ) . '</span>';
 			echo '<span class="pagination-links">';
 
 			if ( $top_paged > 1 ) {
@@ -241,7 +241,7 @@ class DashboardTab {
 			}
 
 			/* translators: 1: current page, 2: total pages */
-			echo '<span class="paging-input">' . esc_html( sprintf( __( '%1$d of %2$d', 'in-stock-notifier-for-woocommerce' ), $top_paged, $total_pages ) ) . '</span>';
+			echo '<span class="paging-input">' . esc_html( sprintf( __( '%1$d of %2$d', 'beltoft-in-stock-notifier' ), $top_paged, $total_pages ) ) . '</span>';
 
 			if ( $top_paged < $total_pages ) {
 				echo ' <a class="next-page button" href="' . esc_url( add_query_arg( 'top_paged', $top_paged + 1, $base_url ) ) . '">&rsaquo;</a>';
@@ -266,7 +266,7 @@ class DashboardTab {
 		check_admin_referer( 'isn_manual_send' );
 
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
-			wp_die( esc_html__( 'You do not have permission to do this.', 'in-stock-notifier-for-woocommerce' ) );
+			wp_die( esc_html__( 'You do not have permission to do this.', 'beltoft-in-stock-notifier' ) );
 		}
 
 		$product_id   = isset( $_GET['product_id'] ) ? absint( $_GET['product_id'] ) : 0;
@@ -301,7 +301,7 @@ class DashboardTab {
 	private static function render_product_subscribers( $product_id ) {
 		$product = wc_get_product( $product_id );
 		if ( ! $product ) {
-			echo '<p>' . esc_html__( 'Product not found.', 'in-stock-notifier-for-woocommerce' ) . '</p>';
+			echo '<p>' . esc_html__( 'Product not found.', 'beltoft-in-stock-notifier' ) . '</p>';
 			return;
 		}
 
@@ -344,19 +344,19 @@ class DashboardTab {
 		if ( $result['total'] > $per_page ) {
 			echo '<p style="color:#d63638;"><strong>';
 			/* translators: 1: displayed count, 2: total count */
-			echo esc_html( sprintf( __( 'Showing first %1$d of %2$d subscribers. Use the Subscriptions tab for full results.', 'in-stock-notifier-for-woocommerce' ), $per_page, $result['total'] ) );
+			echo esc_html( sprintf( __( 'Showing first %1$d of %2$d subscribers. Use the Subscriptions tab for full results.', 'beltoft-in-stock-notifier' ), $per_page, $result['total'] ) );
 			echo '</strong></p>';
 		}
 
 		if ( empty( $items ) ) {
-			echo '<p>' . esc_html__( 'No subscribers for this product.', 'in-stock-notifier-for-woocommerce' ) . '</p>';
+			echo '<p>' . esc_html__( 'No subscribers for this product.', 'beltoft-in-stock-notifier' ) . '</p>';
 		} else {
 			echo '<table class="widefat fixed striped">';
 			echo '<thead><tr>';
-			echo '<th>' . esc_html__( 'Email', 'in-stock-notifier-for-woocommerce' ) . '</th>';
-			echo '<th>' . esc_html__( 'Status', 'in-stock-notifier-for-woocommerce' ) . '</th>';
-			echo '<th>' . esc_html__( 'Subscribed', 'in-stock-notifier-for-woocommerce' ) . '</th>';
-			echo '<th>' . esc_html__( 'Notified', 'in-stock-notifier-for-woocommerce' ) . '</th>';
+			echo '<th>' . esc_html__( 'Email', 'beltoft-in-stock-notifier' ) . '</th>';
+			echo '<th>' . esc_html__( 'Status', 'beltoft-in-stock-notifier' ) . '</th>';
+			echo '<th>' . esc_html__( 'Subscribed', 'beltoft-in-stock-notifier' ) . '</th>';
+			echo '<th>' . esc_html__( 'Notified', 'beltoft-in-stock-notifier' ) . '</th>';
 			echo '</tr></thead><tbody>';
 
 			$colors = AdminPage::STATUS_COLORS;
@@ -399,9 +399,9 @@ class DashboardTab {
 	 */
 	private static function stock_label( $status ) {
 		$labels = array(
-			'instock'     => __( 'In stock', 'in-stock-notifier-for-woocommerce' ),
-			'outofstock'  => __( 'Out of stock', 'in-stock-notifier-for-woocommerce' ),
-			'onbackorder' => __( 'On backorder', 'in-stock-notifier-for-woocommerce' ),
+			'instock'     => __( 'In stock', 'beltoft-in-stock-notifier' ),
+			'outofstock'  => __( 'Out of stock', 'beltoft-in-stock-notifier' ),
+			'onbackorder' => __( 'On backorder', 'beltoft-in-stock-notifier' ),
 		);
 		return isset( $labels[ $status ] ) ? $labels[ $status ] : $status;
 	}

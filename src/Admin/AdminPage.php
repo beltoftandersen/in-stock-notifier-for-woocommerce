@@ -2,10 +2,10 @@
 /**
  * Admin page controller with tab routing.
  *
- * @package InStockNotifier
+ * @package BeltoftInStockNotifier
  */
 
-namespace InStockNotifier\Admin;
+namespace BeltoftInStockNotifier\Admin;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -41,8 +41,8 @@ class AdminPage {
 	public static function add_menu() {
 		add_submenu_page(
 			'woocommerce',
-			__( 'In-Stock Notifier', 'in-stock-notifier-for-woocommerce' ),
-			__( 'In-Stock Notifier', 'in-stock-notifier-for-woocommerce' ),
+			__( 'In-Stock Notifier', 'beltoft-in-stock-notifier' ),
+			__( 'In-Stock Notifier', 'beltoft-in-stock-notifier' ),
 			'manage_woocommerce',
 			self::PAGE_SLUG,
 			array( __CLASS__, 'render_page' )
@@ -56,9 +56,9 @@ class AdminPage {
 	 */
 	public static function render_page() {
 		$tabs = array(
-			'dashboard'     => __( 'Dashboard', 'in-stock-notifier-for-woocommerce' ),
-			'subscriptions' => __( 'Subscriptions', 'in-stock-notifier-for-woocommerce' ),
-			'settings'      => __( 'Settings', 'in-stock-notifier-for-woocommerce' ),
+			'dashboard'     => __( 'Dashboard', 'beltoft-in-stock-notifier' ),
+			'subscriptions' => __( 'Subscriptions', 'beltoft-in-stock-notifier' ),
+			'settings'      => __( 'Settings', 'beltoft-in-stock-notifier' ),
 		);
 
 		/**
@@ -74,7 +74,7 @@ class AdminPage {
 		}
 
 		echo '<div class="wrap">';
-		echo '<h1>' . esc_html__( 'In-Stock Notifier', 'in-stock-notifier-for-woocommerce' ) . '</h1>';
+		echo '<h1>' . esc_html__( 'In-Stock Notifier', 'beltoft-in-stock-notifier' ) . '</h1>';
 
 		echo '<nav class="nav-tab-wrapper">';
 		foreach ( $tabs as $slug => $label ) {
